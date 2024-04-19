@@ -1,5 +1,5 @@
 import '@/pages/dashboard/dashboard.css'
-import { Box, useMediaQuery, useTheme } from "@mui/material"
+import { Box, useMediaQuery } from "@mui/material"
 
 function Dashboard() {
 
@@ -42,7 +42,6 @@ function Dashboard() {
     "ethn"
     `;
     
-    // const { palette } = useTheme()
     const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)")
   return (
     <Box className="dashboard-layout" sx={
