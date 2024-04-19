@@ -47,8 +47,8 @@ function Dashboard() {
     <Box className="dashboard-layout" sx={
         isAboveMediumScreens ? {
         gridTemplateAreas: gridTemplateLargeScreens,
-        gridTemplateColumns: "768px 510px 385px 385px", /* Column widths */
-        gridTemplateRows: "repeat(8, minmax(100px, 1fr))"
+        gridTemplateColumns: "36% 24.3% 19% 19%", /* Column widths */
+        gridTemplateRows: "repeat(8, minmax(80px, 1fr))"
 
     } : {
         gridTemplateAreas: gridTemplateSmallScreens,
