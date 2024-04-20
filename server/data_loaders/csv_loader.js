@@ -1,10 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 import { parse } from 'csv-parse'
+import dotenv from 'dotenv';
 
-// Define your desired time zone offset (UTC+1) in milliseconds
-const UTC_PLUS_1_OFFSET = 1 * 60 * 60 * 1000; // 1 hour in milliseconds
+// Load environment variables from .env file
+dotenv.config();
 
+
+const DATETIME_OCC_FIELD = process.env.DATETIME_OCC_FIELD;
 
 async function loadCSVData(filePath) {
     return new Promise((resolve, reject) => {
@@ -15,17 +18,16 @@ async function loadCSVData(filePath) {
             .pipe(parse({columns: true}))
             .on('data', (row) => {
 
-                const datetimeOcc = row['DATETIME OCC'];
+                const datetimeOcc = row[DATETIME_OCC_FIELD];
 
                 // Parse the datetime string into a Date object
                 const dateUtc = new Date(datetimeOcc);
 
-                // Convert the date to UTC+1 by adding the time zone offset to store the actual datetime
-                // We add the offset because Javascript's Date function assumes these were made in UTC+1
-                const dateUtcPlus1 = new Date(dateUtc.getTime() + UTC_PLUS_1_OFFSET);
+                // getTime uses local time so no offset is needed
+                const dateUtcPlus1 = new Date(dateUtc.getTime());
 
                 // Replace the string representation with the Date object in UTC+1
-                row['DATETIME OCC'] = dateUtcPlus1;
+                row[DATETIME_OCC_FIELD] = dateUtcPlus1;
 
 
                 // Parse the row data

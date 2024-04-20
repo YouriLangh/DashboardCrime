@@ -3,6 +3,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import statRoutes from "./routes/general-stats.js"
 import loadCSVData from './data_loaders/csv_loader.js'
+import { filterData } from './data_processors/filter.js';
 
 /* Configurations */
 dotenv.config()
@@ -10,7 +11,6 @@ dotenv.config()
 const app = express();
 app.use(express.json());
 app.use(cors())
-
 
 
 let data = []; // Variable to store data in memory
@@ -39,6 +39,7 @@ const initializeData = async () => {
       console.log(`Data loaded into memory in ${duration} ms`);
 
       console.log('First data instance:', data[0]);
+
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -47,30 +48,9 @@ const initializeData = async () => {
 // Initialize data
 initializeData();
 
-// Function to get a slice of data for a specific year
-function getDataForYear(year) {
-    // Find the starting index using the year index
-    const startIndex = yearIndex[year];
-
-    // If the year is not found, return an empty array
-    if (startIndex === undefined) {
-        return [];
-    }
-
-    // Find the ending index (either the next year's start index or the end of the data)
-    const nextYear = parseInt(year) + 1;
-    const endIndex = yearIndex[nextYear] || data.length;
-
-    // Return the slice of data from startIndex to endIndex
-    return data.slice(startIndex, endIndex);
-}
-
 
 /* ROUTES */
 app.use("/stats", statRoutes)
-
-
-
 
 
 
