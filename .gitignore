@@ -1,0 +1,3 @@
+# Ignore GeoJSON and CSV files in server/data subdirectory
+server/data/*.geojson
+server/data/*.csv

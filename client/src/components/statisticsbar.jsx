@@ -3,11 +3,12 @@ import { Box, useTheme } from "@mui/material"; //Typography
 // import axios from 'axios'
 import GeneralStatBox from "@/components/generalstatsbox"
 
+
 function StatisticsBar() {
   const { palette } = useTheme()
-
+  // const apiUrl = import.meta.env.VITE_SERVER_BASE_URL; 
   // const fetchData = async () => {
-  //   await axios.get("http://localhost:5000/stats/occurences").then((res) => {
+  //   await axios.get(`${apiUrl}/stats/occurrences`).then((res) => {
   //    console.log("data: ", res.data)
   //    setReply(res.data)
   //   }
