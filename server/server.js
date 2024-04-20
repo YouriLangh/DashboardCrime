@@ -12,9 +12,9 @@ app.use(express.json());
 app.use(cors())
 
 
-// Variable to store data in memory
-let data = [];
 
+let data = []; // Variable to store data in memory
+let yearIndex = {}; // Index by year
 
 const initializeData = async () => {
     try {
@@ -25,14 +25,16 @@ const initializeData = async () => {
       const startTime = Date.now();
 
       // Load the data using the loadCSVData function
-      data = await loadCSVData(dataFilepath);
+      const { data: loadedData, yearIndex: loadedYearIndex } = await loadCSVData(dataFilepath);
+      data = loadedData;
+      yearIndex = loadedYearIndex;
 
       // Record the end time
       const endTime = Date.now();
   
       // Calculate the duration it took to load data
       const duration = endTime - startTime;
-      
+
       // Log the duration
       console.log(`Data loaded into memory in ${duration} ms`);
 
@@ -45,7 +47,23 @@ const initializeData = async () => {
 // Initialize data
 initializeData();
 
+// Function to get a slice of data for a specific year
+function getDataForYear(year) {
+    // Find the starting index using the year index
+    const startIndex = yearIndex[year];
 
+    // If the year is not found, return an empty array
+    if (startIndex === undefined) {
+        return [];
+    }
+
+    // Find the ending index (either the next year's start index or the end of the data)
+    const nextYear = parseInt(year) + 1;
+    const endIndex = yearIndex[nextYear] || data.length;
+
+    // Return the slice of data from startIndex to endIndex
+    return data.slice(startIndex, endIndex);
+}
 
 
 /* ROUTES */
@@ -60,4 +78,20 @@ app.use("/stats", statRoutes)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
+});
+
+// Function to clear the in-memory data
+function clearInMemoryData() {
+    console.log('Clearing in-memory data...');
+    dataInMemory = null; 
+}
+
+// Event handler for server shutdown (e.g., Ctrl+C or termination signals)
+process.on('SIGINT', () => {
+    console.log('Received SIGINT. Shutting down server...');
+    clearInMemoryData();
+    server.close(() => {
+        console.log('Server closed.');
+        process.exit(0);
+    });
 });
