@@ -1,7 +1,11 @@
 import fs from 'fs'
-import path  from 'path'
+import path from 'path'
 import { parse } from 'csv-parse'
-import { parse as dateparse } from 'date-fns';
+
+// Define your desired time zone offset (UTC+1) in milliseconds
+const UTC_PLUS_1_OFFSET = 1 * 60 * 60 * 1000; // 1 hour in milliseconds
+
+
 async function loadCSVData(filePath) {
     return new Promise((resolve, reject) => {
         const data = [];
@@ -10,17 +14,25 @@ async function loadCSVData(filePath) {
         fs.createReadStream(filePath)
             .pipe(parse({columns: true}))
             .on('data', (row) => {
-                // Parse the row data
-                data.push(row);
 
-                // Parse the "DATETIME OCC" column
                 const datetimeOcc = row['DATETIME OCC'];
 
-                // Parse the datetime string using dateparse from date-fns
-                const parsedDate = dateparse(datetimeOcc, 'yyyy-MM-dd HH:mm:ss', new Date());
+                // Parse the datetime string into a Date object
+                const dateUtc = new Date(datetimeOcc);
 
+                // Convert the date to UTC+1 by adding the time zone offset to store the actual datetime
+                // We add the offset because Javascript's Date function assumes these were made in UTC+1
+                const dateUtcPlus1 = new Date(dateUtc.getTime() + UTC_PLUS_1_OFFSET);
+
+                // Replace the string representation with the Date object in UTC+1
+                row['DATETIME OCC'] = dateUtcPlus1;
+
+
+                // Parse the row data
+                data.push(row);
+                
                 // Extract the year from the parsed date
-                const year = parsedDate.getFullYear();
+                const year = dateUtcPlus1.getFullYear();
                 if (!yearIndex[year]) {
                     yearIndex[year] = data.length - 1;
                 }
