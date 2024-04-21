@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import statRoutes from "./routes/general-stats.js"
+import filterRoutes from "./routes/filters.js"
 import loadCSVData from './data_loaders/csv_loader.js'
 import { filterData } from './data_processors/filter.js';
 
@@ -50,8 +51,8 @@ initializeData();
 
 
 /* ROUTES */
-app.use("/stats", statRoutes)
-
+app.use("/api/stats", statRoutes)
+app.use("/api/filters", filterRoutes)
 
 
 // Start the server
@@ -75,3 +76,5 @@ process.on('SIGINT', () => {
         process.exit(0);
     });
 });
+
+export { data, yearIndex };

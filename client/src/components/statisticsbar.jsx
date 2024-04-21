@@ -18,10 +18,13 @@ function StatisticsBar() {
   return (
    <Box display="flex" justifyContent="space-between" alignItems="center" color={palette.grey[300]} width="100%" height="80px" border="1px solid white">
     {/* <Typography variant= "h4" fontSize='16px'>Crime Dashboard</Typography> */}
-    <GeneralStatBox title={"Title"} value={"123"}/>
-    <GeneralStatBox title={"123"} value={"123"}/>
-    <GeneralStatBox title={"123"} value={"123"}/>
-    <GeneralStatBox title={"123"} value={"123"}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={true}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={false}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={true}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={false}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={true}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={false}/>
+    <GeneralStatBox value={"Title"} text={"123"} isLightColor={true}/>
    </Box>
   )
 }
