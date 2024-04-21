@@ -39,8 +39,6 @@ const initializeData = async () => {
       // Log the duration
       console.log(`Data loaded into memory in ${duration} ms`);
 
-      console.log('First data instance:', data[0]);
-
     } catch (error) {
       console.error('Error loading data:', error);
     }
@@ -64,7 +62,7 @@ app.listen(PORT, () => {
 // Function to clear the in-memory data
 function clearInMemoryData() {
     console.log('Clearing in-memory data...');
-    dataInMemory = null; 
+    data = null; 
 }
 
 // Event handler for server shutdown (e.g., Ctrl+C or termination signals)

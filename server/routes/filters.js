@@ -1,5 +1,6 @@
 import express from 'express';
 import { data, yearIndex } from '../server.js';
+import { organizeGroups } from '../data_processors/dropdownprocessor.js';
 
 const router = express.Router();
 
@@ -35,9 +36,18 @@ router.get('/', async (req, res) => {
 
         // Log the reply for verification
         console.log(reply);
+        const processedReply = {};
 
+        // Apply organizeGroups function to each set and store the result in processedReply
+        filterSets.forEach(({ name, set }) => {
+            // Convert set to an array before processing
+            const setArray = Array.from(set);
+            // Process the set array using organizeGroups
+            processedReply[name] = organizeGroups(setArray);
+            console.log(processedReply)
+        });
         // Send the reply as a JSON response
-        res.status(200).json(reply);
+        res.status(200).json(processedReply);
     } catch (error) {
         // Handle errors and send an error response
         console.error('Error:', error);
