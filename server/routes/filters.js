@@ -34,8 +34,6 @@ router.get('/', async (req, res) => {
             return result;
         }, {});
 
-        // Log the reply for verification
-        console.log(reply);
         const processedReply = {};
 
         // Apply organizeGroups function to each set and store the result in processedReply
@@ -44,8 +42,15 @@ router.get('/', async (req, res) => {
             const setArray = Array.from(set);
             // Process the set array using organizeGroups
             processedReply[name] = organizeGroups(setArray);
-            console.log(processedReply)
         });
+
+        const years = Object.keys(yearIndex).map(year => parseInt(year));
+
+        // Find the smallest and largest year using Math.min and Math.max
+        const smallestYear = Math.min(...years);
+        const largestYear = Math.max(...years);
+
+        processedReply['yearSet'] = {smallestYear: smallestYear, largestYear:largestYear} 
         // Send the reply as a JSON response
         res.status(200).json(processedReply);
     } catch (error) {

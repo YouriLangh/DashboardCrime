@@ -29,8 +29,6 @@ export function organizeGroups(menu) {
             });
         }
     }
-    console.log(groupMap)
-
     // Convert the groupMap entries into result array
     for (const [item, subCategories] of groupMap.entries()) {
         result.push({
