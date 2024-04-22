@@ -15,7 +15,7 @@ function App() {
   const [activeFilters, setActiveFilters] = useState()
 
   useEffect(()=> {
-    console.log("Filters have changed, do something.")
+    console.log("Filters have changed, do something:", activeFilters)
   },[activeFilters])
 
   useEffect(() => {

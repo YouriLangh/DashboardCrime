@@ -28,54 +28,38 @@ function FiltersBar({ filters, filterCallback }) {
         }));
     }
 
-    function changeActiveFilters(){
-        filterCallback()
-    }
-
     // Check if localFilterSets is not an empty object
     const hasLocalFilterSets = Object.keys(localFilterSets).length > 0;
 
     //TODO: Temporary fix that loads other boxes if the data hasnt loaded yet
     return (
         <>
-            {hasLocalFilterSets ? (
-                <>
-                    <FilterDropDown
-                        items={localFilterSets.areaSet}
-                        filterType="areaFilter"
-                        onFilterChange={handleFilterChange}
-                    />
-                    <FilterDropDown
-                        items={localFilterSets.crimeTypeSet}
-                        filterType="crimeTypeFilter"
-                        onFilterChange={handleFilterChange}
-                    />
-                    <FilterDropDown
-                        items={localFilterSets.weaponTypeSet}
-                        filterType="weaponTypeFilter"
-                        onFilterChange={handleFilterChange}
-                    />
-                    <FilterDropDown
-                        items={localFilterSets.genderSet}
-                        filterType="genderFilter"
-                        onFilterChange={handleFilterChange}
-                    />
-                    <FilterDropDown
-                        items={localFilterSets.descentSet}
-                        filterType="descentFilter"
-                        onFilterChange={handleFilterChange}
-                    />
-                </>
-            ) : (
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
-                <Box className='dropdown-filters' defaultValue="All"> All </Box>
-                <Box className='dropdown-filters' defaultValue="All"> All</Box>
-                <Box className='dropdown-filters' defaultValue="All"> All</Box>
-                <Box className='dropdown-filters' defaultValue="All"> All</Box>
-                <Box className='dropdown-filters' defaultValue="All"> All</Box>
-                <Box className='dropdown-filters' defaultValue="All"> All</Box>
-                </div>
-            )}
+            {/* Render FilterDropDowns with or without local filter sets */}
+            <FilterDropDown
+                items={hasLocalFilterSets ? localFilterSets.areaSet : []}
+                filterType="areaFilter"
+                onFilterChange={handleFilterChange}
+            />
+            <FilterDropDown
+                items={hasLocalFilterSets ? localFilterSets.crimeTypeSet : []}
+                filterType="crimeTypeFilter"
+                onFilterChange={handleFilterChange}
+            />
+            <FilterDropDown
+                items={hasLocalFilterSets ? localFilterSets.weaponTypeSet : []}
+                filterType="weaponTypeFilter"
+                onFilterChange={handleFilterChange}
+            />
+            <FilterDropDown
+                items={hasLocalFilterSets ? localFilterSets.genderSet : []}
+                filterType="genderFilter"
+                onFilterChange={handleFilterChange}
+            />
+            <FilterDropDown
+                items={hasLocalFilterSets ? localFilterSets.descentSet : []}
+                filterType="descentFilter"
+                onFilterChange={handleFilterChange}
+            />
         </>
     );
 }

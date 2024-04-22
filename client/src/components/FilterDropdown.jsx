@@ -10,18 +10,9 @@ function FilterDropdown({ items, filterType, onFilterChange }) {
 
     
     useEffect(() => {
-        // Create an object representing the 'All' option
-        const allOption = {
-            value: 'All',
-            hierarchy: 'All',
-            // Include any other properties you need for the 'All' option
-        };
-    
-        // Create a new array that appends the 'All' option to the end of the items array
-        const updatedItems = [...items, allOption];
-    
-        // Set the localItems state with the updated array
-        setLocalItems(updatedItems);
+        if (Array.isArray(items) && items.length > 0) {
+            setLocalItems(items);
+        }
     }, [items]);
     
 
@@ -37,8 +28,6 @@ function FilterDropdown({ items, filterType, onFilterChange }) {
 
     // Handle change event
     const handleChange = (event, value) => {
-        console.log(event.target)
-
         // Find the selected item in the localItems array
         const selectedItem = localItems.find(item => item.value === value);
         const activatedFilters =[]
