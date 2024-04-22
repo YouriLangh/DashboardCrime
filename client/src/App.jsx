@@ -7,7 +7,7 @@ import StatisticsBar from "@/components/statisticsbar"
 
 import Dashboard from "@/pages/dashboard/dashboard"
 import { fetchFilterValues } from './services/filterService'
-import Filters from '@/components/filters'
+import FiltersBar from '@/components/FiltersBar'
 function App() {
 
   const theme = useMemo(() => createTheme(themeSettings), [])
@@ -29,7 +29,7 @@ function App() {
         <CssBaseline />
         <Box width="100%" height="100%" padding="1rem">
           <StatisticsBar />
-          <Filters filters={filters}/>
+          <FiltersBar filters={filters}/>
           <Routes>
             <Route path="/" element={<Dashboard />}/>
           </Routes>
