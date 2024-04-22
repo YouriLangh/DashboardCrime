@@ -69,7 +69,7 @@ function clearInMemoryData() {
 process.on('SIGINT', () => {
     console.log('Received SIGINT. Shutting down server...');
     clearInMemoryData();
-    server.close(() => {
+    app.close(() => {
         console.log('Server closed.');
         process.exit(0);
     });
