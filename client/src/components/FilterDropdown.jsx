@@ -8,9 +8,22 @@ function FilterDropdown({ items, filterType, onFilterChange }) {
     const [localItems, setLocalItems] = useState([]);
     const [hoveredItemIndex, setHoveredItemIndex] = useState(null); // State to track the hovered item index
 
+    
     useEffect(() => {
-        setLocalItems(items);
+        // Create an object representing the 'All' option
+        const allOption = {
+            value: 'All',
+            hierarchy: 'All',
+            // Include any other properties you need for the 'All' option
+        };
+    
+        // Create a new array that appends the 'All' option to the end of the items array
+        const updatedItems = [...items, allOption];
+    
+        // Set the localItems state with the updated array
+        setLocalItems(updatedItems);
     }, [items]);
+    
 
     // Event handler to set the index of the hovered item
     const handleMouseEnter = (index) => {
@@ -28,15 +41,27 @@ function FilterDropdown({ items, filterType, onFilterChange }) {
 
         // Find the selected item in the localItems array
         const selectedItem = localItems.find(item => item.value === value);
-        console.log("selected item", selectedItem)
-        // Check if the selected item has a submenu
-        if (selectedItem && selectedItem.submenu) {
-            // Pass the selected value and submenu to the callback function
-            onFilterChange(filterType, value, selectedItem.submenu);
+        const activatedFilters =[]
+        if (selectedItem.value === 'All'){
+            localItems.map((item) => {
+                if(item.submenu){
+                    item.submenu.map((subCat) => {activatedFilters.push(subCat.hierarchy)})
+                } else {activatedFilters.push(item.hierarchy)}
+            })
         } else {
-            // Pass only the selected value to the callback function
-            onFilterChange(filterType, value);
+            // Check if the selected item has a submenu
+            if (selectedItem && selectedItem.submenu) {
+            // Pass the selected value and submenu to the callback function
+                selectedItem.submenu.map((subCat)=> {activatedFilters.push(subCat.hierarchy)})
+            } else {
+                // Pass only the selected value to the callback function
+                activatedFilters.push(selectedItem.hierarchy)
+            
     }
+        }
+        
+    console.log("activated filters: ", activatedFilters)
+    // onFilterChange(filterType, activatedFilters);
 }
 
     return (

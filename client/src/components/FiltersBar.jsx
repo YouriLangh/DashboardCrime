@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import FilterDropDown from "./FilterDropdown";
+import { Box, Select } from "@mui/material";
 
-function FiltersBar({ filters }) {
+function FiltersBar({ filters, filterCallback }) {
     // Initializing state
     const [localFilterSets, setLocalFilterSets] = useState({});
     const [selectedFilters, setSelectedFilters] = useState({
@@ -25,6 +26,10 @@ function FiltersBar({ filters }) {
             ...prevSelectedFilters,
             [filterType]: value,
         }));
+    }
+
+    function changeActiveFilters(){
+        filterCallback()
     }
 
     // Check if localFilterSets is not an empty object
@@ -61,7 +66,14 @@ function FiltersBar({ filters }) {
                     />
                 </>
             ) : (
-                <p>No filter sets available</p>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <Box className='dropdown-filters' defaultValue="All"> All </Box>
+                <Box className='dropdown-filters' defaultValue="All"> All</Box>
+                <Box className='dropdown-filters' defaultValue="All"> All</Box>
+                <Box className='dropdown-filters' defaultValue="All"> All</Box>
+                <Box className='dropdown-filters' defaultValue="All"> All</Box>
+                <Box className='dropdown-filters' defaultValue="All"> All</Box>
+                </div>
             )}
         </>
     );

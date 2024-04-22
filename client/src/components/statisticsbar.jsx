@@ -6,14 +6,6 @@ import GeneralStatBox from "@/components/generalstatsbox"
 
 function StatisticsBar() {
   const { palette } = useTheme()
-  // const apiUrl = import.meta.env.VITE_SERVER_BASE_URL; 
-  // const fetchData = async () => {
-  //   await axios.get(`${apiUrl}/stats/occurrences`).then((res) => {
-  //    console.log("data: ", res.data)
-  //    setReply(res.data)
-  //   }
-  //   )
-  //  }
 
   return (
    <Box display="flex" justifyContent="space-between" alignItems="center" color={palette.grey[300]} width="100%" height="80px" border="1px solid white">

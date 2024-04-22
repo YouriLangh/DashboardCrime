@@ -3,7 +3,6 @@
     display: grid;
     width: 100%;
     height: calc(100% - 150px); /* Subtract the navbar height from 100% of the viewport height */
-    
     gap:0.75rem;
     
   }

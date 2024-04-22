@@ -6,22 +6,22 @@ export function organizeGroups(menu) {
     for (const item of menu) {
         // Check if the item contains a '::' delimiter
         if (item.includes('::')) {
-            // Split the item into group and subgroup
+            // Split the item into category and subCategory
             const [category, subCategory] = item.split('::');
 
-            // Check if the group already exists in the map
+            // Check if the category already exists in the map
             if (!groupMap.has(category)) {
-                // If the group doesn't exist, create a new array for the subgroups
+                // If the category doesn't exist, create a new array for the subCategories
                 groupMap.set(category, []);
             }
 
-            // Add the subgroup to the array associated with the group
+            // Add the subCategory to the array associated with the category
             groupMap.get(category).push({
                 value: subCategory, 
                 hierarchy: item, // Include the complete hierarchy for each item
             });
         } else {
-            // If the item does not contain '::', it is a group without a subgroup
+            // If the item does not contain '::', it is a category without a subCategory
             // Store the item directly as a singleton in the result array
             result.push({
                 value: item,

@@ -11,16 +11,23 @@ import FiltersBar from '@/components/FiltersBar'
 function App() {
 
   const theme = useMemo(() => createTheme(themeSettings), [])
-  const [filters, setFilters] = useState([])
+  const [allFilters, setAllFilters] = useState([])
+  const [activeFilters, setActiveFilters] = useState()
 
+  useEffect(()=> {
+    console.log("Filters have changed, do something.")
+  },[activeFilters])
 
   useEffect(() => {
       // Fetch filter values when the component mounts
       fetchFilterValues().then((res) => {
-        console.log("data: ", res)
-        setFilters(res)
+        setAllFilters(res)
       });
   }, []);
+
+  function updateFilters(newFilters) {
+    setActiveFilters(newFilters)
+  }
 
   return (
     <div className='app'>
@@ -29,7 +36,7 @@ function App() {
         <CssBaseline />
         <Box width="100%" height="100%" padding="1rem">
           <StatisticsBar />
-          <FiltersBar filters={filters}/>
+          <FiltersBar filters={allFilters} filterCallback={updateFilters}/>
           <Routes>
             <Route path="/" element={<Dashboard />}/>
           </Routes>
