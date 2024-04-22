@@ -5,6 +5,7 @@ import statRoutes from "./routes/general-stats.js"
 import filterRoutes from "./routes/filters.js"
 import loadCSVData from './data_loaders/csv_loader.js'
 import { filterData } from './data_processors/filter.js';
+import { filterDictionaryGenerator } from "./data_processors/filterDictionaryGenerator.js"
 
 /* Configurations */
 dotenv.config()
@@ -16,6 +17,7 @@ app.use(cors())
 
 let data = []; // Variable to store data in memory
 let yearIndex = {}; // Index by year
+let filterDictionary
 
 const initializeData = async () => {
     try {
@@ -29,7 +31,7 @@ const initializeData = async () => {
       const { data: loadedData, yearIndex: loadedYearIndex } = await loadCSVData(dataFilepath);
       data = loadedData;
       yearIndex = loadedYearIndex;
-
+      filterDictionary = filterDictionaryGenerator(loadedData, loadedYearIndex)
       // Record the end time
       const endTime = Date.now();
   
@@ -75,4 +77,4 @@ process.on('SIGINT', () => {
     });
 });
 
-export { data, yearIndex };
+export { data, yearIndex, filterDictionary };

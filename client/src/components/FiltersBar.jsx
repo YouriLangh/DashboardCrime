@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import FilterDropDown from "./FilterDropdown";
-import { Box, Select } from "@mui/material";
+import { Box } from "@mui/material";
 
 function FiltersBar({ filters, filterCallback }) {
     // Initializing state
@@ -35,6 +35,7 @@ function FiltersBar({ filters, filterCallback }) {
     // Check if localFilterSets is not an empty object
     const hasLocalFilterSets = Object.keys(localFilterSets).length > 0;
 
+    //TODO: Temporary fix that loads other boxes if the data hasnt loaded yet
     return (
         <>
             {hasLocalFilterSets ? (
