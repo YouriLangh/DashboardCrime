@@ -2,6 +2,14 @@
 import { Box } from '@mui/material';
 
 function SubMenu({ submenu, handleClick }) {
+
+    function onClick(event){
+        const value = event.target.value; // Get the value of the clicked button
+        const selectedItem = submenu.find(item => item.value === value); // Find the corresponding submenu item
+
+        // Call handleClick with the selected item as a parameter
+        handleClick(event, selectedItem, true);
+    }
     return (
         <Box
             sx={{
@@ -17,7 +25,7 @@ function SubMenu({ submenu, handleClick }) {
         >
             {/* Render the submenu items */}
             {submenu.map((subItem, index) => (
-                <button key={index} onClick={handleClick} style={{ color: 'black' }}> {/* Set text color to white */}
+                <button key={index} onClick={onClick} value={subItem.value} style={{ color: 'black' }}> {/* Set text color to white */}
                     {subItem.value}
                 </button>
             ))}

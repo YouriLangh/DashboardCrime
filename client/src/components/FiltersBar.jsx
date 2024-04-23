@@ -24,11 +24,12 @@ function FiltersBar({ filters, filterCallback }) {
 
     // Callback function to update selectedFilters state
     function handleFilterChange(filterType, value){
-        setSelectedFilters((prevSelectedFilters) => ({
-            ...prevSelectedFilters,
-            [filterType]: value,
-        }));
-        
+        if(selectedFilters[filterType] !== value){
+            setSelectedFilters((prevSelectedFilters) => ({
+                ...prevSelectedFilters,
+                [filterType]: value,
+            }));
+        }
     }
 
     // Check if localFilterSets is not an empty object
