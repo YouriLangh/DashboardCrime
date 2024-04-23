@@ -23,6 +23,7 @@ function App() {
       fetchFilterValues().then((res) => {
         setAllFilters(res)
       });
+      
       setActiveFilters({
         yearFilter: 2023,
         areaFilter: [{ value: 'All'}],
