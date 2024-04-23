@@ -15,7 +15,7 @@ function App() {
   const [activeFilters, setActiveFilters] = useState()
 
   useEffect(()=> {
-    console.log("Filters have changed, do something:", activeFilters)
+    console.log("Active filters have changed, do something:", activeFilters)
   },[activeFilters])
 
   useEffect(() => {
@@ -23,11 +23,15 @@ function App() {
       fetchFilterValues().then((res) => {
         setAllFilters(res)
       });
+      setActiveFilters({
+        yearFilter: 2023,
+        areaFilter: [{ value: 'All', hierarchy: 'All' }],
+        crimeTypeFilter: [{ value: 'All', hierarchy: 'All' }],
+        weaponTypeFilter: [{ value: 'All', hierarchy: 'All' }],
+        genderFilter: [{ value: 'All', hierarchy: 'All' }],
+        descentFilter: [{ value: 'All', hierarchy: 'All' }],
+    });
   }, []);
-
-  function updateFilters(newFilters) {
-    setActiveFilters(newFilters)
-  }
 
   return (
     <div className='app'>
@@ -36,7 +40,7 @@ function App() {
         <CssBaseline />
         <Box width="100%" height="100%" padding="1rem">
           <StatisticsBar />
-          <FiltersBar filters={allFilters} filterCallback={updateFilters}/>
+          <FiltersBar filters={allFilters} filterCallback={setActiveFilters}/>
           <Routes>
             <Route path="/" element={<Dashboard />}/>
           </Routes>

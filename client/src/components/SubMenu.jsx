@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box } from '@mui/material';
 
-function SubMenu({ submenu }) {
+function SubMenu({ submenu, handleClick }) {
     return (
         <Box
             sx={{
@@ -17,9 +17,9 @@ function SubMenu({ submenu }) {
         >
             {/* Render the submenu items */}
             {submenu.map((subItem, index) => (
-                <p key={index} style={{ color: 'black' }}> {/* Set text color to white */}
+                <button key={index} onClick={handleClick} style={{ color: 'black' }}> {/* Set text color to white */}
                     {subItem.value}
-                </p>
+                </button>
             ))}
         </Box>
     );

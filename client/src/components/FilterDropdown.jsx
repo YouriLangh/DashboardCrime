@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Select } from '@mui/base/Select';
 import { Option } from '@mui/base/Option';
 import { useState, useEffect } from 'react';
@@ -5,7 +6,7 @@ import SubMenu from './SubMenu'; // Import SubMenu component
 
 function FilterDropdown({ items, filterType, onFilterChange }) {
     // Initialize state with an object {value: 'All'}
-    const [localItems, setLocalItems] = useState([{ value: 'All' }]);
+    const [localItems, setLocalItems] = useState([{ value: 'All', hierarchy: 'All' }]);
     const [hoveredItemIndex, setHoveredItemIndex] = useState(null);
 
     useEffect(() => {
@@ -30,27 +31,14 @@ function FilterDropdown({ items, filterType, onFilterChange }) {
         // Find the selected item in the localItems array
         const selectedItem = localItems.find(item => item.value === value);
         const activatedFilters = [];
-        if (selectedItem.value === 'All') {
-            localItems.forEach((item) => {
-                if (item.submenu) {
-                    item.submenu.forEach((subCat) => { activatedFilters.push(subCat.hierarchy); });
-                } else {
-                    if(item.value !== 'All')
-                    activatedFilters.push(item.hierarchy);
-                }
-            });
-        } else {
             // Check if the selected item has a submenu
             if (selectedItem && selectedItem.submenu) {
                 // Pass the selected value and submenu to the callback function
-                selectedItem.submenu.forEach((subCat) => { activatedFilters.push(subCat.hierarchy); });
+                selectedItem.submenu.forEach((item) => { activatedFilters.push(item); });
             } else {
                 // Pass only the selected value to the callback function
-                activatedFilters.push(selectedItem.hierarchy);
+                activatedFilters.push(selectedItem);
             }
-        }
-
-        console.log("activated filters: ", activatedFilters);
         // Call the onFilterChange callback with the filter type and activated filters
         onFilterChange(filterType, activatedFilters);
     };
@@ -78,7 +66,7 @@ function FilterDropdown({ items, filterType, onFilterChange }) {
                         </Option>
                         {/* Render the SubMenu component if the item has a submenu and is currently hovered */}
                         {hasSubmenu && hoveredItemIndex === index && (
-                            <SubMenu submenu={item.submenu} />
+                            <SubMenu submenu={item.submenu} handleClick={handleChange}/>
                         )}
                     </div>
                 );
