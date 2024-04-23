@@ -12,10 +12,17 @@ function App() {
 
   const theme = useMemo(() => createTheme(themeSettings), [])
   const [allFilters, setAllFilters] = useState([])
-  const [activeFilters, setActiveFilters] = useState()
+  const [activeFilters, setActiveFilters] = useState({
+    yearFilter: 2023,
+    areaFilter: [{ value: 'All'}],
+    crimeTypeFilter: [{ value: 'All'}],
+    weaponTypeFilter: [{ value: 'All'}],
+    genderFilter: [{ value: 'All'}],
+    descentFilter: [{ value: 'All'}],
+})
 
   useEffect(()=> {
-    console.log("Active filters have changed, do something:", activeFilters)
+    console.log("changed", activeFilters)
   },[activeFilters])
 
   useEffect(() => {
@@ -23,16 +30,14 @@ function App() {
       fetchFilterValues().then((res) => {
         setAllFilters(res)
       });
-      
-      setActiveFilters({
-        yearFilter: 2023,
-        areaFilter: [{ value: 'All'}],
-        crimeTypeFilter: [{ value: 'All'}],
-        weaponTypeFilter: [{ value: 'All'}],
-        genderFilter: [{ value: 'All'}],
-        descentFilter: [{ value: 'All'}],
-    });
   }, []);
+
+  function updateActiveFilters(filterType, value){
+    setActiveFilters((prevSelectedFilters) => ({
+      ...prevSelectedFilters,
+      [filterType]: value,
+    }));
+  }
 
   return (
     <div className='app'>
@@ -41,7 +46,7 @@ function App() {
         <CssBaseline />
         <Box width="100%" height="100%" padding="1rem">
           <StatisticsBar />
-          <FiltersBar filters={allFilters} filterCallback={setActiveFilters}/>
+          <FiltersBar filters={allFilters} filterCallback={updateActiveFilters} selectedFilters={activeFilters}/>
           <Routes>
             <Route path="/" element={<Dashboard />}/>
           </Routes>

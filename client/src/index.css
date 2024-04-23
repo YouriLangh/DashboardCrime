@@ -11,22 +11,61 @@ body,
   background-color: #1f2026;
 }
 
-.dropdown-filters{
-  box-sizing: border-box;
-  min-width: 320px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  text-align: left;
-  line-height: 1.5;
-  background: '#fff';
-  color: '#1C2025';
+
+/* Styling for Select component */
+.dropdown-filters {
+  font-size: 14px;
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+  width: 200px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, border-color 0.3s;
 }
 
-.dropdown-option {
-  list-style: none;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: default;
-  background-color: white;
+/* Hover state for Select component */
+.dropdown-filters:hover {
+  background-color: #e6e6e6;
+  border-color: #aaa;
+}
 
+/* Focus state for Select component */
+.dropdown-filters:focus {
+  outline: none;
+  border-color: #666;
+}
+
+/* Styling for Option component */
+.dropdown-option {
+  background-color: #fff;
+  color: #333;
+  padding: 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Hover state for Option component */
+.dropdown-option:hover {
+  background-color: #e6e6e6;
+}
+
+/* Selected state for Option component */
+.dropdown-option[aria-selected="true"] {
+  background-color: #b3d9ff;
+  color: #000;
+}
+
+/* Target the dropdown menu */
+.MuiPopover-paper.MuiMenu-paper {
+  /* Set the maximum height */
+  max-height: 500px;
+  
+  /* Enable overflow handling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  
+  /* Optionally, you can add other styles if needed */
+  overflow-x: hidden; /* Disable horizontal scrolling */
 }
