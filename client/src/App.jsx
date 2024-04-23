@@ -46,7 +46,7 @@ function App() {
         <CssBaseline />
         <Box width="100%" height="100%" padding="1rem">
           <StatisticsBar />
-          <FiltersBar filters={allFilters} filterCallback={updateActiveFilters} selectedFilters={activeFilters}/>
+          <FiltersBar filters={allFilters} filterCallback={updateActiveFilters} />
           <Routes>
             <Route path="/" element={<Dashboard />}/>
           </Routes>

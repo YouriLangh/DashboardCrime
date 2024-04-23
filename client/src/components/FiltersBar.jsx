@@ -4,10 +4,10 @@ import FilterDropDown from "./FilterDropdown";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-function FiltersBar({ filters, filterCallback, selectedFilters }) {
+function FiltersBar({ filters, filterCallback}) {
   // Initializing state
   const [localFilterSets, setLocalFilterSets] = useState({});
-  const [selectedYearFilter, setSelectedYearFilter] = useState(selectedFilters.yearFilter);
+  const [selectedYearFilter, setSelectedYearFilter] = useState(new Date().getFullYear() - 1);
 
   useEffect(() => {
     setLocalFilterSets(filters);
@@ -46,8 +46,8 @@ function FiltersBar({ filters, filterCallback, selectedFilters }) {
               {item}
             </MenuItem>
           ))
-          : <MenuItem className="dropdown-option" value={selectedFilters.yearFilter}>
-              {selectedFilters.yearFilter}
+          : <MenuItem className="dropdown-option" value={selectedYearFilter}>
+              {selectedYearFilter}
             </MenuItem>
         }
       </Select>
