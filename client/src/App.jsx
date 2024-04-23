@@ -25,11 +25,11 @@ function App() {
       });
       setActiveFilters({
         yearFilter: 2023,
-        areaFilter: [{ value: 'All', hierarchy: 'All' }],
-        crimeTypeFilter: [{ value: 'All', hierarchy: 'All' }],
-        weaponTypeFilter: [{ value: 'All', hierarchy: 'All' }],
-        genderFilter: [{ value: 'All', hierarchy: 'All' }],
-        descentFilter: [{ value: 'All', hierarchy: 'All' }],
+        areaFilter: [{ value: 'All'}],
+        crimeTypeFilter: [{ value: 'All'}],
+        weaponTypeFilter: [{ value: 'All'}],
+        genderFilter: [{ value: 'All'}],
+        descentFilter: [{ value: 'All'}],
     });
   }, []);
 
