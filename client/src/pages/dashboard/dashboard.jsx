@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import '@/pages/dashboard/dashboard.css'
 import { Box, useMediaQuery } from "@mui/material"
 
-function Dashboard() {
+function Dashboard({ activeFilters }) {
 
     const gridTemplateLargeScreens = ` 
         "map horbar pie polar"

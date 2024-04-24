@@ -1,10 +1,9 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
-import statRoutes from "./routes/general-stats.js"
+import dataRoutes from "./routes/data.js"
 import filterRoutes from "./routes/filters.js"
 import loadCSVData from './data_loaders/csv_loader.js'
-import { filterData } from './data_processors/filter.js';
 import { filterDictionaryGenerator } from "./data_processors/filterDictionaryGenerator.js"
 
 /* Configurations */
@@ -51,7 +50,7 @@ initializeData();
 
 
 /* ROUTES */
-app.use("/api/stats", statRoutes)
+app.use("/api/data", dataRoutes)
 app.use("/api/filters", filterRoutes)
 
 
@@ -69,12 +68,12 @@ function clearInMemoryData() {
 
 // Event handler for server shutdown (e.g., Ctrl+C or termination signals)
 process.on('SIGINT', () => {
-    console.log('Received SIGINT. Shutting down server...');
-    clearInMemoryData();
-    app.close(() => {
-        console.log('Server closed.');
-        process.exit(0);
-    });
+  console.log('Received SIGINT. Shutting down server...');
+  clearInMemoryData();
+  server.close(() => {
+      console.log('Server closed.');
+      process.exit(0);
+  });
 });
 
 export { data, yearIndex, filterDictionary };

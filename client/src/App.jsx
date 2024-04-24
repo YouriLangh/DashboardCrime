@@ -3,9 +3,9 @@ import { useMemo, useEffect, useState } from "react"
 import { themeSettings } from "./theme"
 import { Box, CssBaseline } from "@mui/material"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import StatisticsBar from "@/components/statisticsbar"
+import GeneralStatisticsBar from "@/components/GeneralStatisticsBar"
 
-import Dashboard from "@/pages/dashboard/dashboard"
+import Dashboard from "@/pages/dashboard/Dashboard"
 import { fetchFilterValues } from './services/filterService'
 import FiltersBar from '@/components/FiltersBar'
 function App() {
@@ -45,10 +45,10 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box width="100%" height="100%" padding="1rem">
-          <StatisticsBar />
+          <GeneralStatisticsBar activeFilters={activeFilters}/>
           <FiltersBar filters={allFilters} filterCallback={updateActiveFilters} />
           <Routes>
-            <Route path="/" element={<Dashboard />}/>
+            <Route path="/" element={<Dashboard activeFilters={activeFilters}/>}/>
           </Routes>
         </Box>
       </ThemeProvider>
