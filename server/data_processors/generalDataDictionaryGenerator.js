@@ -34,7 +34,7 @@ export function generateGeneralStatDictionary(filteredData) {
         statDictionary.average_age = ageSum / ageCount;
 
         // Check for cases closed
-        if (row[process.env.STATUS_FIELD] === "CC") {
+        if (row[process.env.STATUS_FIELD] === "Case Closed") {
             statDictionary.cases_closed += 1;
         }
 
@@ -57,8 +57,8 @@ export function generateGeneralStatDictionary(filteredData) {
     });
 
     // Calculate cases closed proportion
-    statDictionary.cases_closed = statDictionary.cases_closed / statDictionary.incidents;
-
+    statDictionary.cases_closed = parseFloat(statDictionary.cases_closed / statDictionary.incidents).toFixed(1);
+    statDictionary.average_age = parseFloat(statDictionary.average_age.toFixed(1))
     // Find the most common crime type, weapon, and area
     statDictionary.crime = [...crimeCount.entries()].reduce((max, entry) => entry[1] > max[1] ? entry : max)[0];
     statDictionary.hotspot = [...areaCount.entries()].reduce((max, entry) => entry[1] > max[1] ? entry : max)[0];

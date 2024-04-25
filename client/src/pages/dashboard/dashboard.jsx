@@ -1,6 +1,14 @@
 /* eslint-disable react/prop-types */
 import '@/pages/dashboard/dashboard.css'
 import { Box, useMediaQuery } from "@mui/material"
+import AgeDistribution from '@/components/charts/AgeDistribution';
+import CrimeDistribution from '@/components/charts/CrimeDistribution';
+import DescentDistribution from '@/components/charts/DescentDistribution';
+import Heatmap from '@/components/charts/Heatmap';
+import HourlyTrend from '@/components/charts/HourlyTrend';
+import MonthlyTrend from '@/components/charts/MonthlyTrend';
+import WeeklyTrend from '@/components/charts/WeeklyTrend';
+import GenderDistribution from '@/components/charts/GenderDistribution';
 
 function Dashboard({ activeFilters }) {
 
@@ -57,15 +65,15 @@ function Dashboard({ activeFilters }) {
         gridAutoRows: "100px"
     }
 }>
-      <Box gridArea="map" className="map"></Box>
-      <Box gridArea="trend" className="trend"></Box>
-      <Box gridArea="horbar" className="horbar"></Box>
-      <Box gridArea="hour" className="hour"></Box>
-      <Box gridArea="week" className="week"></Box>
-      <Box gridArea="pie" className="pie"></Box>
-      <Box gridArea="polar" className="polar"></Box>
-      <Box gridArea="age" className="age"></Box>
-      <Box gridArea="ethn" className="ethn"></Box>
+      <Box gridArea="map" className="map">map</Box>
+      <Box gridArea="trend" className="trend"><MonthlyTrend filters={activeFilters} /></Box>
+      <Box gridArea="horbar" className="horbar"><CrimeDistribution filters={activeFilters} /></Box>
+      {/* <Box gridArea="hour" className="hour"><HourlyTrend filters={activeFilters} /></Box>
+      <Box gridArea="week" className="week"><WeeklyTrend filters={activeFilters} /></Box>
+      <Box gridArea="pie" className="pie"><GenderDistribution filters={activeFilters} /></Box>
+      <Box gridArea="polar" className="polar"><DescentDistribution filters={activeFilters} /></Box>
+      <Box gridArea="age" className="age"><AgeDistribution filters={activeFilters} /></Box>
+      <Box gridArea="ethn" className="ethn"><Heatmap filters={activeFilters} /></Box> */}
     </Box>
   )
 }
