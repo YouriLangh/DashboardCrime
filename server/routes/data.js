@@ -1,5 +1,5 @@
 import express from "express";
-import { data, yearIndex } from "../server.js";
+import { data, yearIndex, yearlyStats } from "../server.js";
 import { filterData } from "../data_processors/filter.js";
 import { createYearlyDictionary } from "../data_processors/yearlyDictionaryGenerator.js";
 import { generateGeneralStatDictionary } from "../data_processors/generalDataDictionaryGenerator.js";
@@ -14,14 +14,28 @@ import cache from "../cache/cache.js";
 
 const router = express.Router();
 
-function generateCacheKey(filters) {
-  return JSON.stringify(filters);
+// TODO: CLEAN CODE AND MOVE GENERATE CACHEKEY TO SOMEWHERE ELSE
+
+function isBaseFilter(filters) {
+  // Iterate through each [key, value] pair in filters (excluding 'yearFilter')
+  return Object.entries(filters)
+      .filter(([key]) => key !== 'yearFilter') // Exclude the 'yearFilter' key
+      .every(([key, value]) => {
+          // Check if the value is an array of length one and contains an object with value 'All'
+          return Array.isArray(value) && value.length === 1 && value[0].value === 'All';
+      });
 }
+
 
 router.post("/general-stats", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    if(isBaseFilter(filters)){
+      console.log("base filter check")
+      const year = filters.yearFilter
+      return res.status(200).json(yearlyStats[year])
+    }
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -43,7 +57,7 @@ router.post("/general-stats", async (req, res) => {
 router.post("/area-chart/month", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -63,7 +77,7 @@ router.post("/area-chart/month", async (req, res) => {
 router.post("/area-chart/hour", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -83,7 +97,7 @@ router.post("/area-chart/hour", async (req, res) => {
 router.post("/bar-chart/week", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -103,7 +117,7 @@ router.post("/bar-chart/week", async (req, res) => {
 router.post("/pie-chart/gender", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -123,7 +137,7 @@ router.post("/pie-chart/gender", async (req, res) => {
 router.post("/polar-chart/descent", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -143,7 +157,7 @@ router.post("/polar-chart/descent", async (req, res) => {
 router.post("/bar-chart/age", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -163,7 +177,7 @@ router.post("/bar-chart/age", async (req, res) => {
 router.post("/bar-chart/crime", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);
@@ -183,7 +197,7 @@ router.post("/bar-chart/crime", async (req, res) => {
 router.post("/heatmap", async (req, res) => {
   try {
     const filters = req.body;
-    const cacheKey = generateCacheKey(filters);
+    const cacheKey = cache.generateCacheKey(filters);
     if (!cache.has(cacheKey)) {
       const freshlyFilteredData = filterData(data, filters);
       cache.set(cacheKey, freshlyFilteredData);

@@ -12,7 +12,6 @@ function GeneralStatisticsBar({ activeFilters }) {
 
   useEffect(() => {
     fetchData(activeFilters, '/api/data/general-stats').then((res) => {
-      console.log(res)
       setStatistics(res.data)
     })
   },[activeFilters])

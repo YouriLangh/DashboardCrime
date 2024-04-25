@@ -7,6 +7,7 @@ import loadCSVData from "./data_loaders/csv_loader.js";
 import { filterDictionaryGenerator } from "./data_processors/filterDictionaryGenerator.js";
 import { filterData } from "./data_processors/filter.js";
 import cache from "./cache/cache.js";
+import { generateGeneralStatDictionary } from "./data_processors/generalDataDictionaryGenerator.js";
 /* Configurations */
 dotenv.config();
 
@@ -18,6 +19,7 @@ let data = []; // Variable to store data in memory
 let yearIndex = {}; // Index by year
 let filterDictionary;
 const baseFilters = { yearFilter: 2023 };
+let yearlyStats = {}
 
 const initializeData = async () => {
   try {
@@ -47,18 +49,14 @@ const initializeData = async () => {
   }
 };
 
-function generateCacheKey(filters) {
-  return JSON.stringify(filters);
-}
 
 // Function to set base filters in cache after data initialization
 async function setBaseFiltersInCache() {
   // Ensure data is initialized
   if (data && data.length > 0) {
-    const cacheKey = generateCacheKey(baseFilters);
+    const cacheKey = cache.generateCacheKey(baseFilters);
     const filteredData = filterData(data, baseFilters);
     cache.set(cacheKey, filteredData);
-    console.log(`Base filters set in cache with key: ${cacheKey}`);
   } else {
     console.log(
       "Data is not yet initialized. Waiting for data initialization."
@@ -66,11 +64,26 @@ async function setBaseFiltersInCache() {
   }
 }
 
+ function calculateGenericStatistics(data){
+  const years = Object.keys(yearIndex).sort((a, b) => a - b);
+    
+  let result = {};
+    // Get the first and last years from the sorted years
+    const firstYear = years[0];
+    const lastYear = years[years.length - 1];
+    for (let i = firstYear; i <= lastYear; i++){
+      const baseFilter = {yearFilter: i}
+      result[i] = generateGeneralStatDictionary(filterData(data, baseFilter), baseFilter)
+    }
+    return result
+}
+
 // Initialize data
 initializeData()
   .then(() => {
     // Call the function to set base filters in cache after data is initialized
     setBaseFiltersInCache();
+    yearlyStats =  calculateGenericStatistics(data);
   })
   .catch((error) => {
     console.error("Error during data initialization:", error);
@@ -102,4 +115,4 @@ process.on("SIGINT", () => {
   });
 });
 
-export { data, yearIndex, filterDictionary };
+export { data, yearIndex, filterDictionary, yearlyStats };

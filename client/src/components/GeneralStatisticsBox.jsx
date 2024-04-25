@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Box } from '@mui/material'
-import { useEffect } from 'react';
 
 function GeneralStatBox({value, text, isLightColor}) {
 
@@ -9,9 +8,6 @@ function GeneralStatBox({value, text, isLightColor}) {
 
   // Determine the background color based on the prop value
   const backgroundColor = isLightColor ? lightColor : darkColor;
-  useEffect(() => {
-    console.log(value)
-  },[value])
 
   return (
     <Box style = {{ 

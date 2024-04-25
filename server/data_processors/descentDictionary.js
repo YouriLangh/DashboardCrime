@@ -8,9 +8,13 @@ export function createDescentDictionary(data) {
     // Process each row in the input data
     data.forEach((row) => {
         // Extract the sex field from the row
-        const descent = row[process.env.VICT_DESCENT_FIELD];
+        let descent = row[process.env.VICT_DESCENT_FIELD];
+
         if (descent) {
             // Increment the count for that sex
+            if (descent.includes('::')){
+                descent = descent.split('::')[0]
+            }
             descentDictionary[descent] = (descentDictionary[descent] || 0) + 1;
         }
     });

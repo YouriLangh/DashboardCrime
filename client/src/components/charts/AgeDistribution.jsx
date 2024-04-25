@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { fetchData } from '@/services/dataService';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
+import { Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { CircularProgress } from '@mui/material'; // Import CircularProgress
 
 function AgeDistribution({ filters }) {
@@ -9,7 +9,7 @@ function AgeDistribution({ filters }) {
 
     useEffect(() => {
         fetchData(filters, '/api/data/bar-chart/age').then((res) => 
-            setData(res)
+            setData(res.data)
         );
     }, [filters]);
 
@@ -20,19 +20,25 @@ function AgeDistribution({ filters }) {
     const isDataEmpty = !data || data.length === 0;
 
     return (
-        <div>
+      <div style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
                 // Display a CircularProgress loading icon if there is no data
                 <CircularProgress />
             ) : (
-                <BarChart width={600} height={400} data={data}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     {/* Use a function to alternate bar colors based on the index */}
-                    <Bar dataKey="value" fill={(data, index) => colors[index % colors.length]} />
+                    <Bar dataKey="value">
+                            {data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={colors[index % 2]} />
+                            ))}
+                        </Bar>
                 </BarChart>
+                </ResponsiveContainer>
             )}
         </div>
     );

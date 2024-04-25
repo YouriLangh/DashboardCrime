@@ -44,7 +44,10 @@ export function generateGeneralStatDictionary(filteredData) {
         }
 
         // Count crimes
-        const crimeType = row[process.env.CRM_CD_DESC_FIELD];
+        let crimeType = row[process.env.CRM_CD_DESC_FIELD];
+        if (crimeType.includes('::')){
+            crimeType = crimeType.split('::')[1]
+        }
         crimeCount.set(crimeType, (crimeCount.get(crimeType) || 0) + 1);
 
         // Count areas
@@ -52,13 +55,17 @@ export function generateGeneralStatDictionary(filteredData) {
         areaCount.set(areaName, (areaCount.get(areaName) || 0) + 1);
 
         // Count weapons
-        const weapon = row[process.env.WEAPON_DESC_FIELD];
+        let weapon = row[process.env.WEAPON_DESC_FIELD];
+        if (weapon.includes('::')){
+            weapon = weapon.split('::')[1]
+        }
         weaponCount.set(weapon, (weaponCount.get(weapon) || 0) + 1);
     });
 
     // Calculate cases closed proportion
     statDictionary.cases_closed = parseFloat(statDictionary.cases_closed / statDictionary.incidents).toFixed(1);
     statDictionary.average_age = parseFloat(statDictionary.average_age.toFixed(1))
+    statDictionary.weapon_presence = parseFloat(statDictionary.weapon_presence / statDictionary.incidents).toFixed(1);
     // Find the most common crime type, weapon, and area
     statDictionary.crime = [...crimeCount.entries()].reduce((max, entry) => entry[1] > max[1] ? entry : max)[0];
     statDictionary.hotspot = [...areaCount.entries()].reduce((max, entry) => entry[1] > max[1] ? entry : max)[0];

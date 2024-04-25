@@ -10,7 +10,7 @@ function Heatmap({ filters }) {
     useEffect(() => {
         // Fetch data from the API
         fetchData(filters, '/api/data/heatmap').then((res) => {
-            setHeatmapData(res);
+            setHeatmapData(res.data);
         });
     }, [filters]);
 

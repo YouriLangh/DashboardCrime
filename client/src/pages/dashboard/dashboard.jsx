@@ -68,12 +68,12 @@ function Dashboard({ activeFilters }) {
       <Box gridArea="map" className="map">map</Box>
       <Box gridArea="trend" className="trend"><MonthlyTrend filters={activeFilters} /></Box>
       <Box gridArea="horbar" className="horbar"><CrimeDistribution filters={activeFilters} /></Box>
-      {/* <Box gridArea="hour" className="hour"><HourlyTrend filters={activeFilters} /></Box>
+      <Box gridArea="hour" className="hour"><HourlyTrend filters={activeFilters} /></Box>
       <Box gridArea="week" className="week"><WeeklyTrend filters={activeFilters} /></Box>
       <Box gridArea="pie" className="pie"><GenderDistribution filters={activeFilters} /></Box>
       <Box gridArea="polar" className="polar"><DescentDistribution filters={activeFilters} /></Box>
       <Box gridArea="age" className="age"><AgeDistribution filters={activeFilters} /></Box>
-      <Box gridArea="ethn" className="ethn"><Heatmap filters={activeFilters} /></Box> */}
+      {/* <Box gridArea="ethn" className="ethn"><Heatmap filters={activeFilters} /></Box> */}
     </Box>
   )
 }
