@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
 import { fetchData } from '@/services/dataService';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, CartesianGrid, Area } from 'recharts';
@@ -15,28 +14,33 @@ function MonthlyTrend({ filters }) {
         });
     }, [filters]);
 
-    // Conditionally render loading icon or area chart based on whether the data is empty
     return (
-        <div style={{ width: '100%', height: '100%' }}>
+        <div className="monthly-trend" style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
                 <CircularProgress />
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data}>
                         {/* X-Axis: Display month names */}
-                        <XAxis dataKey="name" label={{ value: 'Month', position: 'insideBottomRight', offset: -10 }} />
+                        <XAxis dataKey="name" />
                         
-                        {/* Y-Axis: Display crime count */}
-                        <YAxis label={{ value: 'Crime Count', angle: -90, position: 'insideLeft' }} />
-
-                        {/* Tooltip: Shows information on hover */}
+                        {/* Y-Axis */}
+                        <YAxis />
+                        
+                        {/* Tooltip */}
                         <Tooltip />
-
-                        {/* CartesianGrid: Optional grid lines */}
-                        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-
-                        {/* Area: Represents the crime count per month */}
-                        <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" />
+                        
+                        {/* CartesianGrid */}
+                        <CartesianGrid stroke="#bbb" strokeDasharray="5 5" />
+                        
+                        {/* Area with stroke and small dots at every tick */}
+                        <Area 
+                            type="monotone" 
+                            dataKey="value" 
+                            stroke="#fff"  // Specify the stroke color
+                            fill="#8884d8"  // Specify the fill color
+                            dot={{ stroke: '#fff', fill: '#8884d8', strokeWidth: 2, r: 3 }} // Customize the dot style
+                        />
                     </AreaChart>
                 </ResponsiveContainer>
             )}

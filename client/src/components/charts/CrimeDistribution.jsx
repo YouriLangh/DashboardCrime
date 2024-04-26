@@ -17,7 +17,7 @@ function CrimeDistribution({ filters }) {
     const isDataEmpty = !data || data.length === 0;
 
     return (
-        <div style={{ width: '100%', height: '100%', overflowY: 'scroll' }}>
+        <div className="crime-distribution" style={{ width: '100%', height: '100%', overflowY: 'scroll'  }}>
             {isDataEmpty ? (
                 <CircularProgress />
             ) : (

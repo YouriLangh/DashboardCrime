@@ -76,3 +76,23 @@ body,
   display: flex;
   align-items: center;
 }
+
+.crime-distribution{
+  /* For modern browsers (Chrome, Edge, Safari) */
+  &::-webkit-scrollbar {
+      width: 0; /* Set the width to 0 to hide the scrollbar */
+      height: 0; /* For horizontal scrollbar, set the height to 0 */
+  }
+
+  /* For Firefox */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.monthly-trend .recharts-wrapper{
+  padding: 5px;
+}
+
+.monthly-trend .recharts-surface {
+  transform: translate(-9px, 3px);
+}
+
