@@ -25,7 +25,7 @@ function GeneralStatisticsBar({ activeFilters }) {
     <GeneralStatBox value={isDataFetched ? statistics.hotspot : "Nothing Fetched"} text={"#1 Crime Hotspot"} isLightColor={false}/>
     <GeneralStatBox value={isDataFetched ? statistics.average_age : "Nothing Fetched"} text={"Average Victim Age"} isLightColor={true}/>
     <GeneralStatBox value={isDataFetched ? statistics.crime : "Nothing Fetched"} text={"Most Common Crime"} isLightColor={false}/>
-    <GeneralStatBox value={isDataFetched ? statistics.cases_closed : "Nothing Fetched"} text={"Cases Closed"} isLightColor={true}/>
+    <GeneralStatBox value={isDataFetched ? statistics.active_arrests : "Nothing Fetched"} text={"Active Arrests"} isLightColor={true}/>
     <GeneralStatBox value={isDataFetched ? statistics.weapon_presence : "Nothing Fetched"} text={"Presence of weapon"} isLightColor={false}/>
     <GeneralStatBox value={isDataFetched ? statistics.weapon : "Nothing Fetched"} text={"Most used weapon"} isLightColor={true}/>
    </Box>

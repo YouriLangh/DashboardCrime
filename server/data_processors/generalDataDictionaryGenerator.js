@@ -8,7 +8,7 @@ export function generateGeneralStatDictionary(filteredData) {
         hotspot: "None",
         average_age: 0,
         crime: "None",
-        cases_closed: 0,
+        active_arrests: 0, // Renamed to better reflect the calculation
         weapon_presence: 0,
         weapon: "None"
     };
@@ -48,9 +48,9 @@ export function generateGeneralStatDictionary(filteredData) {
         ageCount += 1;
         statDictionary.average_age = ageSum / ageCount;
 
-        // Check for cases closed
-        if (row[statusField] === "Case Closed") {
-            statDictionary.cases_closed += 1;
+        // Check for active arrests
+        if (row[statusField] === "Active Arrest") {
+            statDictionary.active_arrests += 1;
         }
 
         // Check for weapon presence
@@ -92,10 +92,12 @@ export function generateGeneralStatDictionary(filteredData) {
         }
     });
 
-    // Calculate cases closed proportion
-    statDictionary.cases_closed = parseFloat((statDictionary.cases_closed / statDictionary.incidents).toFixed(1));
+    // Calculate the percentage of active arrests and weapon presence
+    statDictionary.active_arrests = parseFloat((statDictionary.active_arrests / statDictionary.incidents) * 100).toFixed(1);
+    statDictionary.weapon_presence = parseFloat((statDictionary.weapon_presence / statDictionary.incidents) * 100).toFixed(1);
+
+    // Calculate the average age
     statDictionary.average_age = parseFloat(statDictionary.average_age.toFixed(1));
-    statDictionary.weapon_presence = parseFloat((statDictionary.weapon_presence / statDictionary.incidents).toFixed(1));
 
     // Set the most common values
     statDictionary.crime = mostCommonCrime;
