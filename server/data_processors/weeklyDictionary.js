@@ -6,7 +6,7 @@ export function createWeeklyDictionary(data) {
     const crimeCounts = Array(7).fill(0);
 
     // Predefined array of day names for easy mapping
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     // Process each row of data
     data.forEach((row) => {

@@ -15,32 +15,35 @@ function MonthlyTrend({ filters }) {
         });
     }, [filters]);
 
+    const colors = ["#3573D0", "#FF9F40" ]
+    const darkerColors = ["#083D8C", "#FF942B"]
     return (
-        <div className="monthly-trend" style={{ width: '100%', height: '100%' }}>
+        <div className="chart-container" style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
                 <CircularProgress />
             ) : (
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data}>
                         {/* X-Axis: Display month names */}
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="name" stroke='#fff'/>
                         
                         {/* Y-Axis */}
-                        <YAxis />
+                        <YAxis stroke='#fff'/>
                         
                         {/* Tooltip */}
                         <Tooltip />
                         
                         {/* CartesianGrid */}
-                        <CartesianGrid stroke="#bbb" strokeDasharray="5 5" />
+                        <CartesianGrid strokeDasharray="2 5" stroke="#979494" />
                         
                         {/* Area with stroke and small dots at every tick */}
                         <Area 
                             type="monotone" 
                             dataKey="value" 
-                            stroke="#fff"  // Specify the stroke color
-                            fill="#8884d8"  // Specify the fill color
-                            dot={{ stroke: '#fff', fill: '#8884d8', strokeWidth: 2, r: 3 }} // Customize the dot style
+                            stroke={darkerColors[0]}  // Specify the stroke color
+                            strokeWidth={2}
+                            fill={colors[0]}  // Specify the fill color
+                            dot={{ stroke: colors[0], fill: colors[0] , strokeWidth: 2, r: 3 }} // Customize the dot style
                         />
                     </AreaChart>
                 </ResponsiveContainer>

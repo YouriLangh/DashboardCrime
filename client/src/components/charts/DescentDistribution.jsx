@@ -17,7 +17,7 @@ function DescentDistribution({ filters }) {
     const isDataEmpty = !data || data.length === 0;
 
     return (
-      <div style={{ width: '100%', height: '100%' }}>
+      <div className='chart-container' style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
                 // Display a CircularProgress loading icon if there is no data
                 <CircularProgress />
@@ -29,8 +29,8 @@ function DescentDistribution({ filters }) {
                     data={data}
                 >
                     <PolarGrid />
-                    <PolarAngleAxis dataKey="name" />
-                    <PolarRadiusAxis angle={30} domain={[0, Math.max(...data.map(item => item.value))]} />
+                    <PolarAngleAxis dataKey="name" stroke='#fff' />
+                    <PolarRadiusAxis angle={30} domain={[0, Math.max(...data.map(item => item.value))]} stroke='#fff' />
                     <Radar
                         name="Ethnicity"
                         dataKey="value"

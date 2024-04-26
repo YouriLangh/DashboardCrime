@@ -113,15 +113,19 @@ body,
 
 
 /* CHART CSS */
-.monthly-trend .recharts-wrapper{
+.chart-container .recharts-wrapper{
   padding: 5px;
 }
 
-.monthly-trend .recharts-surface {
+.chart-container .recharts-surface {
+  transform: translate(-9px, 3px);
+}
+.transform .recharts-surface {
   transform: translate(-9px, 3px);
 }
 
 .crime-distribution{
+  padding: 5px;
   /* For modern browsers (Chrome, Edge, Safari) */
   &::-webkit-scrollbar {
       width: 0; /* Set the width to 0 to hide the scrollbar */
@@ -129,5 +133,9 @@ body,
   }
 
   /* For Firefox */
+
   scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+.crime-distribution .recharts-xAxis {
+  position: sticky;
 }

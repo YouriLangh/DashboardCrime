@@ -14,23 +14,33 @@ function AgeDistribution({ filters }) {
     }, [filters]);
 
     // Define the colors to alternate between
-    const colors = ['#5E81B5', '#7E8795'];
+    const colors = ['#4A89E7', '#787A7D'];
 
     // Check if the data is empty or undefined
     const isDataEmpty = !data || data.length === 0;
 
     return (
-      <div style={{ width: '100%', height: '100%' }}>
+      <div className='chart-container' style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
                 // Display a CircularProgress loading icon if there is no data
                 <CircularProgress />
             ) : (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
+                <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
+                    <XAxis dataKey="name" stroke='#fff' />
+                    <YAxis stroke='#fff'/>
+                    <Tooltip
+              cursor={{ fill: "#42424F" }}
+              contentStyle={{
+                backgroundColor: "#f5f5f5",
+                borderRadius: "5px",
+                padding: "5px",
+                fontSize: "14px",
+                fontWeight: '800',
+                color: "black",
+              }} // Example of custom styles
+            />
                     {/* Use a function to alternate bar colors based on the index */}
                     <Bar dataKey="value">
                             {data.map((entry, index) => (
