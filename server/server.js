@@ -5,9 +5,7 @@ import dataRoutes from "./routes/data.js";
 import filterRoutes from "./routes/filters.js";
 import loadCSVData from "./data_loaders/csv_loader.js";
 import { filterDictionaryGenerator } from "./data_processors/filterDictionaryGenerator.js";
-import { filterData } from "./data_processors/filter.js";
-import cache from "./cache/cache.js";
-import { generateGeneralStatDictionary } from "./data_processors/generalDataDictionaryGenerator.js";
+import { setBaseFiltersInCache, calculateGenericStatistics } from "./helpers/helperFunctions.js"
 /* Configurations */
 dotenv.config();
 
@@ -18,7 +16,9 @@ app.use(cors());
 let data = []; // Variable to store data in memory
 let yearIndex = {}; // Index by year
 let filterDictionary;
-const baseFilters = { yearFilter: 2023 };
+
+// Will store all the general statistics for each year, assuming only the year is selected as a filter
+// We do this to optimize query speed
 let yearlyStats = {}
 
 const initializeData = async () => {
@@ -49,41 +49,18 @@ const initializeData = async () => {
   }
 };
 
-
-// Function to set base filters in cache after data initialization
-async function setBaseFiltersInCache() {
-  // Ensure data is initialized
-  if (data && data.length > 0) {
-    const cacheKey = cache.generateCacheKey(baseFilters);
-    const filteredData = filterData(data, baseFilters);
-    cache.set(cacheKey, filteredData);
-  } else {
-    console.log(
-      "Data is not yet initialized. Waiting for data initialization."
-    );
-  }
-}
-
- function calculateGenericStatistics(data){
-  const years = Object.keys(yearIndex).sort((a, b) => a - b);
-    
-  let result = {};
-    // Get the first and last years from the sorted years
-    const firstYear = years[0];
-    const lastYear = years[years.length - 1];
-    for (let i = firstYear; i <= lastYear; i++){
-      const baseFilter = {yearFilter: i}
-      result[i] = generateGeneralStatDictionary(filterData(data, baseFilter), baseFilter)
-    }
-    return result
-}
-
 // Initialize data
 initializeData()
   .then(() => {
     // Call the function to set base filters in cache after data is initialized
-    setBaseFiltersInCache();
-    yearlyStats =  calculateGenericStatistics(data);
+    setBaseFiltersInCache(data);
+    // Record the start time
+    const startTime = Date.now();
+    yearlyStats =  calculateGenericStatistics(data, yearIndex);
+     // Record the end time
+     const endTime = Date.now();
+     const duration = endTime - startTime;
+    console.log("Setup finalized in ", duration, 'ms')
   })
   .catch((error) => {
     console.error("Error during data initialization:", error);

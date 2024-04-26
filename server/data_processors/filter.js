@@ -1,6 +1,5 @@
 import fieldMapping from "./fieldMapping.js";
 import { yearIndex } from "../server.js";
-// Access the macros from the environment variables
 
 // Function to filter data based on filters
 export function filterData(data, filters) {
@@ -62,7 +61,7 @@ export function filterData(data, filters) {
     }
   }
 
-  // TODO: Manually implement the age and lat/lon filters as these require boundaries
+  // TODO: Manually implement the age and lat/lon filters as these require boundaries AND week filter
 
   // Return the filtered data
   return filteredData;
