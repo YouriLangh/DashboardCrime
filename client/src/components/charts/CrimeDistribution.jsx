@@ -5,6 +5,7 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  Cell,
   XAxis,
   YAxis,
   Tooltip,
@@ -23,7 +24,7 @@ function CrimeDistribution({ filters }) {
 
   // Check if the data is empty or undefined
   const isDataEmpty = !data || data.length === 0;
-
+  const colors = ['#5E81B5', '#A3BE8C', '#EBCB8B', '#D08770', '#B48EAD', '#88C0D0','#E5C07B', '#BF616A']
 
   const CustomLabel = (props) => {
     const { x, y, width, height, value } = props;
@@ -40,7 +41,7 @@ function CrimeDistribution({ filters }) {
             dy={3} // Adjust vertical offset for visual alignment
             fill="#fef"
             textAnchor="insideLeft"
-            style={{ position: "absolute", left:"0" }}
+            style={{ position: "absolute", left:"0"}}
         >
             {value}
         </text>
@@ -68,16 +69,17 @@ function CrimeDistribution({ filters }) {
             {/* Y-Axis */}
             <YAxis dataKey="name" type="category" width={0} />
             {/* Tooltip for additional information */}
-            <Tooltip />
+            <Tooltip cursor={{ fill:'#42424F'}}/>
             {/* Bars */}
             <Bar
               dataKey="value"
-              fill="#8884d8"
               label={{
                 dataKey: 'name',
-                content: CustomLabel,
+                content: CustomLabel
               }}
-            />
+            >{data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+          ))} </Bar>
           </BarChart>
         </ResponsiveContainer>
       )}

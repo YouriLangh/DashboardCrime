@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import '@/pages/dashboard/dashboard.css'
 import { Box, useMediaQuery } from "@mui/material"
 import AgeDistribution from '@/components/charts/AgeDistribution';
 import CrimeDistribution from '@/components/charts/CrimeDistribution';

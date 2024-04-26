@@ -1,7 +1,7 @@
 export const tokens = {
     grey: {
       100: "#f0f0f3",
-      200: "#e1e2e7",
+      200: "#EFEFEF",
       300: "#d1d3da",
       400: "#c2c5ce",
       500: "#b3b6c2",
@@ -73,15 +73,17 @@ export const tokens = {
       fontSize: 12,
       h1: {
         fontFamily: ["Sora", "sans-serif"].join(","),
-        fontSize: 32,
+        fontSize: 16,
       },
       h2: {
         fontFamily: ["Sora", "sans-serif"].join(","),
+        fontWeight: 600,
+        color: tokens.grey[200],
         fontSize: 24,
       },
       h3: {
         fontFamily: ["Sora", "sans-serif"].join(","),
-        fontSize: 20,
+        fontSize: 26,
         fontWeight: 800,
         color: tokens.grey[200],
       },
@@ -89,18 +91,18 @@ export const tokens = {
         fontFamily: ["Sora", "sans-serif"].join(","),
         fontSize: 14,
         fontWeight: 600,
-        color: tokens.grey[300],
+        color: tokens.grey[200],
       },
       h5: {
         fontFamily: ["Sora", "sans-serif"].join(","),
-        fontSize: 12,
-        fontWeight: 400,
-        color: tokens.grey[500],
+        fontSize: 15,
+        fontWeight: 500,
+        color: tokens.grey[200],
       },
       h6: {
         fontFamily: ["Sora", "sans-serif"].join(","),
         fontSize: 10,
-        color: tokens.grey[700],
+        color: tokens.grey[200],
       },
     },
   };

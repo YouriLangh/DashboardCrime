@@ -9,34 +9,69 @@ body,
   width: 100%;
   font-family: 'Sora', sans-serif;
   background-color: #1f2026;
+  color: #EFEFEF;
+  overflow-x: hidden; 
+  /* TODO: Figure out why this overflows */
 }
 
+.app-container{
+  width: 100%;
+  height: 100%;
+}
+
+.general-stats-bar{
+  cursor: default;
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+}
+
+.stat-box{
+  min-width: 178px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 25px;
+}
+
+.filters-bar{
+  cursor: default;
+  background-color: #28282F;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.dropdown-container{
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  cursor: default;
+  transform: translateY(-2px);
+}
 
 /* Styling for Select component */
 .dropdown-filters {
   font-size: 14px;
-  color: #818181;
+  color: #3b2323;
   background-color: #f5f5f5;
   border-radius: 8px;
   padding: 8px;
   cursor: pointer;
   height: 35px;
   min-width: 150px;
-  margin-left: 40px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, border-color 0.3s;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Hover state for Select component */
 .dropdown-filters:hover {
   background-color: #e6e6e6;
   border-color: #aaa;
-}
-
-/* Focus state for Select component */
-.dropdown-filters:focus {
-  outline: none;
-  border-color: #666;
 }
 
 /* Styling for Option component */
@@ -47,16 +82,6 @@ body,
   cursor: pointer;
 }
 
-/* Hover state for Option component */
-.dropdown-option:hover {
-  background-color: #e6e6e6;
-}
-
-/* Selected state for Option component */
-.dropdown-option[aria-selected="true"] {
-  background-color: #b3d9ff;
-  color: #000;
-}
 
 /* Target the dropdown menu */
 .MuiPopover-paper.MuiMenu-paper {
@@ -70,11 +95,30 @@ body,
   overflow-x: hidden; /* Disable horizontal scrolling */
 }
 
-.filters-bar{
-  background-color: rgb(149, 149, 182);
-  height: 70px;
-  display: flex;
-  align-items: center;
+/* Define styles for the dashboard-layout class */
+.dashboard-layout {
+  padding: 5px;
+  display: grid;
+  width: 100%;
+  height: calc(100% - 156px); /* Subtract the navbar heights from 100% of the viewport height */
+  gap:0.75rem;
+  
+}
+
+/* Define common styles for each grid item */
+.dashboard-layout > * {
+  border-radius: 0.2rem;
+  box-shadow: 0.1rem 0.15rem 0.15rem 0.2rem rgba(0, 0, 0, .8);
+}
+
+
+/* CHART CSS */
+.monthly-trend .recharts-wrapper{
+  padding: 5px;
+}
+
+.monthly-trend .recharts-surface {
+  transform: translate(-9px, 3px);
 }
 
 .crime-distribution{
@@ -87,12 +131,3 @@ body,
   /* For Firefox */
   scrollbar-width: none; /* Hide scrollbar in Firefox */
 }
-
-.monthly-trend .recharts-wrapper{
-  padding: 5px;
-}
-
-.monthly-trend .recharts-surface {
-  transform: translate(-9px, 3px);
-}
-
