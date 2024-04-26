@@ -28,7 +28,7 @@ The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3O
 
 ### Notable libraries
 - GEOJSON for visualizing the districts of Los Angeles and create a heatmap
-- recharts for creating interactive charts
+- recharts/chartjs for creating interactive charts
 - Plotly to create the heatmap-matrix
 - Leaflet to create the map 
 

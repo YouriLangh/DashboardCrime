@@ -4,6 +4,7 @@ import AgeDistribution from '@/components/charts/AgeDistribution';
 import CrimeDistribution from '@/components/charts/CrimeDistribution';
 import DescentDistribution from '@/components/charts/DescentDistribution';
 import Heatmap from '@/components/charts/Heatmap';
+import Map from "@/components/charts/Map";
 import HourlyTrend from '@/components/charts/HourlyTrend';
 import MonthlyTrend from '@/components/charts/MonthlyTrend';
 import WeeklyTrend from '@/components/charts/WeeklyTrend';
@@ -64,7 +65,7 @@ function Dashboard({ activeFilters }) {
         gridAutoRows: "100px"
     }
 }>
-      <Box gridArea="map" className="map">map</Box>
+      <Box gridArea="map" className="map"><Map /></Box>
       <Box gridArea="trend" className="trend"><MonthlyTrend filters={activeFilters} /></Box>
       <Box gridArea="horbar" className="horbar"><CrimeDistribution filters={activeFilters} /></Box>
       <Box gridArea="hour" className="hour"><HourlyTrend filters={activeFilters} /></Box>
@@ -73,6 +74,7 @@ function Dashboard({ activeFilters }) {
       <Box gridArea="polar" className="polar"><DescentDistribution filters={activeFilters} /></Box>
       <Box gridArea="age" className="age"><AgeDistribution filters={activeFilters} /></Box>
       {/* <Box gridArea="ethn" className="ethn"><Heatmap filters={activeFilters} /></Box> */}
+      <Box gridArea="ethn" className="ethn">Heatmap</Box>
     </Box>
   )
 }
