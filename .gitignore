@@ -2,3 +2,4 @@
 server/data/*.geojson
 server/data/*.csv
 **/.env
+*.png
