@@ -8,7 +8,10 @@ const fieldMapping = {
     weaponTypeFilter: process.env.WEAPON_DESC_FIELD,
     descentFilter: process.env.VICT_DESCENT_FIELD,
     statusFilter: process.env.STATUS_FIELD,
-    //TODO: Add LON/LAT for map-bound filtering & add age bound filtering for age graph & add weekday filtering
+    ageFilter: process.env.VICT_AGE_FIELD,
+    longitude: process.env.LON_FIELD,
+    latitude: process.env.LAT_FIELD,
+    date: process.env.DATETIME_OCC_FIELD
 };
 
 export default fieldMapping;

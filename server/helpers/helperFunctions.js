@@ -9,12 +9,16 @@ export function isBaseFilter(filters) {
   return Object.entries(filters)
     .filter(([key]) => key !== "yearFilter") // Exclude the 'yearFilter' key
     .every(([key, value]) => {
-      // Check if the value is an array of length one and contains an object with value 'All'
-      return (
-        Array.isArray(value) && value.length === 1 && value[0].value === "All"
-      );
+      if (key === 'ageFilter') {
+        // Check whether the bottomAge property is 0 and the topAge property is Infinity
+        return value.bottomAge === 0 && value.topAge === Infinity;
+      } else {
+        // Check if the value is an array of length one and contains an object with value 'All'
+        return Array.isArray(value) && value.length === 1 && value[0].value === "All";
+      }
     });
 }
+
 
 export function updateCacheGetFilteredData(data, filters) {
   const cacheKey = cache.generateCacheKey(filters);

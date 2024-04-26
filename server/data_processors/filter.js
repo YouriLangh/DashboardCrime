@@ -1,6 +1,13 @@
 import fieldMapping from "./fieldMapping.js";
 import { yearIndex } from "../server.js";
 
+const manualFilters = [
+  "yearFilter",
+  "ageFilter",
+  "locationFilter",
+  "weekdayFilter",
+  "hourOfDayFilter",
+];
 // Function to filter data based on filters
 export function filterData(data, filters) {
   let filteredData;
@@ -25,10 +32,28 @@ export function filterData(data, filters) {
     // If no year filter is provided, use the entire data array
     filteredData = data;
   }
+  if(filters.ageFilter !== undefined && filters.ageFilter.bottomAge && filters.ageFilter.bottomAge && !(filters.ageFilter.bottomAge === 0 && filters.ageFilter.topAge === Infinity)){
+    const mappedField = fieldMapping['ageFilter']
+    const filterObject = filters.ageFilter
+    const bottomAge = filterObject.bottomAge
+    const topAge = filterObject.topAge
+    filteredData = filteredData.filter((record) =>  record[mappedField] >= bottomAge  && record[mappedField] <= topAge)
+  }
+
+  if(filters.weekdayFilter !== undefined && filters.weekdayFilter[0].value !== 'All'){
+    const mappedField = fieldMapping['date']
+    const weekdayObject = filters.weekdayFilter[0]
+    filteredData = filteredData.filter((record)=> record[mappedField].getDay() === weekdayObject.value)
+  }
+  if(filters.hourOfDayFilter !== undefined && filters.hourOfDayFilter[0].value !== 'All'){
+    const mappedField = fieldMapping['date']
+    const hourOfDayObject = filters.hourOfDayFilter[0]
+    filteredData = filteredData.filter((record)=> record[mappedField].getHours() === hourOfDayObject.value)
+  }
 
   // Loop over all fields in filters except for 'year'
   for (const filter in filters) {
-    if (filter === "yearFilter") continue; // Skip the 'year' field
+    if (manualFilters.includes(filter)) continue; // Skip manual filters
 
     // Map the user-friendly field-names of the filters to those matching the field names of the records in the dotenv environment
     const mappedField = fieldMapping[filter];
@@ -36,11 +61,6 @@ export function filterData(data, filters) {
 
     let query;
     if (Array.isArray(activatedFilters) && activatedFilters.length > 1) {
-      console.log(
-        "activated filter with larger length than 1:",
-        activatedFilters
-      );
-      console.log("length", activatedFilters.length);
       const mainCategory = activatedFilters[0].hierarchy;
       const category = mainCategory.split("::")[0];
       query = category;

@@ -12,13 +12,18 @@ function App() {
 
   const theme = useMemo(() => createTheme(themeSettings), [])
   const [allFilters, setAllFilters] = useState([])
+  const baseFilter = { value: 'All'}
   const [activeFilters, setActiveFilters] = useState({
     yearFilter: 2023,
-    areaFilter: [{ value: 'All'}],
-    crimeTypeFilter: [{ value: 'All'}],
-    weaponTypeFilter: [{ value: 'All'}],
-    genderFilter: [{ value: 'All'}],
-    descentFilter: [{ value: 'All'}],
+    areaFilter: [baseFilter],
+    crimeTypeFilter: [baseFilter],
+    weaponTypeFilter: [baseFilter],
+    genderFilter: [baseFilter],
+    descentFilter: [baseFilter],
+    ageFilter:{ bottomAge: 0, topAge: Infinity },
+    weekdayFilter:[baseFilter],
+    locationFilter:[baseFilter],
+    hourOfDayFilter:[baseFilter],
 })
 
   useEffect(() => {
@@ -26,6 +31,7 @@ function App() {
       fetchFilterValues().then((res) => {
         setAllFilters(res)
       });
+      console.log(Infinity)
   }, []);
 
   function updateActiveFilters(filterType, value){
