@@ -9,7 +9,6 @@ function HourlyTrend({ filters }) {
 
     useEffect(() => {
         fetchData(filters, '/api/data/area-chart/hour').then((res) => {
-          console.log(res)
           setData(res.data)
         }
 

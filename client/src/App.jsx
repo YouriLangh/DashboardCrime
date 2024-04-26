@@ -21,10 +21,6 @@ function App() {
     descentFilter: [{ value: 'All'}],
 })
 
-  useEffect(()=> {
-    console.log("changed", activeFilters)
-  },[activeFilters])
-
   useEffect(() => {
       // Fetch filter values when the component mounts
       fetchFilterValues().then((res) => {

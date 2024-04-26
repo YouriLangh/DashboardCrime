@@ -4,12 +4,14 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState, useEffect } from "react";
 
 function FilterDropdown({ items, filterType, onFilterChange }) {
-  const [localItems, setLocalItems] = useState([{ value: "All" }]);
+  const [localItems, setLocalItems] = useState([{value: 'All'}]);
   const [selectedValue, setSelectedValue] = useState("All");
 
   useEffect(() => {
     if (Array.isArray(items) && items.length > 0) {
-      setLocalItems((prevItems) => [...prevItems, ...items]);
+      const baseFilter = {value: 'All'}
+      const combinedArray = [baseFilter, ...items];
+      setLocalItems(combinedArray);
     }
   }, [items]);
 
