@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '@/services/dataService';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, CartesianGrid, Area } from 'recharts';
 import { CircularProgress } from '@mui/material'; // Import CircularProgress
-
+import { renderMonthlyTooltip } from '../CustomTooltips';
 function MonthlyTrend({ filters }) {
     const [data, setData] = useState([]);
     const [isDataEmpty, setIsDataEmpty] = useState(true);
@@ -17,20 +17,6 @@ function MonthlyTrend({ filters }) {
 
     const colors = ["#3573D0", "#FF9F40" ]
     const darkerColors = ["#083D8C", "#FF942B"]
-
-
-    const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800', color: "black" }}>
-                    <p>{label}</p>
-                    <p className='label'>crime: {payload[0].value}</p>
-                </div>
-            );
-        }
-        return null;
-    };
-
 
     return (
         <div className="chart-container" style={{ width: '100%', height: '100%' }}>
@@ -46,7 +32,7 @@ function MonthlyTrend({ filters }) {
                         <YAxis stroke='#fff'/>
                         
                         {/* Tooltip */}
-                        <Tooltip content={<CustomTooltip />}/>
+                        <Tooltip content={renderMonthlyTooltip}/>
                         
                         {/* CartesianGrid */}
                         <CartesianGrid strokeDasharray="2 5" stroke="#979494" />

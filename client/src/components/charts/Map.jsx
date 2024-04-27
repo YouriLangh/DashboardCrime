@@ -3,6 +3,30 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { fetchGeoJson } from "@/services/dataService";
+import { toTitleCase } from "../../helpers/helpers";
+import { MapLegend } from "../MapLegend";
+
+// Define the color scale function based on crime count for the year 2023
+const getColor = (value) => {
+    return value > 8000 ? '#800026' :
+           value > 7000 ? '#BD0026' :
+           value > 6000 ? '#E31A1C' :
+           value > 5000 ? '#FC4E2A' :
+           value > 4000 ? '#FD8D3C' :
+           value > 3000 ? '#FEB24C' :
+           value > 2000 ? '#FED976' :
+                          '#FFEDA0';
+};
+const colors = [
+    { color: '#800026', label: '>8000' },
+    { color: '#BD0026', label: '>7000' },
+    { color: '#E31A1C', label: '>6000' },
+    { color: '#FC4E2A', label: '>5000' },
+    { color: '#FD8D3C', label: '>4000' },
+    { color: '#FEB24C', label: '>3000' },
+    { color: '#FED976', label: '>2000' },
+    { color: '#FFEDA0', label: '<2000' },
+];
 
 function Map() {
     const centerLA = [34.05, -118.49]; // Adjusted longitude to center the map more towards Santa Monica
@@ -20,18 +44,6 @@ function Map() {
         });
     }, []);
 
-    // Define a color scale function based on crime count for the year 2023
-    const getColor = (value) => {
-        return value > 8000 ? '#800026' :
-               value > 7000 ? '#BD0026' :
-               value > 6000 ? '#E31A1C' :
-               value > 5000 ? '#FC4E2A' :
-               value > 4000 ? '#FD8D3C' :
-               value > 3000 ? '#FEB24C' :
-               value > 2000 ? '#FED976' :
-                              '#FFEDA0';
-    };
-
     // Style function for the GeoJSON layer
     const geoJsonStyle = (feature) => ({
         fillColor: getColor(feature.properties[2023]), // Use crime count for the year 2023
@@ -45,12 +57,13 @@ function Map() {
     const onEachFeature = (feature, layer) => {
         if (feature.properties && feature.properties.APREC) {
             const districtName = feature.properties.APREC;
-            layer.bindTooltip(`District: ${districtName}`);
+            const capitalizedName = toTitleCase(districtName);
+            layer.bindTooltip(`District: ${capitalizedName}`);
         }
     };
 
     return (
-        <div style={{ width: '100%', height: '100%', padding: '5px' }}>
+        <div style={{ width: '100%', height: '100%', padding: '5px', position:'relative' }}>
             <MapContainer center={centerLA} zoom={9} scrollWheelZoom={true} style={{ height: '100%' }}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -71,10 +84,13 @@ function Map() {
                     <GeoJSON
                         data={geoJson}
                         style={geoJsonStyle}
-                        // onEachFeature={onEachFeature} // Bind the tooltip to each feature
+                        onEachFeature={onEachFeature} // Bind the tooltip to each feature
                     />
                 )}
             </MapContainer>
+
+            {/* Add the gradient legend */}
+            <MapLegend colors={colors}/>
         </div>
     );
 }

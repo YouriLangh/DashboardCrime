@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchData } from '@/services/dataService';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, CartesianGrid, Area } from 'recharts';
 import { CircularProgress } from '@mui/material'; // Import CircularProgress
-
+import { renderHourlyTooltip } from '../CustomTooltips';
 function HourlyTrend({ filters }) {
     const [data, setData] = useState([]);
 
@@ -15,18 +15,6 @@ function HourlyTrend({ filters }) {
 
     // Check if the data is empty or undefined
     const isDataEmpty = !data || data.length === 0;
-
-    const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800', color: "black" }}>
-                    <p>{`${label % 12 === 0 ? 12 : label % 12}${label < 12 ? 'am' : 'pm'}`}</p>
-                    <p className='label'>crime: {payload[0].value}</p>
-                </div>
-            );
-        }
-        return null;
-    };
 
     const handleChartClick = (event) => {
         // Log the hour data key value when a user clicks on a specific part of the chart
@@ -50,7 +38,7 @@ function HourlyTrend({ filters }) {
                             tickFormatter={(hour) => `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'am' : 'pm'}`}
                         />
                         <YAxis stroke='#fff' />
-                        <Tooltip cursor={{ fill: "#42424F" }} content={<CustomTooltip />} />
+                        <Tooltip cursor={{ fill: "#42424F" }} content={renderHourlyTooltip} />
                         <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
                         <Area type="monotone" dataKey="crimeCount" stroke="#8884d8" fill="#8884d8" />
                     </AreaChart>

@@ -13,7 +13,7 @@ function App() {
   const theme = useMemo(() => createTheme(themeSettings), [])
   const [allFilters, setAllFilters] = useState([])
   const baseFilter = { value: 'All'}
-  const [GeoJson, setGeoJson] = useState()
+
   const [activeFilters, setActiveFilters] = useState({
     yearFilter: 2023,
     areaFilter: [baseFilter],

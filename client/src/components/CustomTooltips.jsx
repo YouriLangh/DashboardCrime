@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 
 export function renderEthnicityTooltip({ active, payload }, data, colors) {
     if (active && payload && payload.length) {
@@ -45,3 +46,28 @@ export function renderEthnicityTooltip({ active, payload }, data, colors) {
 
     return null;
 }
+
+export function renderHourlyTooltip ({ active, payload, label }){
+    if (active && payload && payload.length) {
+        return (
+            <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800', color: "black" }}>
+                <p>{`${label % 12 === 0 ? 12 : label % 12}${label < 12 ? 'am' : 'pm'}`}</p>
+                <p className='label'>crime: {payload[0].value}</p>
+            </div>
+        );
+    }
+    return null;
+}
+
+export function renderMonthlyTooltip ({ active, payload, label }){
+    if (active && payload && payload.length) {
+        return (
+            <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800', color: "black" }}>
+                <p>{label}</p>
+                <p className='label'>crime: {payload[0].value}</p>
+            </div>
+        );
+    }
+    return null;
+}
+
