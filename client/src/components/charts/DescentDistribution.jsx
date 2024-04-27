@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { CircularProgress } from "@mui/material"; // Import CircularProgress
+import { Box, CircularProgress } from "@mui/material"; // Import CircularProgress
 import { preprocessEthnicityData } from "@/helpers/helpers";
 import { renderEthnicityTooltip }  from "@/components/CustomTooltips";
 
@@ -48,7 +48,7 @@ function DescentDistribution({ filters }) {
     };
 
 return (
-    <div style={{ width: "100%", height: "100%" }}>
+    <div className="grid-cell" style={{ width: "100%", height: "100%" }}>
         {isDataEmpty ? (
     !alreadyRendered ? (
         <CircularProgress />
@@ -56,7 +56,9 @@ return (
         <p>No data matches this description</p>
     )
 ) : (
-            <ResponsiveContainer width="100%" height="100%">
+    <Box className='title-container'>
+    <Box className="title"><strong>Victim Ethnicity Distribution</strong></Box>
+            <ResponsiveContainer className={"chart-container"} width="100%" height="90%">
                 <PieChart>
                     {/* Tooltip with custom content function */}
                     <Tooltip content={(props) => renderEthnicityTooltip(props, data, colors)} />
@@ -81,6 +83,7 @@ return (
 
                 </PieChart>
             </ResponsiveContainer>
+            </Box>
         )}
     </div>
 );

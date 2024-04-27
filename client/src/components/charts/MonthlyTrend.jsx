@@ -15,7 +15,7 @@ function MonthlyTrend({ filters }) {
         });
     }, [filters]);
 
-    const colors = ["#3573D0", "#FF9F40" ]
+    const colors = ["#80AAE9", "#FF9F40" ]
     const darkerColors = ["#083D8C", "#FF942B"]
 
     return (

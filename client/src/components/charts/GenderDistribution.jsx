@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { CircularProgress } from "@mui/material"; // Import CircularProgress
+import { Box, CircularProgress } from "@mui/material"; // Import CircularProgress
 
 // Define the colors for each pie slice
 const colors = ["#EBCB8B", "#D08770", "#B48EAD"];
@@ -43,7 +43,7 @@ function GenderDistribution({ filters }) {
     };
 
     return (
-        <div className="transform" style={{ width: "100%", height: "100%" }}>
+        <div className="grid-cell" style={{ width: "100%", height: "100%" }}>
             {isDataEmpty ? (
     !alreadyRendered ? (
         <CircularProgress />
@@ -51,7 +51,9 @@ function GenderDistribution({ filters }) {
         <p>No data matches this description</p>
     )
 ) : (
-                <ResponsiveContainer width="100%" height="100%">
+    <Box className='title-container'>
+        <Box className="title"><strong>Victim Gender Distribution</strong></Box>
+                <ResponsiveContainer className={"chart-container"} width="100%" height="100%">
                     <PieChart>
                         {/* Tooltip for displaying additional information */}
                         <Tooltip contentStyle={{ fontSize: "14px", fontWeight: '800' }} />
@@ -75,6 +77,7 @@ function GenderDistribution({ filters }) {
                         <Legend layout="vertical" align="right" verticalAlign="middle" formatter={(value) => <strong>{value}</strong>} />
                     </PieChart>
                 </ResponsiveContainer>
+                </Box>
             )}
         </div>
     );
