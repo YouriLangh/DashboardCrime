@@ -2,9 +2,10 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { Box, CircularProgress } from "@mui/material"; // Import CircularProgress
+import { Box } from "@mui/material"; // Import CircularProgress
 import { preprocessEthnicityData } from "@/helpers/helpers";
 import { renderEthnicityTooltip }  from "@/components/CustomTooltips";
+import  CustomProgress  from '@/components/CustomProgress'
 
 
 
@@ -51,7 +52,7 @@ return (
     <div className="grid-cell" style={{ width: "100%", height: "100%" }}>
         {isDataEmpty ? (
     !alreadyRendered ? (
-        <CircularProgress />
+        <CustomProgress />
     ) : (
         <p>No data matches this description</p>
     )

@@ -11,7 +11,8 @@ import {
   CartesianGrid,
   Cell,
 } from "recharts";
-import { CircularProgress } from "@mui/material"; // Import CircularProgress
+import { Box } from "@mui/material";
+import  CustomProgress  from '@/components/CustomProgress'
 
 function WeeklyTrend({ filters }) {
   const [data, setData] = useState([]);
@@ -29,13 +30,15 @@ function WeeklyTrend({ filters }) {
   const isDataEmpty = !data || data.length === 0;
 
   return (
-    <div className="transform" style={{ width: "100%", height: "100%" }}>
+    <div className="transform grid-cell" style={{ width: "100%", height: "100%" }}>
       {isDataEmpty ? (
-        <CircularProgress />
+        <CustomProgress />
       ) : (
+        <Box className='title-container'>
+        <Box className="title"><strong>Weekly Crime Trends</strong></Box>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
-            <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
+          <CartesianGrid strokeDasharray="2 5" stroke="#979494" />
             <XAxis
               dataKey="name"
               tickFormatter={(day) => day.slice(0, 3)}
@@ -61,6 +64,7 @@ function WeeklyTrend({ filters }) {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
+        </Box>
       )}
     </div>
   );

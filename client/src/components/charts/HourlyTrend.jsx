@@ -2,8 +2,9 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '@/services/dataService';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Tooltip, CartesianGrid, Area } from 'recharts';
-import { CircularProgress } from '@mui/material'; // Import CircularProgress
+import { Box } from '@mui/material'; 
 import { renderHourlyTooltip } from '../CustomTooltips';
+import  CustomProgress  from '@/components/CustomProgress'
 function HourlyTrend({ filters }) {
     const [data, setData] = useState([]);
 
@@ -25,10 +26,12 @@ function HourlyTrend({ filters }) {
 
     // Conditionally render loading icon or area chart
     return (
-        <div className="transform" style={{ width: '100%', height: '100%' }}>
+        <div className="transform grid-cell" style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
-                <CircularProgress />
+                <CustomProgress />
             ) : (
+                <Box className='title-container'>
+        <Box className="title"><strong>Hourly Crime Trends</strong></Box>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={data} onClick={handleChartClick}>
                         <XAxis
@@ -39,10 +42,15 @@ function HourlyTrend({ filters }) {
                         />
                         <YAxis stroke='#fff' />
                         <Tooltip cursor={{ fill: "#42424F" }} content={renderHourlyTooltip} />
-                        <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
-                        <Area type="monotone" dataKey="crimeCount" stroke="#8884d8" fill="#8884d8" />
+                        <CartesianGrid strokeDasharray="2 5" stroke="#979494" />
+                        <Area type="monotone"
+                        stroke='#8884d8'  // Specify the stroke color
+                        strokeWidth={2}
+                        dot={{ stroke: '#8884d8', fill: '#8884d8' , strokeWidth: 2, r: 3 }} // Customize the dot style
+                         dataKey="crimeCount" fill="#8884d8" />
                     </AreaChart>
                 </ResponsiveContainer>
+                </Box>
             )}
         </div>
     );

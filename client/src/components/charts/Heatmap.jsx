@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import ApexCharts from 'react-apexcharts';
 import { fetchData } from '@/services/dataService';
-import { CircularProgress } from '@mui/material';
+import  CustomProgress  from '@/components/CustomProgress'
 
 function Heatmap({ filters }) {
     const [heatmapData, setHeatmapData] = useState(null);
@@ -93,7 +93,7 @@ function Heatmap({ filters }) {
     return (
         <div className='heatmap' style={{ width: '100%', height: '100%', overflowX: 'hidden', color: 'black'}}>
             {isDataEmpty ? (
-                <CircularProgress />
+                <CustomProgress />
             ) : (
                 <ApexCharts
                     options={heatmapOptions}

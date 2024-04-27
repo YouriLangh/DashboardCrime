@@ -11,8 +11,10 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import  CustomProgress  from '@/components/CustomProgress'
+
 
 function CrimeDistribution({ filters, filterCallback }) {
   const [data, setData] = useState([]);
@@ -98,7 +100,7 @@ function CrimeDistribution({ filters, filterCallback }) {
     >
       {isDataEmpty ? (
         !alreadyRendered ? (
-          <CircularProgress />
+          <CustomProgress />
         ) : (
           <p>No data matches this description</p>
         )
@@ -107,7 +109,7 @@ function CrimeDistribution({ filters, filterCallback }) {
         <Box className="title crime-dist"><strong>Crime Distribution Overview</strong></Box>
         <ResponsiveContainer width="100%" height={`${100 * size}%`}>
           <BarChart data={data} layout="vertical" onClick={handleClick}>
-            <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
+          <CartesianGrid strokeDasharray="2 5" stroke="#979494" />
             <XAxis type="number" orientation="top" stroke="#fff" />
             <YAxis dataKey="name" type="category" width={0} stroke="#fff" />
             <Tooltip

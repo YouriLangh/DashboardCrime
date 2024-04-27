@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import { fetchData } from '@/services/dataService';
 import { Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-import { CircularProgress } from '@mui/material'; // Import CircularProgress
-
+import { Box } from '@mui/material'; // Import CircularProgress
+import  CustomProgress  from '@/components/CustomProgress'
 function AgeDistribution({ filters }) {
     const [data, setData] = useState([]);
 
@@ -20,11 +20,14 @@ function AgeDistribution({ filters }) {
     const isDataEmpty = !data || data.length === 0;
 
     return (
-      <div className='chart-container' style={{ width: '100%', height: '100%' }}>
+
+      <div className='chart-container grid-cell' style={{ width: '100%', height: '100%' }}>
             {isDataEmpty ? (
                 // Display a CircularProgress loading icon if there is no data
-                <CircularProgress />
+                <CustomProgress />
             ) : (
+                <Box className='title-container'>
+                <Box className="title"><strong>Victim Age Distribution</strong></Box>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={data}>
                 <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
@@ -49,6 +52,7 @@ function AgeDistribution({ filters }) {
                         </Bar>
                 </BarChart>
                 </ResponsiveContainer>
+                </Box>
             )}
         </div>
     );

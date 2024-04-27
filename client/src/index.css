@@ -139,15 +139,6 @@ body,
 .heatmap{
   color: white;
   padding: 10px;
-  /* For modern browsers (Chrome, Edge, Safari) */
-  &::-webkit-scrollbar {
-      width: 0; /* Set the width to 0 to hide the scrollbar */
-      height: 0; /* For horizontal scrollbar, set the height to 0 */
-  }
-
-  /* For Firefox */
-
-  scrollbar-width: none; /* Hide scrollbar in Firefox */
 }
 
 .grid-cell{
