@@ -1,6 +1,6 @@
 import express from "express";
 import { data, yearlyStats } from "../server.js";
-
+import { loadGeoJson } from "../data_loaders/geojson_loader.js";
 import { createYearlyDictionary } from "../data_processors/yearlyDictionaryGenerator.js";
 import { generateGeneralStatDictionary } from "../data_processors/generalDataDictionaryGenerator.js";
 import { createHourlyDictionary } from "../data_processors/hourDictionary.js";
@@ -161,5 +161,19 @@ router.post("/heatmap", async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 });
+
+router.get("/geojson", async (req, res) => {
+  try {
+    const startTime = Date.now();
+    const geojson = loadGeoJson()
+    // Record the start time
+    const endTime = Date.now();
+    console.log("GeoJSON query processing finished in: ", endTime - startTime, "ms");
+    res.status(200).json(geojson);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
 
 export default router;

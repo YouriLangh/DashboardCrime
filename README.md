@@ -17,14 +17,14 @@ The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3O
 ### Project Structure
 #### Python Notebook
 1. Data collection 
-2. Pre-processing via notebooks
+2. Pre-processing via notebooks & GeoJson conversion
 3. Explorative Data Analysis
 #### React
-4. Loading preprocessed data into memory on server side
-5. Optimized server-side filtering technique
-6. Precalculating various statistics based on heuristics and storing them in-memory
-7. Use caching to avoid filtering data multiple times if the same filters have been selected recently.
-8. Client async calls to server for data.
+1. Loading preprocessed data into memory on server side
+2. Optimized server-side filtering technique
+3. Precalculating various statistics based on heuristics and storing them in-memory
+4. Use caching to avoid filtering data multiple times if the same filters have been selected recently.
+5. Client async calls to server for data.
 
 ### Notable libraries
 - GEOJSON for visualizing the districts of Los Angeles and create a heatmap
@@ -45,6 +45,7 @@ The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3O
       - Instances that still contained 'null' values for victim description columns after filtering out victimless crimes were adjusted to their appropriate 'Unknown' values.
     - All the columns with difficult labels or descriptions were mapped (manually) to more readable labels with hierarchy. E.g. "THEFT OF IDENTITY" was mapped to "Theft::Identity Theft". Similarly, the 'C' ethnicity is mapped to 'Asian::Chinese'
       - For the Status of the case itself, no information was given about the meaning of these so we researched possible meanings.
+    - Since the GEOJSON data was nowhere to be found, I had to use a different format and convert it manually
 3. We performed a simple EDA to observe the distribution of various features so that we could design the mid fidelity prototype with powerful visualizations based on knowledge of the data.
 
 4. We load the data in memory as using a database would slow down the speed of processing queries. Additionally this makes the project self-sustaining so if the database were to be down, we would not be affected. We note that this is only possible since our data becomes managably large after processing (~2M instances). 

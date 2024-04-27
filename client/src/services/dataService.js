@@ -17,3 +17,17 @@ export async function fetchData(filters, link) {
         return {};
     }
 }
+
+export async function fetchGeoJson(){
+    try{
+        let data;
+        await axios.get(apiUrl + '/api/data/geojson').then((res) =>{
+            data = res.data
+        })
+        return data
+    } catch (error) {
+        console.error('Error fetching geojson:', error);
+        // Handle the error, e.g., by returning an empty object or array
+        return {};
+}
+}
