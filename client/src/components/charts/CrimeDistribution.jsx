@@ -3,14 +3,21 @@ import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, BarChart, Bar, Cell, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { CircularProgress } from "@mui/material";
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+
 
 function CrimeDistribution({ filters }) {
   const [data, setData] = useState([]);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [size, setSize] = useState(1)
 
   useEffect(() => {
     fetchData(filters, "/api/data/bar-chart/crime").then((res) => {
       setData(res.data);
+      if(res.data && res.data.length > 10){
+        setSize(res.data.length / 10)
+      } else setSize(1)
+
     });
   }, [filters]);
 
@@ -44,9 +51,11 @@ function CrimeDistribution({ filters }) {
   // Handle scroll event in the container
   const handleScroll = (e) => {
     const container = e.target;
-    const isAtBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
+    // Allow a small threshold to account for discrepancies when checking if the user is at the bottom
+    const threshold = 80; // Adjust as necessary
+    const isAtBottom = (container.scrollHeight - container.scrollTop - container.clientHeight) < threshold;
     setIsAtBottom(isAtBottom);
-  };
+};
 
   return (
     <div
@@ -62,7 +71,7 @@ function CrimeDistribution({ filters }) {
       {isDataEmpty ? (
         <CircularProgress />
       ) : (
-        <ResponsiveContainer width="100%" height="300%">
+        <ResponsiveContainer width="100%" height={`${100 * size}%`}>
           <BarChart data={data} layout="vertical">
             <CartesianGrid strokeDasharray="2 5" stroke="#42424F" />
             <XAxis type="number" orientation="top" stroke="#fff" />
@@ -95,19 +104,19 @@ function CrimeDistribution({ filters }) {
 
       {/* Sticky arrow div */}
       <div
-        className={`arrow-container ${isAtBottom ? "bottom" : "sticky-bottom"}`}
-        style={{
-          position: isAtBottom ? "static" : "sticky",
-          bottom: 0,
-          width: "100%",
-          textAlign: "center",
-          backgroundColor: "transparent",
-          visibility: isAtBottom ? "hidden" : "visible",
-          padding: "10px",
-        }}
-      >
-        <span style={{ fontSize: "24px" }}>⬇️</span>
-      </div>
+            className={`arrow-container ${isAtBottom ? "bottom" : "sticky-bottom"}`}
+            style={{
+                position: isAtBottom ? "absolute" : "sticky",
+                bottom: 0,
+                width: "100%",
+                textAlign: "center",
+                backgroundColor: "transparent",
+                opacity: isAtBottom || size === 1 ? 0 : 1,
+                padding: "10px",
+            }}
+        >
+            <span style={{ fontSize: "24px" }}><KeyboardDoubleArrowDownIcon/></span>
+        </div>
     </div>
   );
 }

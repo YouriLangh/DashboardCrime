@@ -1,113 +1,114 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
-import { PolarArea } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    RadialLinearScale,
-    ArcElement,
-    Tooltip,
-    Legend,
-} from 'chart.js';
-import { fetchData } from '@/services/dataService';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend, ChartDataLabels);
+import { useEffect, useState } from "react";
+import { fetchData } from "@/services/dataService";
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import { CircularProgress } from "@mui/material"; // Import CircularProgress
+import { preprocessEthnicityData } from "@/helpers/helpers";
+// Define the colors for each pie slice
+const colors = ["#5E81B5", "#8CB16C", "#D8795C", "#B681AC", "#6FB6CA", "#BF616A"];
 
 function DescentDistribution({ filters }) {
-    // Initialize state to hold data
-    const [data, setData] = useState({
-        labels: [],
-        datasets: [
-            {
-                label: 'Ethnic Descent Distribution',
-                data: [],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)',
-                    // Add more colors as needed
-                ],
-                borderWidth: 1,
-            },
-        ],
-    });
+    const [data, setData] = useState([]);
 
-    // Options object for the PolarArea chart
-    const options = {
-        responsive: true,
-    maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false, // Remove the legend
-            },
-            datalabels: {
-                // Customize the data labels
-                formatter: function(value, context) {
-                    // Calculate the total sum of values
-                    const total = context.dataset.data.reduce((sum, value) => sum + value, 0);
-                    // Calculate the percentage
-                    const percentage = (value / total * 100).toFixed(2);
-                    // Return the percentage with a "%" sign
-                    return `${percentage}%`;
-                },
-                color: '#FFFFFF', // Set the color of the data labels
-            },
-        },
-        // Customize the radial linear scale
-        scales: {
-            r: {
-                grid: {
-                    color: '#FFFFFF', // Set the color of the polar lines to white
-                },
-                ticks: {
-                    display: false, // Hide radial ticks
-                },
-            },
-        },
-    };
-
-    // Fetch data and create the chart
     useEffect(() => {
-        fetchData(filters, '/api/data/polar-chart/descent')
-            .then((res) => {
-                const descentData = res.data;
-
-                // Transform the data to fit the PolarArea component
-                const labels = descentData.map(item => item.name);
-                const values = descentData.map(item => item.value);
-
-                // Update the data state
-                setData({
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: 'Ethnic Descent Distribution',
-                            data: values,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.5)',
-                                'rgba(54, 162, 235, 0.5)',
-                                'rgba(255, 206, 86, 0.5)',
-                                'rgba(75, 192, 192, 0.5)',
-                                'rgba(153, 102, 255, 0.5)',
-                                'rgba(255, 159, 64, 0.5)',
-                                // Add more colors as needed
-                            ],
-                            borderWidth: 1,
-                        },
-                    ],
-                });
-            });
+        // Fetch data from the API endpoint that provides ethnicity data
+        fetchData(filters, "/api/data/polar-chart/descent").then((res) => {
+            console.log(res)
+            setData(preprocessEthnicityData(res.data));
+        });
     }, [filters]);
 
-    // Return the PolarArea component with the data and options
-    return (
-        <div style={{ width: '100%', height: '100%', padding: '5px' }}>
-            <PolarArea  style={{ width: '100%', height: '100%'}} data={data} options={options} />
-        </div>
-    );
+    // Check if the data is empty or undefined
+    const isDataEmpty = !data || data.length === 0;
+
+    // Custom label function to display percentages centered in the pie slice
+    const renderLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+        // Calculate the position for the label
+        const radius = (innerRadius + outerRadius) / 2;
+        const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+        const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+
+        // Return the SVG text element with the calculated position and percentage value
+        return (
+            <text
+                x={x}
+                y={y}
+                fill="#000" // Text color 
+                textAnchor="middle" // Center the text horizontally
+                dominantBaseline="central" // Center the text vertically
+                fontWeight={800}
+            >
+                {`${(percent * 100).toFixed(2)}%`}
+            </text>
+        );
+    };
+
+// Custom tooltip function
+const renderTooltipContent = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+        const { name, value, payload: payloadData } = payload[0];
+
+        // Check if the slice is 'Others' and has details
+        if (name === 'Others' && payloadData.details) {
+            // Return the custom tooltip content
+            return (
+                <div className="custom-tooltip" style={{ backgroundColor: 'white', color: 'black', padding: '8px', borderRadius: '4px' }}>
+                    <p><strong>{name}: {value}</strong></p>
+                    <hr></hr>
+                    {/* List each detail as a separate paragraph */}
+                    {payloadData.details.map((detail, index) => (
+                        <p key={index} style={{ margin: 0 }}><strong>{detail}</strong></p>
+                    ))}
+                </div>
+            );
+        } else {
+            // Default tooltip content for other slices
+            return (
+                <div className="custom-tooltip" style={{ backgroundColor: 'white', color: 'black', padding: '8px', borderRadius: '4px' }}>
+                    <p><strong>{`${name}: ${value}`}</strong></p>
+                </div>
+            );
+        }
+    }
+
+    return null;
+};
+
+
+return (
+    <div style={{ width: "100%", height: "100%" }}>
+        {isDataEmpty ? (
+            // Display a CircularProgress loading icon if there is no data
+            <CircularProgress />
+        ) : (
+            <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                    {/* Tooltip with custom content function */}
+                    <Tooltip content={renderTooltipContent} />
+
+                    {/* Pie component */}
+                    <Pie
+                        data={data}
+                        dataKey="value"
+                        nameKey="name"
+                        fill="#8884d8"
+                        label={renderLabel} // Use the custom renderLabel function
+                        labelLine={false} // Disable label lines
+                    >
+                        {/* Map each data entry to a Cell component with the corresponding color */}
+                        {data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+                        ))}
+                    </Pie>
+
+                    {/* Legend for the pie chart */}
+                    <Legend layout="vertical" align="right" verticalAlign="middle" />
+                </PieChart>
+            </ResponsiveContainer>
+        )}
+    </div>
+);
+
 }
 
 export default DescentDistribution;

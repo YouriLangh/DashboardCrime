@@ -54,7 +54,7 @@ export function generateGeneralStatDictionary(filteredData) {
         }
 
         // Check for weapon presence
-        if (row[weaponDescField] !== "None") {
+        if (row[weaponDescField] !== "No Weapon") {
             statDictionary.weapon_presence += 1;
         }
 
