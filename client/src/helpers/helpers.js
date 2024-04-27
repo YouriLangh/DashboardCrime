@@ -41,3 +41,8 @@ export function preprocessEthnicityData(data) {
 export const toTitleCase = (str) => {
     return str.replace(/\b\w/g, (char) => char.toUpperCase());
 };
+
+export function myFilterSelected(filters, label){
+    const activeFilters = filters[label]
+    return Array.isArray(activeFilters) && ((activeFilters.length === 1) && activeFilters[0].value !== 'All')
+}

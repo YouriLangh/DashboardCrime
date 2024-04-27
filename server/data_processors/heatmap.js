@@ -8,18 +8,21 @@ export function createHeatMapData(data) {
     // Process each row in the input data
     data.forEach((row) => {
         // Extract the descent (ethnicity) and crime fields from the row
-        const descent = row[process.env.VICT_DESCENT_FIELD];
+        let descent = row[process.env.VICT_DESCENT_FIELD];
         let crime = row[process.env.CRM_CD_DESC_FIELD];
 
         // Check if descent and crime are valid
         if (descent && crime) {
+            if(descent.includes('::')){
+                descent = descent.split('::')[0]
+            }
             // Initialize the inner dictionary if necessary
             if (!descentCrimeDictionary[descent]) {
                 descentCrimeDictionary[descent] = {};
             }
             // Simplify crime name by removing prefix (if present)
             if (crime.includes("::")) {
-                crime = crime.split("::")[1];
+                crime = crime.split("::")[0];
             }
             // Increment the count for the crime under the specific ethnicity
             descentCrimeDictionary[descent][crime] =

@@ -9,10 +9,11 @@ const colors = ["#EBCB8B", "#D08770", "#B48EAD"];
 
 function GenderDistribution({ filters }) {
     const [data, setData] = useState([]);
-
+    const [alreadyRendered, setAlreadyRendered] = useState(false)
     useEffect(() => {
         fetchData(filters, "/api/data/pie-chart/gender").then((res) => {
             setData(res.data);
+            setAlreadyRendered(true)
         });
     }, [filters]);
 
@@ -44,9 +45,12 @@ function GenderDistribution({ filters }) {
     return (
         <div className="transform" style={{ width: "100%", height: "100%" }}>
             {isDataEmpty ? (
-                // Display a CircularProgress loading icon if there is no data
-                <CircularProgress />
-            ) : (
+    !alreadyRendered ? (
+        <CircularProgress />
+    ) : (
+        <p>No data matches this description</p>
+    )
+) : (
                 <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         {/* Tooltip for displaying additional information */}
@@ -68,7 +72,7 @@ function GenderDistribution({ filters }) {
                         </Pie>
 
                         {/* Legend for the pie chart */}
-                        <Legend layout="vertical" align="right" verticalAlign="middle"/>
+                        <Legend layout="vertical" align="right" verticalAlign="middle" formatter={(value) => <strong>{value}</strong>} />
                     </PieChart>
                 </ResponsiveContainer>
             )}

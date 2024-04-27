@@ -17,7 +17,7 @@ export function MapLegend({ colors }) {
             <div style={{ position: 'absolute', zIndex: 1000, top: '10px', right: '10px', padding: '10px', background: '#28282F', borderRadius: '8px', boxShadow: '5px 10px 5px rgba(0, 0, 0, 0.2)' }}>
                 {/* Close icon to hide the legend */}
                 <CloseIcon onClick={handleClick} style={{ position: 'absolute', right: '5px', cursor: 'pointer' }} />
-                <h4 style={{ marginTop: '28px', color: '#FFFFFF' }}>Crime Levels</h4>
+                <h4 style={{ margin: '30px 0 10px 0', color: '#FFFFFF' }}>Crime Levels</h4>
                 {/* Display the color scale */}
                 {colors.map((item, index) => (
                     <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
@@ -29,7 +29,7 @@ export function MapLegend({ colors }) {
                 ))}
             </div>
         ) : <div  onClick={handleClick} style={{ position: 'absolute', zIndex: 1000, top: '10px', right: '10px', padding: '10px', background: '#28282F', borderRadius: '8px', boxShadow: '5px 10px 5px rgba(0, 0, 0, 0.2)' }}>
-            <span style={{cursor:"pointer", margin:"0 0"}}>Show Legend</span>
+            <span style={{cursor:"pointer", margin:"0 0"}}><strong>Show Legend</strong></span>
         </div>
     );
 }

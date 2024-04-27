@@ -27,13 +27,13 @@ function GeneralStatisticsBar({ activeFilters }) {
   }
   return (
    <Box className='general-stats-bar'>
-    <GeneralStatBox value={isDataFetched ? formatIncidents(statistics.incidents) : "Nothing Fetched"} text={"Incidents"} isLightColor={true}/>
-    <GeneralStatBox value={isDataFetched ? statistics.hotspot : "Nothing Fetched"} text={"#1 Crime Hotspot"} isLightColor={false}/>
-    <GeneralStatBox value={isDataFetched ? statistics.average_age : "Nothing Fetched"} text={"Average Victim Age"} isLightColor={true}/>
-    <GeneralStatBox value={isDataFetched ? statistics.crime : "Nothing Fetched"} text={"Most Common Crime"} isLightColor={false}/>
-    <GeneralStatBox value={isDataFetched ? statistics.active_arrests : "Nothing Fetched"} text={"Perpetrators Arrested"} isLightColor={true} measure={"%"}/>
-    <GeneralStatBox value={isDataFetched ? statistics.weapon_presence : "Nothing Fetched"} text={"Presence of weapon"} isLightColor={false} measure={"%"}/>
-    <GeneralStatBox value={isDataFetched ? statistics.weapon : "Nothing Fetched"} text={"Most used weapon"} isLightColor={true}/>
+    <GeneralStatBox measure={''} value={isDataFetched ? formatIncidents(statistics.incidents) : "Fetching data..."} text={"Incidents"} isLightColor={true}/>
+    <GeneralStatBox measure={''} value={isDataFetched ? statistics.hotspot : "Fetching data..."} text={"#1 Crime Hotspot"} isLightColor={false}/>
+    <GeneralStatBox measure={''} value={isDataFetched ? statistics.average_age : "Fetching data..."} text={"Average Victim Age"} isLightColor={true}/>
+    <GeneralStatBox measure={''} value={isDataFetched ? statistics.crime : "Fetching data..."} text={"Most Common Crime"} isLightColor={false}/>
+    <GeneralStatBox value={isDataFetched ? statistics.active_arrests : "Fetching data..."} text={"Perpetrators Arrested"} isLightColor={true} measure={"%"}/>
+    <GeneralStatBox value={isDataFetched ? statistics.weapon_presence : "Fetching data..."} text={"Presence of weapon"} isLightColor={false} measure={"%"}/>
+    <GeneralStatBox measure={''} value={isDataFetched ? statistics.weapon : "Fetching data..."} text={"Most used weapon"} isLightColor={true}/>
    </Box>
   )
 }

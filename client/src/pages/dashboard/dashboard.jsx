@@ -73,8 +73,8 @@ function Dashboard({ activeFilters }) {
       <Box gridArea="pie" className="pie"><GenderDistribution filters={activeFilters} /></Box>
       <Box gridArea="polar" className="polar"><DescentDistribution filters={activeFilters} /></Box>
       <Box gridArea="age" className="age"><AgeDistribution filters={activeFilters} /></Box>
-      {/* <Box gridArea="ethn" className="ethn"><Heatmap filters={activeFilters} /></Box> */}
-      <Box gridArea="ethn" className="ethn">Heatmap</Box>
+      <Box gridArea="ethn" className="ethn"><Heatmap filters={activeFilters} /></Box>
+      {/* <Box gridArea="ethn" className="ethn">Heatmap</Box> */}
     </Box>
   )
 }

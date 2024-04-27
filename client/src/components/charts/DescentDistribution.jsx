@@ -13,11 +13,12 @@ const colors = ["#5E81B5", "#8CB16C", "#D8795C", "#B681AC", "#6FB6CA", "#BF616A"
 
 function DescentDistribution({ filters }) {
     const [data, setData] = useState([]);
-
+    const [alreadyRendered, setAlreadyRendered] = useState(false)
     useEffect(() => {
         // Fetch data from the API endpoint that provides ethnicity data
         fetchData(filters, "/api/data/polar-chart/descent").then((res) => {
             setData(preprocessEthnicityData(res.data));
+            setAlreadyRendered(true)
         });
     }, [filters]);
 
@@ -49,9 +50,12 @@ function DescentDistribution({ filters }) {
 return (
     <div style={{ width: "100%", height: "100%" }}>
         {isDataEmpty ? (
-            // Display a CircularProgress loading icon if there is no data
-            <CircularProgress />
-        ) : (
+    !alreadyRendered ? (
+        <CircularProgress />
+    ) : (
+        <p>No data matches this description</p>
+    )
+) : (
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     {/* Tooltip with custom content function */}
@@ -73,7 +77,8 @@ return (
                     </Pie>
 
                     {/* Legend for the pie chart */}
-                    <Legend layout="vertical" align="right" verticalAlign="middle" />
+                    <Legend layout="vertical" align="right" verticalAlign="middle" formatter={(value) => <strong>{value}</strong>} />
+
                 </PieChart>
             </ResponsiveContainer>
         )}
