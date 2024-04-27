@@ -59,15 +59,28 @@ export function renderHourlyTooltip ({ active, payload, label }){
     return null;
 }
 
-export function renderMonthlyTooltip ({ active, payload, label }){
+export function renderMonthlyTooltip({ active, payload, label, currentYear, comparisonYear }) {
     if (active && payload && payload.length) {
         return (
-            <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800', color: "black" }}>
-                <p>{label}</p>
-                <p className='label'>crime: {payload[0].value}</p>
+            <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800' }}>
+                {/* Label text is set to black */}
+                <p style={{ color: 'black' }}>{label}</p>
+                {/* Display the values for each area with text color matching the area color */}
+                {payload.map((entry, index) => (
+                    <p
+                        key={index}
+                        className='label'
+                        style={{ color: index === 0 ? '#80AAE9' : '#FF9F40' }} // Set text color based on the area
+                    >
+                        {/* Display the year for each data entry */}
+                        {index === 0 ? currentYear : comparisonYear}: {entry.value}
+                    </p>
+                ))}
             </div>
         );
     }
     return null;
 }
+
+
 

@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export function createYearlyDictionary(filteredData) {
+export function createYearlyData(filteredData) {
     // Array of month names in three-letter representation
     const monthNames = [
         "January", "February", "March", "April", "May", "June",

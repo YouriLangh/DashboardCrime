@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import { Box, CircularProgress } from "@mui/material"; // Import CircularProgress
-
+import { Box } from "@mui/material"; // Import CircularProgress
+import  CustomProgress  from '@/components/CustomProgress'
 // Define the colors for each pie slice
 const colors = ["#EBCB8B", "#D08770", "#B48EAD"];
 
@@ -46,7 +46,7 @@ function GenderDistribution({ filters }) {
         <div className="grid-cell" style={{ width: "100%", height: "100%" }}>
             {isDataEmpty ? (
     !alreadyRendered ? (
-        <CircularProgress />
+        <CustomProgress />
     ) : (
         <p>No data matches this description</p>
     )

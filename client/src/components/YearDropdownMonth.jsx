@@ -5,29 +5,27 @@ import MenuItem from "@mui/material/MenuItem";
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 
-function YearDropdown({
+function YearDropdownMonth({
   text,
   smallestYear,
   largestYear,
-  filterType,
   onFilterChange,
 }) {
   const [selectedYear, setSelectedYear] = useState(
-    new Date().getFullYear() - 1
+    2022
   );
   const [allYears, setAllYears] = useState();
 
   useEffect(() => {
     if (smallestYear && largestYear) {
       const years = generateYearArray(smallestYear, largestYear);
-
       setAllYears(years);
     }
   }, [largestYear, smallestYear]);
 
-  function handleFilterChange(filterType, value) {
-      onFilterChange(filterType, value);
+  function handleFilterChange(value) {
     setSelectedYear(value);
+    onFilterChange(value);
   }
 
   function generateYearArray(smallestYear, largestYear) {
@@ -39,22 +37,44 @@ function YearDropdown({
   }
 
   return (
-    <Box className='dropdown-container'>
+    <Box className='dropdown-container-month'>
       <Typography variant="h5">{text}</Typography>
       <Select
-        className="dropdown-filters"
-        sx={{color: "black", fontWeight:'600'}}
+      sx={{
+        color: "white", fontWeight:'600',
+      }}
+      inputProps={{
+
+        MenuProps: {
+            MenuListProps: {
+                sx: {
+                    backgroundColor: 'rgba(50, 51, 60, 1)',
+                }
+            }
+        },
+    }}
+        className="dropdown-filters-month"
         value={selectedYear} // Controlled value
-        onChange={(e) => handleFilterChange(filterType, e.target.value)}
+        onChange={(e) => handleFilterChange(e.target.value)}
       >
         {allYears ? (
           allYears.map((item, index) => (
-            <MenuItem sx={{color: "black", fontSize:'15px' ,fontWeight:'600'}} key={index} className="dropdown-option" value={item}>
+            <MenuItem sx={{color: "white", backgroundColor:"rgba(50, 51, 60, 0.5)", fontSize:'15px' ,fontWeight:'600',
+            '&:hover': {
+                backgroundColor: '#5C5F72',
+             },
+            
+            }} key={index} className="dropdown-option-month" value={item}>
               {item}
             </MenuItem>
           ))
         ) : (
-          <MenuItem sx={{color: "black", fontSize:'15px' ,fontWeight:'600'}} className="dropdown-option" value={selectedYear}>
+          <MenuItem sx={{color: "white", backgroundColor:"rgba(50, 51, 60, 0.5)", fontSize:'15px' ,fontWeight:'600',
+          '&:hover': {
+            backgroundColor: '#5C5F72',
+         },
+          
+          }} className="dropdown-option-month" value={selectedYear}>
             {selectedYear}
           </MenuItem>
         )}
@@ -63,4 +83,4 @@ function YearDropdown({
   );
 }
 
-export default YearDropdown;
+export default YearDropdownMonth;

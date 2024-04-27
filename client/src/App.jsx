@@ -32,6 +32,7 @@ function App() {
       fetchFilterValues().then((res) => {
         setAllFilters(res)
       });
+
   }, []);
 
   function updateActiveFilters(filterType, value){
@@ -50,7 +51,7 @@ function App() {
           <GeneralStatisticsBar activeFilters={activeFilters}/>
           <FiltersBar filters={allFilters} filterCallback={updateActiveFilters} />
           <Routes>
-            <Route path="/" element={<Dashboard activeFilters={activeFilters}/>}/>
+            <Route path="/" element={<Dashboard allFilters={allFilters} activeFilters={activeFilters}/>}/>
           </Routes>
         </Box>
       </ThemeProvider>

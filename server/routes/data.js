@@ -1,7 +1,7 @@
 import express from "express";
 import { data, yearlyStats } from "../server.js";
 import { loadGeoJson } from "../data_loaders/geojson_loader.js";
-import { createYearlyDictionary } from "../data_processors/yearlyDictionaryGenerator.js";
+import { createYearlyData } from "../data_processors/yearlyDictionaryGenerator.js";
 import { generateGeneralStatDictionary } from "../data_processors/generalDataDictionaryGenerator.js";
 import { createHourlyDictionary } from "../data_processors/hourDictionary.js";
 import { createWeeklyDictionary } from "../data_processors/weeklyDictionary.js";
@@ -39,7 +39,7 @@ router.post("/area-chart/month", async (req, res) => {
     const filters = req.body;
     const filteredData = updateCacheGetFilteredData(data, filters)
     const startTime = Date.now();
-    const reply = createYearlyDictionary(filteredData);
+    const reply = createYearlyData(filteredData);
     // Record the start time
     const endTime = Date.now();
     console.log("Monthly Trend query processing finished in: ", endTime - startTime, "ms");

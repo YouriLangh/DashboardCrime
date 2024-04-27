@@ -10,7 +10,7 @@ import MonthlyTrend from '@/components/charts/MonthlyTrend';
 import WeeklyTrend from '@/components/charts/WeeklyTrend';
 import GenderDistribution from '@/components/charts/GenderDistribution';
 
-function Dashboard({ activeFilters }) {
+function Dashboard({ allFilters, activeFilters }) {
 
     const gridTemplateLargeScreens = ` 
         "map horbar pie polar"
@@ -66,7 +66,7 @@ function Dashboard({ activeFilters }) {
     }
 }>
       <Box gridArea="map" className="map"><Map /></Box>
-      <Box gridArea="trend" className="trend"><MonthlyTrend filters={activeFilters} /></Box>
+      <Box gridArea="trend" className="trend"><MonthlyTrend allFilters={allFilters} filters={activeFilters} /></Box>
       <Box gridArea="horbar" className="horbar"><CrimeDistribution filters={activeFilters} /></Box>
       <Box gridArea="hour" className="hour"><HourlyTrend filters={activeFilters} /></Box>
       <Box gridArea="week" className="week"><WeeklyTrend filters={activeFilters} /></Box>

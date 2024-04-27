@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import ApexCharts from 'react-apexcharts';
 import { fetchData } from '@/services/dataService';
 import  CustomProgress  from '@/components/CustomProgress'
+import { Box } from '@mui/material';
 
 function Heatmap({ filters }) {
     const [heatmapData, setHeatmapData] = useState(null);
@@ -20,28 +21,34 @@ function Heatmap({ filters }) {
     // Calculate color scale ranges dynamically
     const calculateColorScaleRanges = () => {
         if (!heatmapData) return [];
-
+    
         // Flatten the matrix to find the min and max values
         const values = heatmapData.matrix.flat();
         const minValue = Math.min(...values);
         const maxValue = Math.max(...values);
-
+    
         // Calculate the range intervals
         const rangeSize = (maxValue - minValue) / 4;
-
-        // Create color scale ranges
+    
+        // Create color scale ranges with the new color scheme
         return [
-            { from: minValue, to: minValue + rangeSize, color: '#14151A' }, // Dark
-            { from: minValue + rangeSize, to: minValue + 2 * rangeSize, color: '#555555' }, // Medium dark
-            { from: minValue + 2 * rangeSize, to: minValue + 3 * rangeSize, color: '#CACACA' }, // Medium light
-            { from: minValue + 3 * rangeSize, to: maxValue, color: '#FEFEFE' }, // Light
+            { from: minValue, to: minValue + rangeSize, color: '#0D0887' }, // Dark blue
+            { from: minValue + rangeSize, to: minValue + 2 * rangeSize, color: '#225EA8' }, // Medium blue
+            { from: minValue + 2 * rangeSize, to: minValue + 3 * rangeSize, color: '#41B6C4' }, // Light blue
+            { from: minValue + 3 * rangeSize, to: maxValue, color: '#FDE725' }, // Light yellow
         ];
     };
+    
+    
 
     // Prepare data and options for the heatmap using ApexCharts
     const heatmapOptions = {
+        grid:{
+            show:false
+        },
         theme: {
             mode: 'dark',
+            
         },
         chart: {
             type: 'heatmap',
@@ -52,12 +59,19 @@ function Heatmap({ filters }) {
         dataLabels: {
             enabled: false, // Disable data labels
         },
+        legend: {
+            fontSize: '13px',
+            fontWeight: 400,
+        },
+        
         plotOptions: {
             heatmap: {
+                enableShades: true,
+                shadeIntensity: 0.9,
                 colorScale: {
                     ranges: calculateColorScaleRanges(),
                 },
-                rowHeight: 15, // Set row height to make rows thinner
+                useFillColorAsStroke:true,
             },
         },
         xaxis: {
@@ -66,7 +80,8 @@ function Heatmap({ filters }) {
                 rotate: -45,
                 style: {
                     colors: '#FFFFFF', // Set label color to white
-                    fontWeight: 'bold', // Make labels bold
+                    fontSize: '14px',
+            fontWeight: 400,
                 },
             },
         },
@@ -75,7 +90,8 @@ function Heatmap({ filters }) {
             labels: {
                 style: {
                     colors: '#FFFFFF', // Set label color to white
-                    fontWeight: 'bold', // Make labels bold
+                    fontSize: '14px',
+            fontWeight: 400,
                 },
             },
         },
@@ -95,12 +111,16 @@ function Heatmap({ filters }) {
             {isDataEmpty ? (
                 <CustomProgress />
             ) : (
+                <>
+                <Box className="title crime-dist" style={{color:'white'}}><strong>Victim Ethnicity & Crime Heatmap</strong></Box>
                 <ApexCharts
+                style={{marginTop:"10px"}}
                     options={heatmapOptions}
                     series={heatmapSeries}
                     type="heatmap"
                     height={"130%"}
                 />
+                </>
             )}
         </div>
     );

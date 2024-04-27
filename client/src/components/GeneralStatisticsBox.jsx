@@ -3,8 +3,8 @@ import { Box, Typography } from '@mui/material';
 
 function GeneralStatBox({ value, text, isLightColor, measure }) {
     // Define light and dark colors
-    const lightColor = '#6A8BFF';
-    const darkColor = '#254FE3';
+    const lightColor = '#303649';
+    const darkColor = '#37446D';
 
     // Determine the background color based on the prop value
     const backgroundColor = isLightColor ? lightColor : darkColor;
