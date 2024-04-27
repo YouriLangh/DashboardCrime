@@ -17,18 +17,49 @@ function Heatmap({ filters }) {
     // Check if data is empty or undefined
     const isDataEmpty = !heatmapData || !heatmapData.matrix || heatmapData.matrix.length === 0;
 
+    // Calculate color scale ranges dynamically
+    const calculateColorScaleRanges = () => {
+        if (!heatmapData) return [];
+
+        // Flatten the matrix to find the min and max values
+        const values = heatmapData.matrix.flat();
+        const minValue = Math.min(...values);
+        const maxValue = Math.max(...values);
+
+        // Calculate the range intervals
+        const rangeSize = (maxValue - minValue) / 4;
+
+        // Create color scale ranges
+        return [
+            { from: minValue, to: minValue + rangeSize, color: '#14151A' }, // Dark
+            { from: minValue + rangeSize, to: minValue + 2 * rangeSize, color: '#555555' }, // Medium dark
+            { from: minValue + 2 * rangeSize, to: minValue + 3 * rangeSize, color: '#CACACA' }, // Medium light
+            { from: minValue + 3 * rangeSize, to: maxValue, color: '#FEFEFE' }, // Light
+        ];
+    };
+
     // Prepare data and options for the heatmap using ApexCharts
     const heatmapOptions = {
+        theme: {
+            mode: 'dark',
+        },
         chart: {
             type: 'heatmap',
-            height: '400px',
+            height: '100%',
             width: '100%',
             background: 'rgba(0, 0, 0, 0)', // Set background to transparent
         },
         dataLabels: {
             enabled: false, // Disable data labels
         },
-        colors: ["#000"], // Use a single color
+        plotOptions: {
+            heatmap: {
+                colorScale: {
+                    ranges: calculateColorScaleRanges(),
+                },
+                rowHeight: 15, // Set row height to make rows thinner
+            },
+        },
         xaxis: {
             categories: heatmapData ? heatmapData.crimes : [],
             labels: {
@@ -60,7 +91,7 @@ function Heatmap({ filters }) {
 
     // Conditionally render loading icon or heatmap
     return (
-        <div className='heatmap' style={{ width: '100%', height: '100%', overflowX: 'scroll', color: 'black' }}>
+        <div className='heatmap' style={{ width: '100%', height: '100%', overflowX: 'hidden', color: 'black'}}>
             {isDataEmpty ? (
                 <CircularProgress />
             ) : (
@@ -68,6 +99,7 @@ function Heatmap({ filters }) {
                     options={heatmapOptions}
                     series={heatmapSeries}
                     type="heatmap"
+                    height={"130%"}
                 />
             )}
         </div>
