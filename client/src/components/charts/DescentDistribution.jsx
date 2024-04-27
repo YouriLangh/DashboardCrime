@@ -4,6 +4,10 @@ import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { CircularProgress } from "@mui/material"; // Import CircularProgress
 import { preprocessEthnicityData } from "@/helpers/helpers";
+import { renderEthnicityTooltip }  from "@/components/CustomTooltips";
+
+
+
 // Define the colors for each pie slice
 const colors = ["#5E81B5", "#8CB16C", "#D8795C", "#B681AC", "#6FB6CA", "#BF616A"];
 
@@ -13,7 +17,6 @@ function DescentDistribution({ filters }) {
     useEffect(() => {
         // Fetch data from the API endpoint that provides ethnicity data
         fetchData(filters, "/api/data/polar-chart/descent").then((res) => {
-            console.log(res)
             setData(preprocessEthnicityData(res.data));
         });
     }, [filters]);
@@ -43,38 +46,6 @@ function DescentDistribution({ filters }) {
         );
     };
 
-// Custom tooltip function
-const renderTooltipContent = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-        const { name, value, payload: payloadData } = payload[0];
-
-        // Check if the slice is 'Others' and has details
-        if (name === 'Others' && payloadData.details) {
-            // Return the custom tooltip content
-            return (
-                <div className="custom-tooltip" style={{ backgroundColor: 'white', color: 'black', padding: '8px', borderRadius: '4px' }}>
-                    <p><strong>{name}: {value}</strong></p>
-                    <hr></hr>
-                    {/* List each detail as a separate paragraph */}
-                    {payloadData.details.map((detail, index) => (
-                        <p key={index} style={{ margin: 0 }}><strong>{detail}</strong></p>
-                    ))}
-                </div>
-            );
-        } else {
-            // Default tooltip content for other slices
-            return (
-                <div className="custom-tooltip" style={{ backgroundColor: 'white', color: 'black', padding: '8px', borderRadius: '4px' }}>
-                    <p><strong>{`${name}: ${value}`}</strong></p>
-                </div>
-            );
-        }
-    }
-
-    return null;
-};
-
-
 return (
     <div style={{ width: "100%", height: "100%" }}>
         {isDataEmpty ? (
@@ -84,7 +55,7 @@ return (
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     {/* Tooltip with custom content function */}
-                    <Tooltip content={renderTooltipContent} />
+                    <Tooltip content={(props) => renderEthnicityTooltip(props, data, colors)} />
 
                     {/* Pie component */}
                     <Pie
