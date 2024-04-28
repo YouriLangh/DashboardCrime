@@ -35,6 +35,10 @@ function App() {
 
   }, []);
 
+  useEffect(() => {
+    console.log(activeFilters)
+  },[activeFilters])
+
   function updateActiveFilters(filterType, value){
     setActiveFilters((prevSelectedFilters) => ({
       ...prevSelectedFilters,
@@ -51,7 +55,7 @@ function App() {
           <GeneralStatisticsBar activeFilters={activeFilters}/>
           <FiltersBar filters={allFilters} filterCallback={updateActiveFilters} />
           <Routes>
-            <Route path="/" element={<Dashboard allFilters={allFilters} activeFilters={activeFilters}/>}/>
+            <Route path="/" element={<Dashboard filterCallback={updateActiveFilters} allFilters={allFilters} activeFilters={activeFilters}/>}/>
           </Routes>
         </Box>
       </ThemeProvider>
