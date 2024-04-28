@@ -70,10 +70,10 @@ export function renderMonthlyTooltip({ active, payload, label, currentYear, comp
                     <p
                         key={index}
                         className='label'
-                        style={{ color: index === 0 ? '#80AAE9' : '#FF9F40' }} // Set text color based on the area
+                        style={{ color: index === 0 ? '#FF9F40' : '#80AAE9' }} // Set text color based on the area
                     >
                         {/* Display the year for each data entry */}
-                        {index === 0 ? currentYear : comparisonYear}: {entry.value}
+                        {index === 0 ? comparisonYear : currentYear}: {entry.value}
                     </p>
                 ))}
             </div>

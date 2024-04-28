@@ -21,13 +21,13 @@ function MonthlyTrend({ allFilters, filters }) {
   const [localFilterSets, setLocalFilterSets] = useState({});
   const [comparisonYear, setComparisonYear] = useState(2022);
   const [comparisonData, setComparisonData] = useState([]);
-  const [comparisonFilter, setComparisonFilter] = useState({});
 
   useEffect(() => {
     fetchData(filters, "/api/data/area-chart/month").then((res) => {
       setData(res.data);
       setIsDataEmpty(!res || res.length === 0);
-    });
+      
+    })
   }, [filters]);
 
   useEffect(() => {
@@ -36,11 +36,10 @@ function MonthlyTrend({ allFilters, filters }) {
 
   useEffect(() => {
     const comparisonFilter = { ...filters, yearFilter: comparisonYear };
-    setComparisonFilter(comparisonFilter);
     fetchData(comparisonFilter, "/api/data/area-chart/month").then((res) => {
       setComparisonData(res.data);
     });
-  }, [comparisonYear]);
+  }, [filters, comparisonYear]);
 
   function handleYearSelection(value) {
     setComparisonYear(value);
@@ -53,7 +52,7 @@ function MonthlyTrend({ allFilters, filters }) {
   );
   const maxYValue = Math.max(maxDataValue, maxComparisonDataValue);
 
-  const colors = ["#80AAE9", "#FFB547"];
+  const colors = ["#80AAE9", "#FF9F40"];
   const hasLocalFilterSets = Object.keys(localFilterSets).length > 0;
 
   return (
@@ -67,10 +66,11 @@ function MonthlyTrend({ allFilters, filters }) {
         <Box className="title-container">
           <Box className="title monthly-trend-title">
             <strong>Monthly Crime Trends: </strong>
-            <strong>Current Year</strong>
+            <strong style={{color:colors[0]}}>Current Year</strong>
             <strong>vs.</strong>
             <Box className="year-dropdown-container monthly">
               <YearDropdownMonth
+              color={colors[1]}
                 smallestYear={
                   hasLocalFilterSets
                     ? localFilterSets.yearSet.smallestYear

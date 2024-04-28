@@ -46,3 +46,56 @@ export function myFilterSelected(filters, label){
     const activeFilters = filters[label]
     return Array.isArray(activeFilters) && ((activeFilters.length === 1) && activeFilters[0].value !== 'All')
 }
+
+
+export function updateGeoJson(geoJsonData, updatedData) {
+    if (geoJsonData && updatedData) {
+        // Create a Map object for fast lookup of the new crime counts
+        const crimeCountLookup = new Map();
+        updatedData.forEach(item => {
+            const districtName = item.APREC.toLowerCase().trim();
+            crimeCountLookup.set(districtName, item['Crime Count']);
+        });
+
+        // Iterate over the GeoJSON features and update the 'Crime Count' property based on the lookup
+        geoJsonData.features.forEach(feature => {
+            const districtName = feature.properties.APREC.toLowerCase().trim();
+
+            // Use the Map object to look up the new crime count
+            if (crimeCountLookup.has(districtName)) {
+                feature.properties['Crime Count'] = crimeCountLookup.get(districtName);
+            }
+        });
+
+        // Return the updated GeoJSON data
+        return geoJsonData;
+    }
+}
+
+// export function calculateMaxCrimeCount(geoJsonData) {
+//     let maxCrimeCount = 0;
+
+//     if (geoJsonData && geoJsonData.features) {
+//         geoJsonData.features.forEach(feature => {
+//             const crimeCount = feature.properties['Crime Count'];
+//             if (crimeCount > maxCrimeCount) {
+//                 maxCrimeCount = crimeCount;
+//             }
+//         });
+//     }
+
+//     return maxCrimeCount;
+// }
+
+// export function generateDynamicThresholds(maxCrimeCount) {
+//     const intervals = 5; // You can adjust the number of intervals as needed
+//     const thresholdStep = maxCrimeCount / intervals;
+
+//     const thresholds = [];
+//     for (let i = 1; i <= intervals; i++) {
+//         thresholds.push(i * thresholdStep);
+//     }
+
+//     return thresholds;
+// }
+

@@ -6,6 +6,7 @@ import filterRoutes from "./routes/filters.js";
 import loadCSVData from "./data_loaders/csv_loader.js";
 import { filterDictionaryGenerator } from "./data_processors/filterDictionaryGenerator.js";
 import { setBaseFiltersInCache, calculateGenericStatistics } from "./helpers/helperFunctions.js"
+import { createAreaDictionary } from './data_processors/areaDictionary.js'
 /* Configurations */
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cors());
 let data = []; // Variable to store data in memory
 let yearIndex = {}; // Index by year
 let filterDictionary;
+let areaDictionary;
 
 // Will store all the general statistics for each year, assuming only the year is selected as a filter
 // We do this to optimize query speed
@@ -54,7 +56,9 @@ initializeData()
   .then(() => {
     // Call the function to set base filters in cache after data is initialized
     setBaseFiltersInCache(data);
+    areaDictionary = createAreaDictionary(data)
     // Record the start time
+    console.log(areaDictionary)
     const startTime = Date.now();
     yearlyStats =  calculateGenericStatistics(data, yearIndex);
      // Record the end time
@@ -92,4 +96,4 @@ process.on("SIGINT", () => {
   });
 });
 
-export { data, yearIndex, filterDictionary, yearlyStats };
+export { data, yearIndex, filterDictionary, yearlyStats, areaDictionary };

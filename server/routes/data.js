@@ -11,6 +11,8 @@ import { createAgeDictionary } from "../data_processors/ageDictionary.js";
 import { createCrimeDistDictionary } from "../data_processors/crimeDistributionDictionary.js";
 import { createHeatMapData } from "../data_processors/heatmap.js";
 import { isBaseFilter, updateCacheGetFilteredData } from "../helpers/helperFunctions.js";
+import { getCountsPerDistrict } from "../data_processors/crimePerDistrict.js";
+
 const router = express.Router();
 
 router.post("/general-stats", async (req, res) => {
@@ -170,6 +172,21 @@ router.get("/geojson", async (req, res) => {
     const endTime = Date.now();
     console.log("GeoJSON query processing finished in: ", endTime - startTime, "ms");
     res.status(200).json(geojson);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
+router.post("/geojson/update", async (req, res) => {
+  try {
+    const filters = req.body;
+    const filteredData = updateCacheGetFilteredData(data, filters)
+    const startTime = Date.now();
+    const updatedCounts = getCountsPerDistrict(filteredData)
+    // Record the start time
+    const endTime = Date.now();
+    console.log("GeoJSON update query processing finished in: ", endTime - startTime, "ms");
+    res.status(200).json(updatedCounts);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

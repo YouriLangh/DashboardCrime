@@ -65,7 +65,7 @@ function Dashboard({ allFilters, activeFilters }) {
         gridAutoRows: "100px"
     }
 }>
-      <Box gridArea="map" className="map"><Map /></Box>
+      <Box gridArea="map" className="map"><Map filters={activeFilters}/></Box>
       <Box gridArea="trend" className="trend"><MonthlyTrend allFilters={allFilters} filters={activeFilters} /></Box>
       <Box gridArea="horbar" className="horbar"><CrimeDistribution filters={activeFilters} /></Box>
       <Box gridArea="hour" className="hour"><HourlyTrend filters={activeFilters} /></Box>

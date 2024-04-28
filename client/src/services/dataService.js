@@ -31,3 +31,17 @@ export async function fetchGeoJson(){
         return {};
 }
 }
+
+export async function fetchUpdatedGeoJson(filters){
+    try{
+        let data;
+        await axios.post(apiUrl + '/api/data/geojson/update', filters).then((res)=>{
+            data = res.data
+        })
+        return data
+    }catch (error) {
+        console.error('Error fetching geojson:', error);
+        // Handle the error, e.g., by returning an empty object or array
+        return {};
+}
+}

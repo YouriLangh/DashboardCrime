@@ -10,6 +10,7 @@ function YearDropdownMonth({
   smallestYear,
   largestYear,
   onFilterChange,
+  color,
 }) {
   const [selectedYear, setSelectedYear] = useState(
     2022
@@ -41,7 +42,7 @@ function YearDropdownMonth({
       <Typography variant="h5">{text}</Typography>
       <Select
       sx={{
-        color: "white", fontWeight:'600',
+        color: color, fontWeight:'600',
       }}
       inputProps={{
 
@@ -59,7 +60,7 @@ function YearDropdownMonth({
       >
         {allYears ? (
           allYears.map((item, index) => (
-            <MenuItem sx={{color: "white", backgroundColor:"rgba(50, 51, 60, 0.5)", fontSize:'15px' ,fontWeight:'600',
+            <MenuItem sx={{color: color, backgroundColor:"rgba(50, 51, 60, 0.5)", fontSize:'15px' ,fontWeight:'600',
             '&:hover': {
                 backgroundColor: '#5C5F72',
              },
@@ -69,7 +70,7 @@ function YearDropdownMonth({
             </MenuItem>
           ))
         ) : (
-          <MenuItem sx={{color: "white", backgroundColor:"rgba(50, 51, 60, 0.5)", fontSize:'15px' ,fontWeight:'600',
+          <MenuItem sx={{color: color, backgroundColor:"rgba(50, 51, 60, 0.5)", fontSize:'15px' ,fontWeight:'600',
           '&:hover': {
             backgroundColor: '#5C5F72',
          },
