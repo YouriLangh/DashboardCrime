@@ -117,3 +117,77 @@ export const createDynamicColors = (maxCrimeCount, colors) => {
   colorsArray[0].label = `<${Math.floor(step)}`;
   return colorsArray;
 };
+
+// Define a hashing function to hash the crime description and generate a color and shape
+export const hashToColorAndShape = (str) => {
+  // Simple hash function (sdbm hash algorithm)
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + (hash << 6) + (hash << 16) - hash;
+  }
+  // Convert hash to a hue value (0-360 degrees) and create a color using HSL
+  const hue = Math.abs(hash % 360);
+  const color = `hsl(${hue}, 70%, 50%)`; // Use HSL color format
+
+  // Map the hash value to a shape based on modulus
+  const shapes = ["circle", "square", "triangle"];
+  const shapeIndex = Math.abs(hash % shapes.length);
+  const shape = shapes[shapeIndex];
+
+  return { color, shape };
+};
+
+function processCrimes(crimes) {
+  let result = [];
+  crimes.forEach((crm) => {
+    // Check if the crime description contains '::'
+    if (crm.hierarchy) {
+      result.push(crm.hierarchy);
+    } else if (crm.submenu) {
+      crm.submenu.forEach((c) => {
+        if (c.hierarchy && c.hierarchy.includes("::")) {
+          // Extract the part after '::'
+          const subCat = c.hierarchy.split("::")[1];
+          result.push(subCat);
+        }
+      });
+    }
+  });
+  return result;
+}
+
+// Define the function to generate the legend dictionary
+export function generateLegendDictionary(unprocessedCrimes) {
+    const crimes = processCrimes(unprocessedCrimes);
+    // Initialize the dictionary
+    const legendDictionary = {};
+
+    // Iterate through each crime in unprocessedCrimes
+    crimes.forEach((crime) => {
+        // Get the color and shape for the crime using the hashing function
+        const { color, shape } = hashToColorAndShape(crime);
+        
+        // Store the color and shape in the dictionary using the crime description as the key
+        legendDictionary[crime] = {
+            color,
+            shape,
+        };
+    });
+
+    // Return the dictionary
+    return legendDictionary;
+}
+
+export // Function to generate clip-path for different shapes
+const getShapeClipPath = (shape) => {
+    switch (shape) {
+        case 'circle':
+            return 'circle(50%)';
+        case 'square':
+            return 'inset(0)';
+        case 'triangle':
+            return 'polygon(50% 0%, 0% 100%, 100% 100%)';
+        default:
+            return 'circle(50%)'; // Default to circle
+    }
+};

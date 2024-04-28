@@ -256,3 +256,55 @@ body,
 .dropdown-filters-month .MuiSelect-icon{
   color: white;
 }
+
+
+.legend{
+  position:absolute;
+  padding: 10px;
+  background-color: #1f2026;
+  z-index: 500;
+  border-radius: 9px;
+  padding-bottom: 30px;
+  overflow-y: auto;
+  max-height: 63%;
+  top: 5px;
+  right:5px;
+  overflow-x: hidden;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+  /* Customize the scrollbar in Firefox */
+  scrollbar-width: thin; /* Set the width of the scrollbar */
+  scrollbar-color: #676E7D #2C2F36; /* Set the thumb and track colors */
+}
+.legend h2{
+  text-align: center;
+}
+
+.legend .legend-row{
+  margin-top: 30px;
+  margin-bottom: -10px;
+  border-bottom: #2e2f36 1px solid;
+  padding: 10px 8px;
+  display: flex;
+
+  align-items: center;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+  background-color: #28282fc7;
+  border-radius: 4px;
+}
+
+.legend-text{
+  position: relative;
+  left: 5%;
+}
+
+.show-legend{
+  position:absolute;
+  padding: 10px;
+  background-color: #1f2026;
+  z-index: 500;
+  border-radius: 9px;
+  overflow-y: auto;
+  top: 5px;
+  right:5px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+}

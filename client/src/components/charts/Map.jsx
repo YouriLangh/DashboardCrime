@@ -2,21 +2,23 @@
 import {
     MapContainer,
     TileLayer,
-    Marker,
     GeoJSON,
     useMapEvents,
 } from "react-leaflet";
 import L from "leaflet"; // Importing Leaflet
 
+
+import Legend from "../Legend";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { fetchInstances, fetchGeoJson, fetchUpdatedGeoJson } from "@/services/dataService";
 import { MapLegend } from "../MapLegend";
 import { toTitleCase } from "../../helpers/helpers";
-import { updateGeoJson, calculateMaxCrimeCount, getColor, createDynamicColors } from "../../helpers/helpers";
+import { updateGeoJson, calculateMaxCrimeCount, getColor, createDynamicColors, generateLegendDictionary } from "../../helpers/helpers";
+import CustomMarker from "@/components/CustomMarker"
 
-function Map({ filters }) {
+function Map({ allFilters, filters }) {
     const centerLA = [34.05, -118.49];
     const [geoJson, setGeoJson] = useState(null);
     const [zoomLevel, setZoomLevel] = useState(9);
@@ -35,7 +37,7 @@ function Map({ filters }) {
     const [instances, setInstances] = useState([]);
     const [mapBounds, setMapBounds] = useState(null);
     const [bufferedBounds, setBufferedBounds] = useState(null);
-
+    const [legend, setLegend] = useState({})
     // Calculate and store the buffered bounds
 const calculateBufferedBounds = (bounds) => {
     const bufferMargin = 0.025; // Adjust the buffer margin as needed
@@ -54,6 +56,13 @@ const calculateBufferedBounds = (bounds) => {
     return L.latLngBounds(southWest, northEast);
 };
 
+useEffect(()=>{
+    if(allFilters && allFilters.crimeTypeSet){
+        const legend = generateLegendDictionary(allFilters.crimeTypeSet)
+        setLegend(legend)
+    }
+
+},[allFilters])
 
     // Fetch initial data
     useEffect(() => {
@@ -165,15 +174,20 @@ const calculateBufferedBounds = (bounds) => {
                     <MarkerClusterGroup>
                         {/* Add markers for filtered instances */}
                         {filteredInstances.map((instance, index) => (
-                            <Marker
+                            <CustomMarker
                                 key={index}
+                                instance={instance}
                                 position={[parseFloat(instance.LAT), parseFloat(instance.LON)]}
                             >
                                 {/* You can customize the popup content */}
-                            </Marker>
+                            </CustomMarker>
                         ))}
                     </MarkerClusterGroup>
                 )}
+                {geoJson && zoomLevel >= 15 && (
+
+                   <Legend legend={legend} />
+                    )}
                 
                 {/* Add GeoJSON layer */}
                 {geoJson && zoomLevel < 15 && (

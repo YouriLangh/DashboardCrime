@@ -20,6 +20,7 @@ function HourlyTrend({ filters }) {
     const handleChartClick = (event) => {
         // Log the hour data key value when a user clicks on a specific part of the chart
         if (event && event.activeLabel !== undefined) {
+            console.log(event)
             console.log(`Clicked on hour: ${event.activeLabel}`);
         }
     };
