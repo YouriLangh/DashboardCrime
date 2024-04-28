@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export function createHeatMapData(data) {
-    // Create an empty nested dictionary for all ethnicities and crimes
-    let descentCrimeDictionary = {};
+    // Create a Map to hold the nested dictionary for all ethnicities and crimes
+    const descentCrimeMap = new Map();
+    const crimeSet = new Set();
 
     // Process each row in the input data
     data.forEach((row) => {
@@ -13,50 +14,39 @@ export function createHeatMapData(data) {
 
         // Check if descent and crime are valid
         if (descent && crime) {
-            if(descent.includes('::')){
-                descent = descent.split('::')[0]
+            // Simplify descent and crime by removing prefixes
+            descent = descent.split('::')[0];
+            crime = crime.split('::')[0];
+
+            // Get or create a Map for the current descent
+            if (!descentCrimeMap.has(descent)) {
+                descentCrimeMap.set(descent, new Map());
             }
-            // Initialize the inner dictionary if necessary
-            if (!descentCrimeDictionary[descent]) {
-                descentCrimeDictionary[descent] = {};
-            }
-            // Simplify crime name by removing prefix (if present)
-            if (crime.includes("::")) {
-                crime = crime.split("::")[0];
-            }
+            const crimeMap = descentCrimeMap.get(descent);
+
             // Increment the count for the crime under the specific ethnicity
-            descentCrimeDictionary[descent][crime] =
-                (descentCrimeDictionary[descent][crime] || 0) + 1;
+            crimeMap.set(crime, (crimeMap.get(crime) || 0) + 1);
+
+            // Add the crime to the set of unique crimes
+            crimeSet.add(crime);
         }
     });
 
-    // Extract unique crimes and ethnicities from the dictionary
-    const crimes = new Set();
-    const ethnicities = Object.keys(descentCrimeDictionary);
-
-    // Populate the set of unique crimes
-    for (const ethnicity of ethnicities) {
-        for (const crime in descentCrimeDictionary[ethnicity]) {
-            crimes.add(crime);
-        }
-    }
-
-    // Convert the set of crimes to an array
-    const crimesArray = Array.from(crimes);
+    // Convert the set of unique crimes to an array
+    const crimesArray = Array.from(crimeSet);
+    // Convert the keys of descentCrimeMap to an array of ethnicities
+    const ethnicities = Array.from(descentCrimeMap.keys());
 
     // Create a 2D array (matrix) to hold the frequencies of crimes for each ethnicity
-    const matrix = ethnicities.map(ethnicity => {
+    const matrix = ethnicities.map((ethnicity) => {
         // Create an array for this ethnicity
         const row = Array(crimesArray.length).fill(0);
 
         // Fill the row with crime frequencies
-        for (const crime in descentCrimeDictionary[ethnicity]) {
-            // Find the index of the crime in the crimesArray
-            const crimeIndex = crimesArray.indexOf(crime);
-            
-            // Set the count in the row at the appropriate index
-            row[crimeIndex] = descentCrimeDictionary[ethnicity][crime];
-        }
+        const crimeMap = descentCrimeMap.get(ethnicity);
+        crimesArray.forEach((crime, index) => {
+            row[index] = crimeMap.get(crime) || 0;
+        });
 
         return row;
     });

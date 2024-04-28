@@ -58,7 +58,6 @@ initializeData()
     setBaseFiltersInCache(data);
     areaDictionary = createAreaDictionary(data)
     // Record the start time
-    console.log(areaDictionary)
     const startTime = Date.now();
     yearlyStats =  calculateGenericStatistics(data, yearIndex);
      // Record the end time
