@@ -21,6 +21,7 @@ function MonthlyTrend({ allFilters, filters }) {
   const [localFilterSets, setLocalFilterSets] = useState({});
   const [comparisonYear, setComparisonYear] = useState(2022);
   const [comparisonData, setComparisonData] = useState([]);
+  const [currentYear, setCurrentYear] = useState(2023)
 
   useEffect(() => {
     fetchData(filters, "/api/data/area-chart/month").then((res) => {
@@ -39,6 +40,7 @@ function MonthlyTrend({ allFilters, filters }) {
     fetchData(comparisonFilter, "/api/data/area-chart/month").then((res) => {
       setComparisonData(res.data);
     });
+    setCurrentYear(filters.yearFilter)
   }, [filters, comparisonYear]);
 
   function handleYearSelection(value) {
@@ -66,7 +68,7 @@ function MonthlyTrend({ allFilters, filters }) {
         <Box className="title-container">
           <Box className="title monthly-trend-title">
             <strong>Monthly Crime Trends: </strong>
-            <strong style={{color:colors[0]}}>Current Year</strong>
+            <strong style={{color:colors[0]}}>{currentYear}</strong>
             <strong>vs.</strong>
             <Box className="year-dropdown-container monthly">
               <YearDropdownMonth
@@ -98,14 +100,6 @@ function MonthlyTrend({ allFilters, filters }) {
               <YAxis
                 stroke="#fff"
                 domain={[0, maxYValue]}
-                // Calculate and round the ticks to integers
-                ticks={[
-                  0,
-                  Math.ceil(maxYValue * 0.25),
-                  Math.ceil(maxYValue * 0.5),
-                  Math.ceil(maxYValue * 0.75),
-                  Math.ceil(maxYValue),
-                ]}
               />
 
               {/* Tooltip */}

@@ -192,5 +192,19 @@ router.post("/geojson/update", async (req, res) => {
   }
 });
 
+router.post("/geojson/instances", async (req, res) => {
+  try {
+    let filters = {};
+    if(req.body){
+      filters = req.body.filters
+      filters.mapbounds = req.body.mapbounds
+    }
+    const filteredData = updateCacheGetFilteredData(data, filters)
+    res.status(200).json(filteredData);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
+
 
 export default router;

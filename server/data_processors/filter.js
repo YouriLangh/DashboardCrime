@@ -50,6 +50,11 @@ export function filterData(data, filters) {
     const hourOfDayObject = filters.hourOfDayFilter[0]
     filteredData = filteredData.filter((record)=> record[mappedField].getHours() === hourOfDayObject.value)
   }
+  if(filters.mapBounds !== undefined){
+    const mappedLon = fieldMapping['longitude']
+    const mappedLat = fieldMapping['latitude']
+    filteredData = filterData.filter((record) => filters.mapBounds.contains([record[mappedLat], record[mappedLon]]))
+  }
 
   // Loop over all fields in filters except for 'year'
   for (const filter in filters) {

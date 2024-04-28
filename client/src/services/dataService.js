@@ -40,7 +40,21 @@ export async function fetchUpdatedGeoJson(filters){
         })
         return data
     }catch (error) {
-        console.error('Error fetching geojson:', error);
+        console.error('Error updating geojson:', error);
+        // Handle the error, e.g., by returning an empty object or array
+        return {};
+}
+}
+
+export async function fetchInstances(filters, mapbounds){
+    try{
+        let data;
+        await axios.post(apiUrl + '/api/data/geojson/instances', {filters: filters, mapbounds: mapbounds}).then((res)=>{
+            data = res.data
+        })
+        return data
+    }catch (error) {
+        console.error('Error fetching map instances:', error);
         // Handle the error, e.g., by returning an empty object or array
         return {};
 }
