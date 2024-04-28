@@ -72,30 +72,45 @@ export function updateGeoJson(geoJsonData, updatedData) {
     }
 }
 
-// export function calculateMaxCrimeCount(geoJsonData) {
-//     let maxCrimeCount = 0;
+// Function to calculate the maximum crime count from the GeoJSON data
+export function calculateMaxCrimeCount(data) {
+    let maxCount = 0;
+    data.features.forEach(feature => {
+        const crimeCount = feature.properties["Crime Count"];
+        if (crimeCount > maxCount) {
+            maxCount = crimeCount;
+        }
+    });
+    // Return the calculated maximum crime count
+    return maxCount;
+}
 
-//     if (geoJsonData && geoJsonData.features) {
-//         geoJsonData.features.forEach(feature => {
-//             const crimeCount = feature.properties['Crime Count'];
-//             if (crimeCount > maxCrimeCount) {
-//                 maxCrimeCount = crimeCount;
-//             }
-//         });
-//     }
+// Function to dynamically adjust the color thresholds based on the maximum crime count
+export function getColor(value, maxCrimeCount) {
+    // Define color thresholds dynamically
+    const step = maxCrimeCount / 7;
+    const thresholds = Array.from({ length: 8 }, (_, i) => step * i);
 
-//     return maxCrimeCount;
-// }
+    // Define colors based on dynamic thresholds
+    const colors = ["#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#BD0026", "#800026"];
 
-// export function generateDynamicThresholds(maxCrimeCount) {
-//     const intervals = 5; // You can adjust the number of intervals as needed
-//     const thresholdStep = maxCrimeCount / intervals;
+    // Determine the color based on the value and thresholds
+    for (let i = thresholds.length - 1; i >= 0; i--) {
+        if (value > thresholds[i]) {
+            return colors[i];
+        }
+    }
+    return colors[0];
+}
 
-//     const thresholds = [];
-//     for (let i = 1; i <= intervals; i++) {
-//         thresholds.push(i * thresholdStep);
-//     }
 
-//     return thresholds;
-// }
-
+    // Create dynamic legend colors based on calculated maxCrimeCount
+   export const createDynamicColors = (maxCrimeCount) => {
+        const step = maxCrimeCount / 7;
+        const colorsArray = Array.from({ length: 8 }, (_, i) => ({
+            color: ["#FFEDA0", "#FED976", "#FEB24C", "#FD8D3C", "#FC4E2A", "#E31A1C", "#BD0026", "#800026"][i],
+            label: `>${Math.floor(step * i)}`
+        }));
+        colorsArray[0].label = `<${Math.floor(step)}`;
+        return colorsArray;
+    };
