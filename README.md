@@ -20,16 +20,15 @@ The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3O
 2. Pre-processing via notebooks & GeoJson conversion
 3. Explorative Data Analysis
 #### React
-1. Loading preprocessed data into memory on server side
-2. Optimized server-side filtering technique
-3. Precalculating various statistics based on heuristics and storing them in-memory
-4. Use caching to avoid filtering data multiple times if the same filters have been selected recently.
-5. Client async calls to server for data.
+4. Loading preprocessed data into memory on server side
+5. Optimized server-side filtering technique
+6. Precalculating various statistics based on heuristics and storing them in-memory
+7. Use caching to avoid filtering data multiple times if the same filters have been selected recently.
+8. Client async calls to server for data.
 
 ### Notable libraries
 - GEOJSON for visualizing the districts of Los Angeles and create a heatmap
-- recharts/chartjs for creating interactive charts
-- Plotly to create the heatmap-matrix
+- recharts/apex charts for creating interactive charts (apexcharts used for corr-matrix)
 - Leaflet to create the map 
 
 
@@ -48,23 +47,22 @@ The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3O
     - Since the GEOJSON data was nowhere to be found, I had to use a different format and convert it manually
 3. We performed a simple EDA to observe the distribution of various features so that we could design the mid fidelity prototype with powerful visualizations based on knowledge of the data.
 
-4. We load the data in memory as using a database would slow down the speed of processing queries. Additionally this makes the project self-sustaining so if the database were to be down, we would not be affected. We note that this is only possible since our data becomes managably large after processing (~2M instances). 
-5. Since we work with bigger data, processing and filtering the data can be slow. Therefore I tried to optimize this as much as possible. When the data is loaded in on the server, an index is made which keeps tracks of where a new year starts in my data. This can be done since I have sorted my data in the pre-processing step. This way I can use this index to instantly slice my data to only the instances of that year. This offered a ~90% speedup to processing queries, which can be seen in the image.
+4. We load the data in memory as using a database would slow down the speed of processing queries. Additionally this makes the project self-sustaining such that if the database were to be down, we would not be affected. We note that this is only possible since our data becomes managably large after processing (~2M instances). 
+5. Since we work with bigger data, processing and filtering the data can be slow. Therefore I tried to optimize this as much as possible. When the data is loaded in on the server, an index is made which keeps tracks of where a new year starts in my data. This can be done since I have sorted my data in the pre-processing step. This way I can use this index to instantly slice my data to only the instances of that year. This offered a ~90% speedup to processing queries, which can be seen in the following image.
 
 <div style="text-align: center;">
     <img src="images/speedup.png" alt="Speed up example" width="500" height="80">
 </div>
 
-1. Since processing larger data can be slow, we pre-processed general statistics for only the various base filters, these are filters where the data is only filtered on a specific year. If the user selects more filters these will be processed at run-time.
-2. Since users would select filters and possibly revert to the previous filter, we optimized our server to not have to filter all the data again by caching ten of the most frequently used filter combinations by the user on the server and storing the accompanying filtered data. 
+6. Since processing larger data can be slow, we pre-processed general statistics for only the various base filters, these are filters where the data is only filtered on a specific year. If the user selects more filters these will be processed at run-time.
+7. Since users would select filters and possibly revert to the previous filter, we optimized our server to not have to filter all the data again by caching ten of the most frequently used filter combinations by the user on the server and storing the accompanying filtered data. 
 
-3. /
+8. /
 
 
 ### Future work
 - As data gets updated monthly, we could use a pipeline to run our notebook and update our csv and re-run our server to automate fresh data capturing
-- Various pre-processing steps such as the mapping of crimes, ethnicities and so on are done manually. Big shifts in trends such as an increase in an uncommong crime (that has not been mapped) would lead to unmapped text to be visualized on the front end.
+- Various pre-processing steps such as the mapping of crimes, ethnicities and so on are done manually. Big shifts in trends such as an increase in an uncommon crime (that has not been mapped) would lead to unmapped text to be visualized on the front end.
 - Dropdowns are currently grouping various aspects of the instances, such as crime/ethnicity/... based on super-class. This means that people can not access more specific instances of a crime, e.g. if people want to access "Theft from a Motor Vehicle", users could only access "Theft" and all the sub-categories of "Theft" would be selected as well. Multi-dropdowns could be created to avoid these generalizations.
-- Create different zoom levels such that if the user is on the highest zoom level, the type of the map gets changed to a scatter plot rather than a heatmap.
 - Improve data processing speed on the server side by implementing eclairjs to use spark to manipulate big data or use multithreading.
 - Load data into a database and only add new instances to the database when fetching fresh data.

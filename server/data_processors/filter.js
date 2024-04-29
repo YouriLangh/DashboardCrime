@@ -70,7 +70,7 @@ export function filterData(data, filters) {
       const category = mainCategory.split("::")[0];
       query = category;
       filteredData = filteredData.filter((record) =>
-        record[mappedField].includes(query)
+        record[mappedField].split('::')[0] && record[mappedField].split('::')[0].includes(query)
       );
     } else {
       if (

@@ -191,3 +191,15 @@ const getShapeClipPath = (shape) => {
             return 'circle(50%)'; // Default to circle
     }
 };
+
+export function sortItems(items){
+  return items.sort((a, b) => {
+    if (a.value < b.value) {
+      return -1; // a should come before b
+    } else if (a.value > b.value) {
+      return 1; // a should come after b
+    } else {
+      return 0; // a and b are equal
+    }
+  });
+}

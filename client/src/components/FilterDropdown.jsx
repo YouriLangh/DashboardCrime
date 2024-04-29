@@ -3,6 +3,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
+import { sortItems } from '@/helpers/helpers'
 
 function FilterDropdown({ text, items, filterType, onFilterChange }) {
   const [localItems, setLocalItems] = useState([{ value: "All" }]);
@@ -12,7 +13,7 @@ function FilterDropdown({ text, items, filterType, onFilterChange }) {
     if (Array.isArray(items) && items.length > 0) {
       const baseFilter = { value: "All" };
       const combinedArray = [baseFilter, ...items];
-      setLocalItems(combinedArray);
+      setLocalItems(sortItems(combinedArray));
     }
   }, [items]);
 
