@@ -12,8 +12,8 @@ function FilterDropdown({ text, items, filterType, onFilterChange }) {
   useEffect(() => {
     if (Array.isArray(items) && items.length > 0) {
       const baseFilter = { value: "All" };
-      const combinedArray = [baseFilter, ...items];
-      setLocalItems(sortItems(combinedArray));
+      const sortedItems = sortItems(items)
+      setLocalItems([baseFilter, ...sortedItems]);
     }
   }, [items]);
 

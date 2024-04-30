@@ -35,10 +35,6 @@ function App() {
 
   }, []);
 
-  useEffect(() => {
-    console.log(activeFilters)
-  },[activeFilters])
-
   function updateActiveFilters(filterType, value){
     setActiveFilters((prevSelectedFilters) => ({
       ...prevSelectedFilters,

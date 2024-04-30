@@ -20,7 +20,6 @@ function CrimeDistribution({ filters, filterCallback }) {
   const [data, setData] = useState([]);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [size, setSize] = useState(1);
-  const [selectedBarIndex, setSelectedBarIndex] = useState(null); // Track selected bar index
   const [alreadyRendered, setAlreadyRendered] = useState(false);
   useEffect(() => {
     fetchData(filters, "/api/data/bar-chart/crime").then((res) => {
@@ -33,14 +32,6 @@ function CrimeDistribution({ filters, filterCallback }) {
       }
     });
   }, [filters]);
-
-  // Handle the click event on the BarChart
-  function handleClick(e, i) {
-    // Get the index of the clicked bar
-    console.log(e);
-    const index = e.activeTooltipIndex;
-    setSelectedBarIndex(index);
-  }
 
   // Check if the data is empty or undefined
   const isDataEmpty = !data || data.length === 0;
@@ -108,7 +99,7 @@ function CrimeDistribution({ filters, filterCallback }) {
         <>
         <Box className="title crime-dist"><strong>Crime Distribution Overview</strong></Box>
         <ResponsiveContainer width="100%" height={`${100 * size}%`}>
-          <BarChart data={data} layout="vertical" onClick={handleClick}>
+          <BarChart data={data} layout="vertical">
           <CartesianGrid strokeDasharray="2 5" stroke="#979494" />
             <XAxis type="number" orientation="top" stroke="#fff" />
             <YAxis dataKey="name" type="category" width={0} stroke="#fff" />

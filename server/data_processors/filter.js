@@ -70,6 +70,7 @@ export function filterData(data, filters) {
       const category = mainCategory.split("::")[0];
       query = category;
       filteredData = filteredData.filter((record) =>
+      // Crimes such as Battery - Simple assault would otherwise we classified as assault
         record[mappedField].split('::')[0] && record[mappedField].split('::')[0].includes(query)
       );
     } else {

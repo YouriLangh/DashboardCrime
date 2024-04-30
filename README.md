@@ -59,6 +59,8 @@ The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3O
 
 8. /
 
+Additional: Sorting of dropdown menus to help with consistency and help with finding filters easier. Color schemes are color-blind proof, though not white-black proof.
+
 
 ### Future work
 - As data gets updated monthly, we could use a pipeline to run our notebook and update our csv and re-run our server to automate fresh data capturing
