@@ -4,9 +4,11 @@ import { fetchData } from "@/services/dataService";
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import { Box } from "@mui/material"; // Import CircularProgress
 import  CustomProgress  from '@/components/CustomProgress'
+
 // Define the colors for each pie slice
 const colors = ["#EBCB8B", "#D08770", "#B48EAD"];
 
+// GenderDistribution component that displays a pie chart for the gender distribution of the victims
 function GenderDistribution({ filters }) {
     const [data, setData] = useState([]);
     const [alreadyRendered, setAlreadyRendered] = useState(false)

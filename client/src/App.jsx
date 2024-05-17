@@ -4,10 +4,10 @@ import { themeSettings } from "./theme"
 import { Box, CssBaseline } from "@mui/material"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import GeneralStatisticsBar from "@/components/GeneralStatisticsBar"
-
 import Dashboard from "@/pages/dashboard/Dashboard"
 import { fetchFilterValues } from './services/filterService'
 import FiltersBar from '@/components/FiltersBar'
+
 function App() {
 
   const theme = useMemo(() => createTheme(themeSettings), [])

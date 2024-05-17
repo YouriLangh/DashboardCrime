@@ -1,9 +1,11 @@
 import cache from "../cache/cache.js";
 import { filterData } from "../data_processors/filter.js";
 import { generateGeneralStatDictionary } from "../data_processors/generalDataDictionaryGenerator.js";
+
 // The filter we initialize the client on
 const baseFilters = { yearFilter: 2023 };
 
+// Function to check if the filters are the base filters
 export function isBaseFilter(filters) {
   // Iterate through each [key, value] pair in filters (excluding 'yearFilter')
   return Object.entries(filters)
@@ -19,7 +21,7 @@ export function isBaseFilter(filters) {
     });
 }
 
-
+// Fetch data from the cache if it exists, otherwise filter the data and store it in the cache
 export function updateCacheGetFilteredData(data, filters) {
   const cacheKey = cache.generateCacheKey(filters);
   if (!cache.has(cacheKey)) {
@@ -44,7 +46,9 @@ export async function setBaseFiltersInCache(data) {
     }
   }
 
+  // Function to calculate generic statistics for each year
 export  function calculateGenericStatistics(data, yearIndex){
+  // TODO: CHECK WHETHER SORTING IS REQUIRED
     const years = Object.keys(yearIndex).sort((a, b) => a - b);
       
     let result = {};

@@ -15,6 +15,7 @@ import { renderMonthlyTooltip } from "../CustomTooltips";
 import YearDropdownMonth from "../YearDropdownMonth";
 import CustomProgress from "@/components/CustomProgress";
 
+// MonthlyTrend component that displays an area chart of the crime trends by month
 function MonthlyTrend({ allFilters, filters }) {
   const [data, setData] = useState([]);
   const [isDataEmpty, setIsDataEmpty] = useState(true);
@@ -35,6 +36,7 @@ function MonthlyTrend({ allFilters, filters }) {
     setLocalFilterSets(allFilters);
   }, [allFilters]);
 
+  // When the filter or the comparison year changes, fetch the data for the comparison year to update the chart
   useEffect(() => {
     const comparisonFilter = { ...filters, yearFilter: comparisonYear };
     fetchData(comparisonFilter, "/api/data/area-chart/month").then((res) => {
@@ -47,7 +49,7 @@ function MonthlyTrend({ allFilters, filters }) {
     setComparisonYear(value);
   }
 
-  // Calculate the maximum value from data and comparisonData
+  // Calculate the maximum value from data and comparisonData for the y-axis domain.
   const maxDataValue = Math.max(...data.map((d) => d.value));
   const maxComparisonDataValue = Math.max(
     ...comparisonData.map((d) => d.value)

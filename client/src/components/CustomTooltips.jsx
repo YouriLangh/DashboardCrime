@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 
+// Custom tooltip components that displays additional information for each data point on their corresponding charts
 export function renderEthnicityTooltip({ active, payload }, data, colors) {
     if (active && payload && payload.length) {
         // Extract the name, value, and index from the payload
@@ -48,8 +49,10 @@ export function renderEthnicityTooltip({ active, payload }, data, colors) {
 }
 
 export function renderHourlyTooltip ({ active, payload, label }){
+    // Check if the tooltip is active and the payload exists
     if (active && payload && payload.length) {
         return (
+            // Format using "AM" or "PM" based on the label value
             <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800', color: "black" }}>
                 <p>{`${label % 12 === 0 ? 12 : label % 12}${label < 12 ? 'am' : 'pm'}`}</p>
                 <p className='label'>crime: {payload[0].value}</p>
@@ -63,7 +66,6 @@ export function renderMonthlyTooltip({ active, payload, label, currentYear, comp
     if (active && payload && payload.length) {
         return (
             <div className='custom-tooltip' style={{ backgroundColor: "#f5f5f5", borderRadius: "5px", padding: "5px", fontSize: "14px", fontWeight: '800' }}>
-                {/* Label text is set to black */}
                 <p style={{ color: 'black' }}>{label}</p>
                 {/* Display the values for each area with text color matching the area color */}
                 {payload.map((entry, index) => (

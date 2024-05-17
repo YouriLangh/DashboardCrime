@@ -20,7 +20,7 @@ let filterDictionary;
 let areaDictionary;
 
 // Will store all the general statistics for each year, assuming only the year is selected as a filter
-// We do this to optimize query speed
+// We do this to optimize query speeds on large data
 let yearlyStats = {}
 
 const initializeData = async () => {

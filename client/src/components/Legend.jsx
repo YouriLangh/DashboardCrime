@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { getShapeClipPath } from "@/helpers/helpers";
-// Define the Legend component
+
+// Define the Legend component for the map which will show an overview of all the crimes and the corresponding shape
 const Legend = ({ legend }) => {
   // Define state for visibility of the legend
   const [isVisible, setIsVisible] = useState(true);
@@ -14,7 +14,7 @@ const Legend = ({ legend }) => {
   };
 
   return (
-
+    // Display the legend if it is visible, otherwise display a button to show it
       isVisible ? (
         <div id="legend" className="legend">
           <CloseIcon
@@ -33,7 +33,7 @@ const Legend = ({ legend }) => {
                   clipPath: getShapeClipPath(iconDetails.shape),
                 }}
               />
-              {/* Display the crime description */}
+              {/* Display the crime description, but crop if it if gets too long*/}
               <span className="legend-text">
                 {crime.substring(0, 25).concat("...")}
               </span>

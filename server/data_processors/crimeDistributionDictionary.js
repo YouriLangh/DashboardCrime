@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Function to create a dictionary of crimes with their corresponding counts
 export function createCrimeDistDictionary(data) {
     // Create an empty map for all crimes
     const crimeMap = new Map();

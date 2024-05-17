@@ -2,7 +2,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export function createHourlyDictionary(data) {
-  // Create an empty dictionary for the hours in a day
   // Create an array of size 24 for the hours in a day, initializing each element to 0
   let hourDictionary = Array(24).fill(0);
 

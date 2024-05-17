@@ -10,6 +10,7 @@ import MonthlyTrend from '@/components/charts/MonthlyTrend';
 import WeeklyTrend from '@/components/charts/WeeklyTrend';
 import GenderDistribution from '@/components/charts/GenderDistribution';
 
+// Dashboard component that displays all the charts, it is the main layout of the application by using grid layout
 function Dashboard({ allFilters, activeFilters, filterCallback  }) {
 
     const gridTemplateLargeScreens = ` 
@@ -51,6 +52,7 @@ function Dashboard({ allFilters, activeFilters, filterCallback  }) {
     "ethn"
     `;
     
+    // Check if the screen size is above 1200px, limited reactiness of the application
     const isAboveMediumScreens = useMediaQuery("(min-width: 1200px)")
   return (
     <Box className="dashboard-layout" sx={

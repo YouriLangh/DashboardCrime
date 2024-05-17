@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService";
 import {
@@ -15,6 +14,8 @@ import {
 import { Box } from "@mui/material";
 import { renderHourlyTooltip } from "../CustomTooltips";
 import CustomProgress from "@/components/CustomProgress";
+
+// Component that displays an area chart of the crime trends by hour of the day
 function HourlyTrend({ filters, filterCallback }) {
   const [data, setData] = useState([]);
   const [clickedHour, setClickedHour] = useState();
@@ -28,6 +29,7 @@ function HourlyTrend({ filters, filterCallback }) {
   // Check if the data is empty or undefined
   const isDataEmpty = !data || data.length === 0;
 
+  // Function to handle the click event on the chart, use the data of the element to create a filter object.
   const handleChartClick = (props) => {
     let filter = [{value : 'All'}]
     if(clickedHour === props.activeLabel){

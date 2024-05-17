@@ -9,9 +9,10 @@ import  CustomProgress  from '@/components/CustomProgress'
 
 
 
-// Define the colors for each pie slice
+// Define the colors the pie slices will have, we use modulo to iterate over the colors if there are more slices than colors
 const colors = ["#5E81B5", "#8CB16C", "#D8795C", "#B681AC", "#6FB6CA", "#BF616A"];
 
+// DescentDistribution component that displays a pie chart of the descent distribution of the victims
 function DescentDistribution({ filters }) {
     const [data, setData] = useState([]);
     const [alreadyRendered, setAlreadyRendered] = useState(false)

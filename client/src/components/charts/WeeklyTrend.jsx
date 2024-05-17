@@ -14,6 +14,7 @@ import {
 import { Box } from "@mui/material";
 import  CustomProgress  from '@/components/CustomProgress'
 
+// WeeklyTrend component that displays a bar chart of the crime trends by day of the week
 function WeeklyTrend({ filters, filterCallback }) {
   const [data, setData] = useState([]);
   const [clickedWeek, setClickedWeek] = useState(null)
@@ -30,6 +31,7 @@ function WeeklyTrend({ filters, filterCallback }) {
   const isDataEmpty = !data || data.length === 0;
 
 
+  // Function to handle the click event on the chart, use the data of the element to create a filter object.
   const handleChartClick = (entry, idx) => {
     let filter = [{ value: 'All' }]
     // Log the hour data key value when a user clicks on a specific part of the chart

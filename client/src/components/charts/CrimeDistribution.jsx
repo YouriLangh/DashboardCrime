@@ -15,8 +15,8 @@ import { Box } from "@mui/material";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import  CustomProgress  from '@/components/CustomProgress'
 
-
-function CrimeDistribution({ filters, filterCallback }) {
+// Component that displays a horizontal bar chart of the crime distribution
+function CrimeDistribution({ filters }) {
   const [data, setData] = useState([]);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [size, setSize] = useState(1);
@@ -36,7 +36,7 @@ function CrimeDistribution({ filters, filterCallback }) {
   // Check if the data is empty or undefined
   const isDataEmpty = !data || data.length === 0;
 
-  // Colors for the bars
+  // Colors for the bars to increase visibility and distinguishability
   const colors = [
     "#5E81B5",
     "#8CB16C",

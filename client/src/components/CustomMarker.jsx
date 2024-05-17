@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import { hashToColorAndShape } from '../helpers/helpers';
+
+// Custom marker component that displays a popup with crime information on the map
 const CustomMarker = ({ instance, mapBounds, position }) => {
     const [crimeDesc, setCrimeDesc] = useState('');
     const [date, setDate] = useState('');
@@ -72,7 +74,6 @@ const CustomMarker = ({ instance, mapBounds, position }) => {
 
     return (
         <Marker position={position} icon={customIcon}>
-            {/* Customize the popup content */}
             <Popup autoPan={false}>
                 <div>
                     <strong>{crimeDesc}</strong><br />

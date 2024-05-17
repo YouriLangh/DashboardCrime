@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Box } from "@mui/material"; 
-// import { useState } from 'react'
-
 import GeneralStatBox from "@/components/GeneralStatisticsBox"
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/dataService.js"
 
+// GeneralStatisticsBar component that displays general statistics about the data
 function GeneralStatisticsBar({ activeFilters }) {
   const [statistics, setStatistics] = useState({})
 
@@ -27,6 +26,7 @@ function GeneralStatisticsBar({ activeFilters }) {
   }
   return (
    <Box className='general-stats-bar'>
+    {/* When the data is not yet fetched we use placeholders */}
     <GeneralStatBox measure={''} value={isDataFetched ? formatIncidents(statistics.incidents) : "Fetching data..."} text={"# of Incidents"} isLightColor={true}/>
     <GeneralStatBox measure={''} value={isDataFetched ? statistics.hotspot : "Fetching data..."} text={"#1 Crime Hotspot"} isLightColor={false}/>
     <GeneralStatBox measure={''} value={isDataFetched ? statistics.average_age : "Fetching data..."} text={"Average Victim Age"} isLightColor={true}/>

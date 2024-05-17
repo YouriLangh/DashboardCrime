@@ -14,7 +14,9 @@ import { isBaseFilter, updateCacheGetFilteredData } from "../helpers/helperFunct
 import { getCountsPerDistrict } from "../data_processors/crimePerDistrict.js";
 
 const router = express.Router();
-
+// Route to handle data requests, we time requests to see how long they take to optimize performance
+// We always use and update the cache on each request.
+// Compute general statistics and return them
 router.post("/general-stats", async (req, res) => {
   try {
     const filters = req.body;

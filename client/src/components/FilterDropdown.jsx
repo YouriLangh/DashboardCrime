@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import { sortItems } from '@/helpers/helpers'
 
+// FilterDropdown component that displays a dropdown menu for filtering data based on the filter type
 function FilterDropdown({ text, items, filterType, onFilterChange }) {
   const [localItems, setLocalItems] = useState([{ value: "All" }]);
   const [selectedValue, setSelectedValue] = useState("All");
@@ -21,6 +22,7 @@ function FilterDropdown({ text, items, filterType, onFilterChange }) {
     const value = event.target.value;
     setSelectedValue(value); // Update the selected value state
 
+    // Some filters contain submenus, for forward compatibility, we handle these cases. If we were to create submenus for each menu item, this would work as well with this code.
     const activatedFilters = [];
     const selectedItem = localItems.find((item) => item.value === value);
 
@@ -32,6 +34,7 @@ function FilterDropdown({ text, items, filterType, onFilterChange }) {
       activatedFilters.push(selectedItem);
     }
 
+    // Call the parent component's onFilterChange function with the filter type and the activated filters
     onFilterChange(filterType, activatedFilters);
   };
 

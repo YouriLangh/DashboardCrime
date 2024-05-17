@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Function to create a dictionary of descents with their corresponding counts
 export function createDescentDictionary(data) {
     // Create an empty map for all descents
     const descentMap = new Map();

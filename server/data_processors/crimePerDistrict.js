@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import { areaDictionary } from "../server.js";
 dotenv.config();
 
+// Function to count the number of crimes per district
 export function getCountsPerDistrict(filteredData) {
     // Ensure the data is an array of objects and each object contains at least 'APREC' and 'Year' properties
     if (!Array.isArray(filteredData)) {

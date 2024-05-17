@@ -25,6 +25,7 @@ function categorizeAge(age) {
     return null; // Return null if age is not within any defined range
 }
 
+// Function to create a dictionary of age ranges with their corresponding counts
 export function createAgeDictionary(data) {
     // Create a dictionary to hold counts for each age range
     const ageRangeDictionary = {};

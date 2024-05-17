@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Function to create a dictionary of areas with their corresponding counts
 export function createAreaDictionary(data) {
     // Create an object to hold counts for each area
     const areas = {};

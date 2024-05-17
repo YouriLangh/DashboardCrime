@@ -1,3 +1,5 @@
+// This function creates a dictionary where each crime contains the value (name) and the total hierarchy to get to that element
+// If the crime has subcategories, it will include a submenu rather than a hierarchy
 export function organizeGroups(menu) {
     const result = [];
     const groupMap = new Map();

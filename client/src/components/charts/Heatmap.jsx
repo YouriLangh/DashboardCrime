@@ -5,6 +5,7 @@ import { fetchData } from '@/services/dataService';
 import  CustomProgress  from '@/components/CustomProgress'
 import { Box } from '@mui/material';
 
+// Heatmap component that displays a heatmap of the victim's ethnicity and the crime
 function Heatmap({ filters }) {
     const [heatmapData, setHeatmapData] = useState(null);
 

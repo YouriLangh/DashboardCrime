@@ -2,6 +2,8 @@ import axios from 'axios'
 
 const apiUrl = import.meta.env.VITE_SERVER_BASE_URL; 
 
+// Service to fetch data from the backend
+
 export async function fetchData(filters, link) {
     try {
         let data;
@@ -13,7 +15,6 @@ export async function fetchData(filters, link) {
         return data
     } catch (error) {
         console.error('Error fetching filter values:', error);
-        // Handle the error, e.g., by returning an empty object or array
         return {};
     }
 }
@@ -27,7 +28,6 @@ export async function fetchGeoJson(){
         return data
     } catch (error) {
         console.error('Error fetching geojson:', error);
-        // Handle the error, e.g., by returning an empty object or array
         return {};
 }
 }
@@ -41,7 +41,6 @@ export async function fetchUpdatedGeoJson(filters){
         return data
     }catch (error) {
         console.error('Error updating geojson:', error);
-        // Handle the error, e.g., by returning an empty object or array
         return {};
 }
 }
@@ -55,7 +54,6 @@ export async function fetchInstances(filters, mapbounds){
         return data
     }catch (error) {
         console.error('Error fetching map instances:', error);
-        // Handle the error, e.g., by returning an empty object or array
         return {};
 }
 }

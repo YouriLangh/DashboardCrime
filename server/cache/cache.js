@@ -1,4 +1,4 @@
-// Define an in-memory cache object
+// Define an in-memory cache object that implements a Least Recently Used (LRU) cache algorithm
 const cache = {};
 
 // Define a list to track access order

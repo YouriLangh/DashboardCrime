@@ -10,6 +10,7 @@ export const tokens = {
     },
   };
   
+  //TODO: CHECK WHAT I CAN REMOVE FROM FONTS
   // mui theme settings
   export const themeSettings = {
     palette: {

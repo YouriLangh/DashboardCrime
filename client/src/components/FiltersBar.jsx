@@ -4,6 +4,7 @@ import FilterDropDown from "./FilterDropdown";
 import YearDropdown from "./YearDropdown";
 import { Box, Typography } from "@mui/material";
 
+// FiltersBar component that displays all the filter dropdowns
 function FiltersBar({ filters, filterCallback }) {
   // Initializing state
   const [localFilterSets, setLocalFilterSets] = useState({});

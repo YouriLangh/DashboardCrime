@@ -1,3 +1,5 @@
+// Preprocess ethnicity data in the pie chart, and calculate the total value
+// when elements are less than 6% add them to the "others" category to group them, therefore avoiding small slices
 export function preprocessEthnicityData(data) {
   // Calculate the total value
   const total = data.reduce((sum, entry) => sum + entry.value, 0);
@@ -42,10 +44,13 @@ export function preprocessEthnicityData(data) {
   return newData;
 }
 
+// Function to change the words to title case
 export const toTitleCase = (str) => {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
+// Function which checks whether the current filter that is selected, is equal to the filter of the component
+// This function is not currently used but would be used in the future when a chart that already has a filter-dropdown, is pressed and therefore updates the filter again.
 export function myFilterSelected(filters, label) {
   const activeFilters = filters[label];
   return (
@@ -55,6 +60,7 @@ export function myFilterSelected(filters, label) {
   );
 }
 
+// Function to update the GeoJSON data with the new crime counts
 export function updateGeoJson(geoJsonData, updatedData) {
   if (geoJsonData && updatedData) {
     // Create a Map object for fast lookup of the new crime counts
@@ -137,6 +143,7 @@ export const hashToColorAndShape = (str) => {
   return { color, shape };
 };
 
+// Define a function to process the crimes and extract the hierarchy as crimes are denoted by the category and subcategory
 function processCrimes(crimes) {
   let result = [];
   crimes.forEach((crm) => {

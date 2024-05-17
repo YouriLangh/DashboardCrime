@@ -1,5 +1,6 @@
 import { organizeGroups } from "./dropdownprocessor.js";
 
+// Generate a dictionary for all the filters, these are calculated from the dataset
 export function filterDictionaryGenerator(data, yearIndex) {
   // Define an array of objects representing sets and field names
   const filterSets = [

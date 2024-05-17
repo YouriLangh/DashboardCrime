@@ -155,6 +155,7 @@ useEffect(()=>{
         fillOpacity: 0.7,
     });
 
+    // Conditionally render the choropleth or the individual markers depending on the zoom level of the map
     return (
         <div style={{ width: "100%", height: "100%", padding: "5px", position: "relative" }}>
             <MapContainer

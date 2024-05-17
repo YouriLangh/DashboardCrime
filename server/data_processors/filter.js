@@ -32,6 +32,7 @@ export function filterData(data, filters) {
     // If no year filter is provided, use the entire data array
     filteredData = data;
   }
+  // Filter based on age
   if(filters.ageFilter !== undefined && filters.ageFilter.bottomAge && filters.ageFilter.bottomAge && !(filters.ageFilter.bottomAge === 0 && filters.ageFilter.topAge === Infinity)){
     const mappedField = fieldMapping['ageFilter']
     const filterObject = filters.ageFilter
@@ -39,24 +40,26 @@ export function filterData(data, filters) {
     const topAge = filterObject.topAge
     filteredData = filteredData.filter((record) =>  record[mappedField] >= bottomAge  && record[mappedField] <= topAge)
   }
-
+  // Filter based on day of the week
   if(filters.weekdayFilter !== undefined && filters.weekdayFilter[0].value !== 'All'){
     const mappedField = fieldMapping['date']
     const weekdayObject = filters.weekdayFilter[0]
     filteredData = filteredData.filter((record)=> record[mappedField].getDay() === weekdayObject.value)
   }
+  // Filter based on hour of the day
   if(filters.hourOfDayFilter !== undefined && filters.hourOfDayFilter[0].value !== 'All'){
     const mappedField = fieldMapping['date']
     const hourOfDayObject = filters.hourOfDayFilter[0]
     filteredData = filteredData.filter((record)=> record[mappedField].getHours() === hourOfDayObject.value)
   }
+  // Filter based on location
   if(filters.mapBounds !== undefined){
     const mappedLon = fieldMapping['longitude']
     const mappedLat = fieldMapping['latitude']
     filteredData = filterData.filter((record) => filters.mapBounds.contains([record[mappedLat], record[mappedLon]]))
   }
 
-  // Loop over all fields in filters except for 'year'
+  // Loop over all fields in filters except for the previous ones
   for (const filter in filters) {
     if (manualFilters.includes(filter)) continue; // Skip manual filters
 

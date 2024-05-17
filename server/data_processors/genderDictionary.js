@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Generate a dictionary for the genders and their counts
 export function createGenderDictionary(data) {
     // Create an empty dictionary for genders
     let genderDictionary = {};

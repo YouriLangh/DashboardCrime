@@ -5,6 +5,9 @@ import MenuItem from "@mui/material/MenuItem";
 import { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 
+// YearDropdown component that displays a dropdown menu for filtering data based on the year
+// The reason we make a separate component for the year is that it has a different structure than the other filters, namely we can just store the first and last year and create a loop
+// to iterate over all the years in between
 function YearDropdown({
   text,
   smallestYear,
@@ -25,11 +28,13 @@ function YearDropdown({
     }
   }, [largestYear, smallestYear]);
 
+  // Function to handle the change of the filter, calls the parent component's onFilterChange function with the filter type and the selected value
   function handleFilterChange(filterType, value) {
       onFilterChange(filterType, value);
     setSelectedYear(value);
   }
 
+  // Function to generate an array of years between the smallest and largest year
   function generateYearArray(smallestYear, largestYear) {
     const arr = [];
     for (let i = smallestYear; i <= largestYear; i++) {

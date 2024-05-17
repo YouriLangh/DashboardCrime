@@ -9,6 +9,8 @@ dotenv.config();
 
 const DATETIME_OCC_FIELD = process.env.DATETIME_OCC_FIELD;
 
+// Define a function to load the CSV data, parsing datetime strings into Date objects
+// Additionally we create an index by year to speed up filtering by year
 async function loadCSVData(filePath) {
     return new Promise((resolve, reject) => {
         const data = [];

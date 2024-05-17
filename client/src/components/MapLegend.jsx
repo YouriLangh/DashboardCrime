@@ -2,7 +2,7 @@
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
 
-// Function to create the gradient legend
+// Function to create the gradient legend for the choropleth map
 export function MapLegend({ colors }) {
     // Define state for visibility of the legend
     const [isVisible, setIsVisible] = useState(true);

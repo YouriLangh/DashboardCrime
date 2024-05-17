@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+// Define the field mapping for the CSV data with dotenv environments
 const fieldMapping = {
     crimeTypeFilter: process.env.CRM_CD_DESC_FIELD,
     genderFilter: process.env.VICT_SEX_FIELD,

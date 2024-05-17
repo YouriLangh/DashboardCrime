@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const apiUrl = import.meta.env.VITE_SERVER_BASE_URL; 
 
+// Service to fetch all the filters from the backend
 export async function fetchFilterValues() {
     try {
         let filterValues;
@@ -19,7 +20,6 @@ export async function fetchFilterValues() {
         return filterValues;
     } catch (error) {
         console.error('Error fetching filter values:', error);
-        // Handle the error, e.g., by returning an empty object or array
         return {};
     }
 }

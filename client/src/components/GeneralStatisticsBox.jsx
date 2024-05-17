@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, Typography } from '@mui/material';
 
+// GeneralStatBox component that displays a box with a value and text for each general statistic
 function GeneralStatBox({ value, text, isLightColor, measure }) {
     // Define light and dark colors
     const lightColor = '#303649';
