@@ -48,9 +48,7 @@ export async function setBaseFiltersInCache(data) {
 
   // Function to calculate generic statistics for each year
 export  function calculateGenericStatistics(data, yearIndex){
-  // TODO: CHECK WHETHER SORTING IS REQUIRED
-    const years = Object.keys(yearIndex).sort((a, b) => a - b);
-      
+    const years = Object.keys(yearIndex)
     let result = {};
       // Get the first and last years from the sorted years
       const firstYear = years[0];

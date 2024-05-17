@@ -90,8 +90,6 @@ export function filterData(data, filters) {
     }
   }
 
-  // TODO: Manually implement the age and lat/lon filters as these require boundaries AND week filter
-
   // Return the filtered data
   return filteredData;
 }

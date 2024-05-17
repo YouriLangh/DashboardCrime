@@ -10,7 +10,6 @@ export const tokens = {
     },
   };
   
-  //TODO: CHECK WHAT I CAN REMOVE FROM FONTS
   // mui theme settings
   export const themeSettings = {
     palette: {
@@ -35,12 +34,6 @@ export const tokens = {
         fontWeight: 600,
         color: tokens.grey[200],
         fontSize: 24,
-      },
-      h3: {
-        fontFamily: ["Sora", "sans-serif"].join(","),
-        fontSize: 26,
-        fontWeight: 800,
-        color: tokens.grey[200],
       },
       h4: {
         fontFamily: ["Sora", "sans-serif"].join(","),
