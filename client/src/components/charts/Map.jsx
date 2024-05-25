@@ -94,6 +94,13 @@ useEffect(()=>{
                 setMaxCrimeCount(calculateMaxCrimeCount(updatedGeoJson));
             });
         }
+        if (zoomLevel >= 15) {
+            const adjustedBounds = calculateBufferedBounds(mapBounds);
+            setBufferedBounds(adjustedBounds);
+            fetchInstances(filters, adjustedBounds).then((data) => {
+                setInstances(data);
+            });
+        }
     }, [filters]);
 
     // Event handler to track zoom level changes and get map bounds

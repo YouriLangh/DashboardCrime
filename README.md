@@ -2,14 +2,59 @@
 This is a group project I made alone for the Information Visualization course at the VUB.
 
 - [DashboardCrime](#dashboardcrime)
+  - [Loading the project](#loading-the-project)
+    - [Python Notebook](#python-notebook)
+    - [Dashboard](#dashboard)
   - [Design Prototypes](#design-prototypes)
   - [Project Structure](#project-structure)
-    - [Python Notebook](#python-notebook)
+    - [Python Notebook](#python-notebook-1)
     - [React](#react)
   - [Notable libraries](#notable-libraries)
   - [Notable Decisions](#notable-decisions)
   - [Future work](#future-work)
 
+
+### Loading the project
+#### Python Notebook
+To run the project, if you do not have all the required data for the server, first run the notebook has to be run. Before running the notebook, uncomment the second line in the first cell of the notebook which installs necessary dependencies using pip. The line goes as follows:
+```shell
+%pip install pandas ...
+```
+Then run the notebook with a Python interpreter (Mine was 3.9.2). Note: Expect this step to take some time (around five minutes)
+
+#### Dashboard
+To run the dashboard locally, open two separate terminals, one for the server and one for the client. In the terminal for the server, first maneuver to the server subfolder with the following command:
+```shell
+cd server
+```
+then install the dependencies using:
+```shell
+npm install
+```
+and finally run: 
+```shell
+npm run dev
+```
+This will start up the back end. This process takes approximately 25 seconds, but you will be notified with a statement in the console when this is finished that goes as follows:
+```shell
+"Setup finalized in {TIME} ms"
+```
+After this, to start up the client, maneuver to the client with the corresponding terminal with the command:
+```shell
+cd client
+```
+then install the dependencies using:
+```shell
+npm install
+```
+and finally, run the command to start up the client:
+```shell
+npm run dev
+```
+This should launch the client on port 5173. The terminal should provide the link with which you can access the client. In case it does not, this is the link: 
+```shell
+http://localhost:5173/
+```
 
 ### Design Prototypes
 The design prototypes can be found [here](https://www.figma.com/file/0YprOmBCj3OOZh0XUd8U2W/Infovis?type=design&node-id=0-1&mode=design).
